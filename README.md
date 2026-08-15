@@ -1,44 +1,54 @@
-<div align="center">
-  <img src="assets/brand/agent_forge_logo_v3.svg" width="104" alt="Agent Forge logo">
+<p align="center">
+  <a href="https://myagentforge.ai/">
+    <img src="assets/screenshots/website-hero.png" width="100%" alt="Agent Forge - Burning Within">
+  </a>
+</p>
 
-  # Agent Forge
+<p align="center">
+  <strong>FIRE MEETS MACHINE.</strong><br>
+  <sub>A private AI workspace that decides where work should run.</sub>
+</p>
 
-  ### Burning Within
+<p align="center">
+  <a href="https://myagentforge.ai/"><strong>WEBSITE</strong></a>
+  &nbsp;|&nbsp;
+  <a href="https://myagentforge.ai/tour_factual.html#demo"><strong>PRODUCT TOUR</strong></a>
+  &nbsp;|&nbsp;
+  <a href="docs/ARCHITECTURE.md">ARCHITECTURE</a>
+  &nbsp;|&nbsp;
+  <a href="docs/CODEBASE_MAP.md">CODEBASE MAP</a>
+  &nbsp;|&nbsp;
+  <a href="docs/BRAND_IDENTITY.md">BRAND</a>
+</p>
 
-  **Engineering dossier for a private, production multi-model AI workspace.**
+---
 
-  [![CI](https://github.com/Prashant10009/agent-forge-showcase/actions/workflows/ci.yml/badge.svg)](https://github.com/Prashant10009/agent-forge-showcase/actions/workflows/ci.yml)
-  [![CodeQL](https://github.com/Prashant10009/agent-forge-showcase/actions/workflows/codeql.yml/badge.svg)](https://github.com/Prashant10009/agent-forge-showcase/actions/workflows/codeql.yml)
-  [![Website](https://img.shields.io/badge/Website-myagentforge.ai-ff4500)](https://myagentforge.ai/)
+## The work
 
-  [**Website**](https://myagentforge.ai/) · [**Existing product tour**](https://myagentforge.ai/tour_factual.html#demo) · [Architecture](docs/ARCHITECTURE.md) · [Codebase map](docs/CODEBASE_MAP.md) · [Brand](docs/BRAND_IDENTITY.md)
-</div>
+Agent Forge discovers configured models, routes requests using capability and live availability, coordinates agents and subtasks, stores persistent context, and records traces, reviews, approvals, and user ratings in one browser interface.
 
-![Agent Forge website hero](assets/screenshots/website-hero.png)
+This repository is its public engineering record. It makes the product thinking, system architecture, codebase shape, security posture, and delivery discipline inspectable without publishing the private production implementation.
 
-## What this repository is
+> **PUBLICATION BOUNDARY**
+> No replica UI. No synthetic replacement product. No production source. The website and tour linked above are the existing Agent Forge product surfaces.
 
-This is the public GitHub representation of Agent Forge: a place to understand the product, architecture, private codebase shape, engineering decisions, verification discipline, and publication boundary.
-
-The website and interactive tour already exist. This repository links to and documents those real surfaces; it does not rebuild them or publish a second interface.
-
-| Evaluate | Evidence here |
+| What to evaluate | Evidence in this repository |
 |---|---|
-| Product judgment | Real website and tour captures, workflows, positioning, and operator controls |
+| Product judgment | Authentic website and tour captures, positioning, workflows, and operator controls |
 | System design | Request lifecycle, package map, routing, review, tools, state, and observability |
-| Engineering depth | Verified codebase snapshot, architecture notes, threat model, and decision records |
+| Engineering depth | Verified codebase inventory, architecture notes, threat model, and decision records |
 | Delivery discipline | CI, CodeQL, dependency review, Dependabot, protected branches, and releases |
-| Publication judgment | Explicit public/private boundary with automated leak scanning |
+| Publication judgment | Explicit public/private boundary backed by automated leak scanning |
 
-## Ten-minute reviewer path
+## Start here
 
-1. Open [myagentforge.ai](https://myagentforge.ai/).
-2. Walk the existing [interactive tour](https://myagentforge.ai/tour_factual.html#demo).
+1. Enter [myagentforge.ai](https://myagentforge.ai/).
+2. Walk the [existing product tour](https://myagentforge.ai/tour_factual.html#demo).
 3. Read the [architecture](docs/ARCHITECTURE.md) and [codebase map](docs/CODEBASE_MAP.md).
 4. Inspect the [public-boundary gate](scripts/check-public-boundary.mjs) and [repository tests](tests/repository.test.mjs).
-5. Review Actions, security configuration, releases, issues, and dependency updates.
+5. Review the Actions, security configuration, dependency updates, issues, and releases.
 
-## Product in one flow
+## How work moves
 
 ```mermaid
 flowchart LR
@@ -50,21 +60,21 @@ flowchart LR
   F -. "routing evidence" .-> C
 ```
 
-Runtime selection, execution authority, and result verification remain separate concerns.
+Runtime selection, execution authority, and result verification remain separate concerns. That separation is what makes the system observable, governable, and replaceable at the runtime edge.
 
-## Existing product surfaces
+## The existing product
 
-The public website explains why Agent Forge exists and how work moves through it. The existing tour presents the real product shell using clearly labeled sample data.
+The public website explains why Agent Forge exists and how work moves through it. The existing tour presents the real product shell with clearly labeled sample data. This repository documents those surfaces; it does not rebuild them.
 
 ![Agent Forge interactive product tour](assets/screenshots/product-tour.png)
 
 <details>
-  <summary><strong>Website orchestration comparison</strong></summary>
+  <summary><strong>Open the orchestration comparison from the website</strong></summary>
   <br>
   <img src="assets/screenshots/website-home.png" alt="Agent Forge website orchestration comparison">
 </details>
 
-## Private codebase snapshot
+## Private codebase, public evidence
 
 Read-only inventory captured on 2026-08-15:
 
@@ -86,28 +96,45 @@ Responsibility groups include:
 - **Runtimes:** model clients, provider integrations, optional user runtimes, vision, and fine-tuning support.
 - **Trust:** safety boundaries, permissions, approvals, traces, and observability.
 
+The detailed public map is in [docs/CODEBASE_MAP.md](docs/CODEBASE_MAP.md). It describes responsibilities and relationships, not proprietary implementations.
+
 ## Public/private boundary
 
 This repository does not publish production source, Git history, prompts, routing weights, thresholds, credentials, provider inventories, operational configuration, private sessions, evaluation data, or authenticated application bundles.
 
-It publishes system responsibilities, authentic public visuals, codebase structure, engineering decisions, and inspectable repository automation. See [PUBLIC_BOUNDARY.md](docs/PUBLIC_BOUNDARY.md).
+It publishes system responsibilities, authentic public visuals, codebase structure, engineering decisions, and inspectable repository automation. The enforceable rules are documented in [docs/PUBLIC_BOUNDARY.md](docs/PUBLIC_BOUNDARY.md).
 
-## Repository automation
+| Public here | Private by design |
+|---|---|
+| Architecture and responsibility maps | Production application source and history |
+| Authentic public website captures | Authenticated application bundles |
+| Curated engineering decisions | Prompts, policies, weights, and thresholds |
+| Repository checks and security controls | Credentials, configuration, and runtime data |
+| Clearly labeled structural counts | Customer, session, telemetry, and evaluation data |
+
+## Repository signals
+
+[![CI](https://github.com/Prashant10009/agent-forge-showcase/actions/workflows/ci.yml/badge.svg)](https://github.com/Prashant10009/agent-forge-showcase/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/Prashant10009/agent-forge-showcase/actions/workflows/codeql.yml/badge.svg)](https://github.com/Prashant10009/agent-forge-showcase/actions/workflows/codeql.yml)
 
 Every pull request runs:
 
 ```text
-repository tests → public-boundary scan → link validation → dossier build → CodeQL
+repository tests -> public-boundary scan -> link validation -> dossier build -> CodeQL
 ```
 
-The repository also uses dependency review, Dependabot, protected `main`, code-owner review, secret scanning, push protection, build artifacts, and tagged releases.
+The repository also uses dependency review, Dependabot, protected `main`, code-owner review, secret scanning, push protection, build artifacts, issue forms, pull-request templates, and tagged releases.
 
 ```bash
 npm ci
 npm run check
 ```
 
-Repository metadata and documentation point to the existing website and tour; no second public site is deployed from this repository.
+Repository metadata and documentation point to the existing website and tour. GitHub Pages is intentionally disabled so this repository cannot become a competing product surface.
+
+## Brand continuity
+
+The public repository follows the established Agent Forge identity: dark, sharp, fire palette, alive but controlled. The official mark, real website imagery, product language, and **Burning Within** signature come from the existing brand system. See the curated [brand identity notes](docs/BRAND_IDENTITY.md) for the public-safe implementation rules.
 
 ## Author and ownership
 
