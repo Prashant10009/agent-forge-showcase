@@ -47,12 +47,30 @@ test("contains no duplicate website or demo implementation", async () => {
   }
 });
 
+test("includes a runnable provider-neutral public core", async () => {
+  for (const file of [
+    "pyproject.toml",
+    "src/agent_forge_public/orchestrator.py",
+    "src/agent_forge_public/routing.py",
+    "src/agent_forge_public/governance.py",
+    "src/agent_forge_public/dispatch.py",
+    "src/agent_forge_public/cli.py",
+    "examples/governed_run.py",
+    "tests_python/test_governance_orchestrator.py"
+  ]) await access(new URL(`../${file}`, import.meta.url));
+
+  const boundary = await read("docs/PUBLIC_BOUNDARY.md");
+  assert.match(boundary, /provider-neutral public core/i);
+  assert.match(boundary, /not production policy/i);
+});
+
 test("includes substantive engineering documentation", async () => {
   for (const file of [
     "docs/ARCHITECTURE.md",
     "docs/BRAND_IDENTITY.md",
     "docs/CODEBASE_MAP.md",
     "docs/PUBLIC_BOUNDARY.md",
+    "docs/PUBLIC_CORE.md",
     "docs/THREAT_MODEL.md"
   ]) {
     const content = await read(file);

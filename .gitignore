@@ -8,3 +8,7 @@ Thumbs.db
 !.env.example
 dist/
 .tmp/
+__pycache__/
+*.py[cod]
+.venv/
+.coverage

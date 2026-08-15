@@ -1,6 +1,6 @@
 # Public Boundary
 
-This repository is an engineering dossier, not a source release or parallel implementation.
+This repository is an engineering dossier with an independently authored, provider-neutral public core. It is not a production source release or parallel product implementation. The public scoring example and governance defaults are not production policy.
 
 ## Included
 
@@ -8,6 +8,8 @@ This repository is an engineering dossier, not a source release or parallel impl
 - authentic captures of the public website and labeled interactive tour;
 - the official Agent Forge logo asset;
 - high-level architecture and responsibility maps;
+- runnable reference code for classification, routing, approvals, deterministic execution, tracing, checkpoints, and task-graph dispatch;
+- unit tests and a CLI for that provider-neutral public core;
 - point-in-time codebase counts and package-group descriptions;
 - publication tests, link checks, leak scanning, GitHub workflows, and release metadata;
 - contribution, security, privacy, terms, and trademark notices for this repository.
@@ -20,6 +22,10 @@ This repository is an engineering dossier, not a source release or parallel impl
 - credentials, provider inventories, quotas, internal endpoints, and deployment configuration;
 - database schemas, private sessions, projects, traces, uploads, logs, and evaluation data;
 - operational runbooks, incident evidence, and internal handoff documents.
+
+## Reference-code rule
+
+Public code must use neutral runtime names, deterministic local behavior, documented example scoring, and no external account or credential. It may demonstrate architectural relationships, but it must not reproduce provider selection, internal prompts, proprietary policy logic, operational endpoints, or production defaults.
 
 ## No duplication rule
 
@@ -49,7 +55,7 @@ The scanner is a backstop, not proof by itself. Every pull request also requires
 
 ## Publication checklist
 
-- [ ] The change explains the product without copying private implementation.
+- [ ] The change explains or demonstrates the product without copying private implementation.
 - [ ] Every claim is public, verified, or explicitly labeled as a point-in-time snapshot.
 - [ ] Images come from an approved public surface.
 - [ ] No duplicate product interface or tour was introduced.
