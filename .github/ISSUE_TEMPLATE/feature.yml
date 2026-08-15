@@ -1,0 +1,19 @@
+name: Showcase idea
+description: Suggest a public-safe improvement to the portfolio experience.
+title: "[Idea]: "
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: Ideas must remain inside the documented public boundary.
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Reviewer outcome
+      description: What should a hiring manager or engineer understand more clearly?
+    validations:
+      required: true
+  - type: textarea
+    id: approach
+    attributes:
+      label: Suggested approach

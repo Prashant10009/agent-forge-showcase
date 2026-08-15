@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+title: Agent Forge Public Showcase
+message: If this portfolio edition informs your work, please cite it using this metadata.
+type: software
+authors:
+  - family-names: Dimri
+    given-names: Prashant
+repository-code: https://github.com/Prashant10009/agent-forge-showcase
+url: https://prashant10009.github.io/agent-forge-showcase/
+version: 0.1.0
+date-released: 2026-08-15
+license: MIT
