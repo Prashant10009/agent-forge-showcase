@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="240" viewBox="0 0 640 240" role="img" aria-labelledby="title desc">
+  <title id="title">Agent Forge watermark</title>
+  <desc id="desc">Subtle Forge wordmark for dark empty states and content-panel backgrounds.</desc>
+  <defs>
+    <pattern id="grid" width="52" height="52" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="52" stroke="#ffffff" stroke-opacity=".02"/>
+    </pattern>
+  </defs>
+  <rect width="640" height="240" rx="18" fill="#181820"/>
+  <rect width="640" height="240" rx="18" fill="url(#grid)"/>
+  <text x="320" y="145" text-anchor="middle" fill="#ff4500" fill-opacity=".08" font-family="Arial, Helvetica, sans-serif" font-size="92" font-weight="800" letter-spacing="18">FORGE</text>
+</svg>

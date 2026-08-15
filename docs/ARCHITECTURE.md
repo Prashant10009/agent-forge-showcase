@@ -4,6 +4,8 @@ Agent Forge is a private AI workspace that decides where work should run, coordi
 
 This document describes system responsibilities already presented by the public website. It does not reproduce private implementation, prompts, provider configuration, or routing policy.
 
+A compact implementation of the public lifecycle is available in [PUBLIC_CORE.md](PUBLIC_CORE.md). Its deterministic adapters and documented scoring example make the relationships executable without exposing production behavior.
+
 ## Request lifecycle
 
 ```mermaid

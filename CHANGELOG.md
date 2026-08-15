@@ -2,6 +2,20 @@
 
 All notable changes to the public showcase are documented here.
 
+## [0.3.0] - 2026-08-15
+
+### Added
+
+- Provider-neutral Python orchestration core with deterministic runtime adapters.
+- Explained capability routing, explicit approval gates, replay protection, traces, and checkpoints.
+- Dependency-aware parallel task dispatch, CLI commands, examples, and unit tests.
+- Public-core architecture and substitution documentation.
+
+### Changed
+
+- Added Python verification to CI and the engineering-dossier build artifact.
+- Updated the README to lead reviewers from the existing product surfaces into runnable code.
+
 ## [0.2.0] — 2026-08-15
 
 ### Changed

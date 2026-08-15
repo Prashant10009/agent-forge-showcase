@@ -56,3 +56,5 @@ flowchart LR
 ## What this map withholds
 
 No file contents, prompts, credentials, endpoint inventories, routing coefficients, thresholds, database schemas, operational commands, customer data, or private Git history are included.
+
+Reviewers who want executable evidence can inspect the independently authored [runnable public core](PUBLIC_CORE.md). It mirrors only the responsibility boundaries above and replaces private integrations and policy with neutral, deterministic examples.

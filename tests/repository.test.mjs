@@ -14,9 +14,26 @@ test("points to the existing product instead of duplicating it", async () => {
 });
 
 test("includes official brand and authentic public captures", async () => {
-  const logo = await read("assets/brand/agent_forge_logo_v3.svg");
-  assert.match(logo, /<svg/);
-  assert.match(logo, /ff4500/i);
+  const logoFiles = [
+    "agent-forge-primary-stacked.svg",
+    "agent-forge-horizontal-dark.svg",
+    "agent-forge-horizontal-light.svg",
+    "agent-forge-mark-16.svg",
+    "agent-forge-mark-24.svg",
+    "agent-forge-mark-36.svg",
+    "agent-forge-mark-52.svg",
+    "agent-forge-static-lockup.svg",
+    "agent-forge-thinking.svg",
+    "agent-forge-topbar.svg",
+    "agent-forge-watermark.svg",
+    "agent-forge-monochrome.svg"
+  ];
+  for (const file of logoFiles) {
+    const logo = await read(`assets/brand/${file}`);
+    assert.match(logo, /<svg/);
+    assert.match(logo, /M44,8|FORGE/);
+  }
+  await assert.rejects(access(new URL("../assets/brand/agent_forge_logo_v3.svg", import.meta.url)));
   for (const file of [
     "assets/screenshots/website-hero.png",
     "assets/screenshots/website-home.png",
@@ -30,12 +47,30 @@ test("contains no duplicate website or demo implementation", async () => {
   }
 });
 
+test("includes a runnable provider-neutral public core", async () => {
+  for (const file of [
+    "pyproject.toml",
+    "src/agent_forge_public/orchestrator.py",
+    "src/agent_forge_public/routing.py",
+    "src/agent_forge_public/governance.py",
+    "src/agent_forge_public/dispatch.py",
+    "src/agent_forge_public/cli.py",
+    "examples/governed_run.py",
+    "tests_python/test_governance_orchestrator.py"
+  ]) await access(new URL(`../${file}`, import.meta.url));
+
+  const boundary = await read("docs/PUBLIC_BOUNDARY.md");
+  assert.match(boundary, /provider-neutral public core/i);
+  assert.match(boundary, /not production policy/i);
+});
+
 test("includes substantive engineering documentation", async () => {
   for (const file of [
     "docs/ARCHITECTURE.md",
     "docs/BRAND_IDENTITY.md",
     "docs/CODEBASE_MAP.md",
     "docs/PUBLIC_BOUNDARY.md",
+    "docs/PUBLIC_CORE.md",
     "docs/THREAT_MODEL.md"
   ]) {
     const content = await read(file);

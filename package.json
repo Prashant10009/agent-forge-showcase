@@ -1,15 +1,16 @@
 {
   "name": "agent-forge-engineering-dossier",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
-  "description": "Public engineering dossier for Agent Forge, linking to the existing website and product tour.",
+  "description": "Runnable public core and engineering dossier for Agent Forge.",
   "type": "module",
   "scripts": {
     "test": "node --test tests/*.test.mjs",
+    "test:python": "node scripts/run-python-tests.mjs",
     "check:boundary": "node scripts/check-public-boundary.mjs",
     "check:links": "node scripts/check-links.mjs",
     "build": "node scripts/build-dossier.mjs",
-    "check": "npm run test && npm run check:boundary && npm run check:links && npm run build"
+    "check": "npm run test && npm run test:python && npm run check:boundary && npm run check:links && npm run build"
   },
   "engines": {
     "node": ">=20"

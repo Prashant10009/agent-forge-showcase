@@ -2,7 +2,7 @@ import { readFile, readdir, stat } from "node:fs/promises";
 import { extname, relative, resolve, sep } from "node:path";
 
 const root = resolve(import.meta.dirname, "..");
-const skip = new Set([".git", "dist", "node_modules", "coverage"]);
+const skip = new Set([".git", ".venv", "__pycache__", "dist", "node_modules", "coverage"]);
 const violations = [];
 
 const forbiddenPathPatterns = [

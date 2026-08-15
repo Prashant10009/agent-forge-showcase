@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://myagentforge.ai/">
-    <img src="assets/screenshots/website-hero.png" width="100%" alt="Agent Forge - Burning Within">
+    <img src="assets/brand/agent-forge-primary-stacked.svg" width="640" alt="Agent Forge - AI Orchestration">
   </a>
 </p>
 
@@ -18,6 +18,8 @@
   &nbsp;|&nbsp;
   <a href="docs/CODEBASE_MAP.md">CODEBASE MAP</a>
   &nbsp;|&nbsp;
+  <a href="docs/PUBLIC_CORE.md">RUNNABLE CORE</a>
+  &nbsp;|&nbsp;
   <a href="docs/BRAND_IDENTITY.md">BRAND</a>
 </p>
 
@@ -27,16 +29,16 @@
 
 Agent Forge discovers configured models, routes requests using capability and live availability, coordinates agents and subtasks, stores persistent context, and records traces, reviews, approvals, and user ratings in one browser interface.
 
-This repository is its public engineering record. It makes the product thinking, system architecture, codebase shape, security posture, and delivery discipline inspectable without publishing the private production implementation.
+This repository is its public engineering record. It makes the product thinking, system architecture, codebase shape, security posture, and delivery discipline inspectable without publishing the private production implementation. It also contains a runnable, independently authored reference core so reviewers can execute the central orchestration pattern rather than only read about it.
 
 > **PUBLICATION BOUNDARY**
-> No replica UI. No synthetic replacement product. No production source. The website and tour linked above are the existing Agent Forge product surfaces.
+> No replica UI. No synthetic replacement product. No production source. The provider-neutral public core demonstrates architecture and control flow; it is not production policy. The website and tour linked above are the existing Agent Forge product surfaces.
 
 | What to evaluate | Evidence in this repository |
 |---|---|
 | Product judgment | Authentic website and tour captures, positioning, workflows, and operator controls |
 | System design | Request lifecycle, package map, routing, review, tools, state, and observability |
-| Engineering depth | Verified codebase inventory, architecture notes, threat model, and decision records |
+| Engineering depth | Runnable orchestration core, tests, verified codebase inventory, architecture notes, and decision records |
 | Delivery discipline | CI, CodeQL, dependency review, Dependabot, protected branches, and releases |
 | Publication judgment | Explicit public/private boundary backed by automated leak scanning |
 
@@ -44,8 +46,8 @@ This repository is its public engineering record. It makes the product thinking,
 
 1. Enter [myagentforge.ai](https://myagentforge.ai/).
 2. Walk the [existing product tour](https://myagentforge.ai/tour_factual.html#demo).
-3. Read the [architecture](docs/ARCHITECTURE.md) and [codebase map](docs/CODEBASE_MAP.md).
-4. Inspect the [public-boundary gate](scripts/check-public-boundary.mjs) and [repository tests](tests/repository.test.mjs).
+3. Run the [provider-neutral public core](docs/PUBLIC_CORE.md), then read the [architecture](docs/ARCHITECTURE.md) and [codebase map](docs/CODEBASE_MAP.md).
+4. Inspect the [public-boundary gate](scripts/check-public-boundary.mjs), [Python tests](tests_python/), and [repository tests](tests/repository.test.mjs).
 5. Review the Actions, security configuration, dependency updates, issues, and releases.
 
 ## How work moves
@@ -62,9 +64,24 @@ flowchart LR
 
 Runtime selection, execution authority, and result verification remain separate concerns. That separation is what makes the system observable, governable, and replaceable at the runtime edge.
 
+## Run the public core
+
+The Python package under [`src/agent_forge_public`](src/agent_forge_public) is a working reference implementation of that lifecycle. It classifies tasks, explains routing choices, pauses side-effecting actions for single-use approval, executes deterministic adapters, verifies output, records an ordered trace, persists atomic checkpoints, and dispatches dependency-aware task graphs.
+
+```bash
+python -m pip install -e .
+agent-forge-public route "Implement and verify a Python parser"
+agent-forge-public demo --action write --approve "Implement and verify a Python parser"
+python -m unittest discover -s tests_python -v
+```
+
+It has no external package dependency, account requirement, provider credential, network call, or production configuration. The full module map and substitution rationale are in [docs/PUBLIC_CORE.md](docs/PUBLIC_CORE.md).
+
 ## The existing product
 
 The public website explains why Agent Forge exists and how work moves through it. The existing tour presents the real product shell with clearly labeled sample data. This repository documents those surfaces; it does not rebuild them.
+
+![Agent Forge public website](assets/screenshots/website-hero.png)
 
 ![Agent Forge interactive product tour](assets/screenshots/product-tour.png)
 
@@ -100,7 +117,7 @@ The detailed public map is in [docs/CODEBASE_MAP.md](docs/CODEBASE_MAP.md). It d
 
 ## Public/private boundary
 
-This repository does not publish production source, Git history, prompts, routing weights, thresholds, credentials, provider inventories, operational configuration, private sessions, evaluation data, or authenticated application bundles.
+This repository does not publish production source, Git history, prompts, routing weights, thresholds, credentials, provider inventories, operational configuration, private sessions, evaluation data, or authenticated application bundles. The included public core is new, provider-neutral reference code with documented substitutions.
 
 It publishes system responsibilities, authentic public visuals, codebase structure, engineering decisions, and inspectable repository automation. The enforceable rules are documented in [docs/PUBLIC_BOUNDARY.md](docs/PUBLIC_BOUNDARY.md).
 
@@ -109,6 +126,7 @@ It publishes system responsibilities, authentic public visuals, codebase structu
 | Architecture and responsibility maps | Production application source and history |
 | Authentic public website captures | Authenticated application bundles |
 | Curated engineering decisions | Prompts, policies, weights, and thresholds |
+| Provider-neutral reference core and tests | Proprietary policies, adapters, and production source |
 | Repository checks and security controls | Credentials, configuration, and runtime data |
 | Clearly labeled structural counts | Customer, session, telemetry, and evaluation data |
 
@@ -120,7 +138,7 @@ It publishes system responsibilities, authentic public visuals, codebase structu
 Every pull request runs:
 
 ```text
-repository tests -> public-boundary scan -> link validation -> dossier build -> CodeQL
+repository tests -> public-core tests -> public-boundary scan -> link validation -> dossier build -> CodeQL
 ```
 
 The repository also uses dependency review, Dependabot, protected `main`, code-owner review, secret scanning, push protection, build artifacts, issue forms, pull-request templates, and tagged releases.
@@ -134,7 +152,9 @@ Repository metadata and documentation point to the existing website and tour. Gi
 
 ## Brand continuity
 
-The public repository follows the established Agent Forge identity: dark, sharp, fire palette, alive but controlled. The official mark, real website imagery, product language, and **Burning Within** signature come from the existing brand system. See the curated [brand identity notes](docs/BRAND_IDENTITY.md) for the public-safe implementation rules.
+The public repository follows the established Agent Forge identity: dark, sharp, fire palette, alive but controlled. The triangular flame/A mark, real website imagery, product language, and **Burning Within** signature come from the existing brand system.
+
+The complete public SVG export set includes the primary stacked and horizontal lockups, four icon sizes, static, thinking, topbar, watermark, and monochrome variants. Browse or download every variant from the [official logo asset index](assets/brand/README.md), and see the curated [brand identity notes](docs/BRAND_IDENTITY.md) for usage rules.
 
 ## Author and ownership
 

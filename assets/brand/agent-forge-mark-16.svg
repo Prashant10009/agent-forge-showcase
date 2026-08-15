@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="14" viewBox="0 0 88 76" role="img" aria-labelledby="title">
+  <title id="title">Agent Forge 16 pixel mark</title>
+  <style>.mark{transform-origin:44px 42px;animation:spin 3s linear infinite,fire 2.4s ease-in-out infinite alternate}@keyframes spin{to{transform:rotate(360deg)}}@keyframes fire{0%{fill:#ff2200}25%{fill:#ff6600}50%{fill:#ff4500}75%{fill:#cc1100}100%{fill:#ff2200}}@media(prefers-reduced-motion:reduce){.mark{animation:none;fill:#ff4500}}</style>
+  <path class="mark" d="M44,8 L84,76 L68,76 L68,65 L20,65 L20,76 L4,76 Z M20,60 L68,60 L68,57 L20,57 Z" fill="#ff4500" fill-rule="evenodd"/>
+</svg>
