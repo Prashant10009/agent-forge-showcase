@@ -1,94 +1,60 @@
 # Architecture
 
-Agent Forge treats AI execution as a governed system rather than a single model call. This document describes the public architecture at the level needed to evaluate design judgment while withholding production source, policies, prompts, routing weights, infrastructure, and data.
+Agent Forge is a private AI workspace that decides where work should run, coordinates the work, preserves context, and records enough evidence for an operator to understand what happened.
 
-## Design goals
-
-1. Route each task to an appropriate runtime instead of binding the product to one provider.
-2. Make consequential tool use visible and interruptible.
-3. Keep state boundaries explicit: request, session, project, outcome, and durable memory are different concerns.
-4. Produce evidence for why an action occurred and whether the result was verified.
-5. Keep runtime adapters replaceable and degrade predictably when a provider is unavailable.
-
-## Four layers
-
-### 1. Experience
-
-The experience layer turns system state into useful product surfaces:
-
-- mission-oriented chat;
-- execution graph and trace;
-- action manifest and approval controls;
-- project and file context;
-- structured-data workspace concepts;
-- runtime and health visibility.
-
-Its responsibility is not merely presentation. It preserves the distinction between proposed work, approved work, running work, and verified work.
-
-### 2. Orchestration
-
-The orchestration layer coordinates a request through bounded stages:
-
-```text
-intake → context → planning → routing → tool dispatch → post-processing → verification
-```
-
-Each stage accepts and returns an explicit state contract. Production contains richer policy and recovery behavior; the public edition demonstrates only the stage relationships.
-
-### 3. Intelligence and governance
-
-This layer answers two different questions:
-
-- **Intelligence:** Which runtime or specialist best fits the task under current constraints?
-- **Governance:** What is the system allowed to do, and what needs human approval?
-
-Keeping those questions separate prevents model confidence from becoming execution authority. A strong route can still be stopped at a policy boundary.
-
-Public concepts include:
-
-- task-shape and capability fit;
-- runtime-health awareness;
-- outcome signals;
-- explicit approval manifests;
-- multi-perspective review;
-- durable memory boundaries.
-
-The production weights, thresholds, prompts, and adjudication policies are not public.
-
-### 4. Replaceable runtimes
-
-Provider clients, local runtimes, remote runtimes, protocol tools, vector stores, and telemetry backends sit behind adapters. This isolates the product model from provider churn and enables health-aware fallback.
-
-The public repository names the interfaces and relationships but includes no production credentials, endpoint inventory, quota data, or operational configuration.
+This document describes system responsibilities already presented by the public website. It does not reproduce private implementation, prompts, provider configuration, or routing policy.
 
 ## Request lifecycle
 
-The synthetic mission in this repository illustrates the lifecycle:
+```mermaid
+flowchart TD
+  A["Authenticated request"] --> B["Request and session intake"]
+  B --> C["Project, checkpoint, and memory context"]
+  C --> D["Compatible candidate discovery"]
+  D --> E["Capability, health, limits, latency, and evidence ranking"]
+  E --> F{"Complexity or risk requires coordination?"}
+  F -- "yes" --> G["Trimurti review, agents, and scoped tools"]
+  F -- "no" --> H["Selected runtime"]
+  G --> H
+  H --> I["Streaming result and compatible fallback handling"]
+  I --> J["Trace, review state, approval, and user rating"]
+  J -. "bounded routing evidence" .-> E
+```
 
-1. **Intent intake** assigns a public demo task shape.
-2. **Context assembly** attaches four synthetic signals.
-3. **Dynamic route** selects a fictional runtime alias and explains the fit.
-4. **Tool scope** creates a read/propose-only manifest against demo paths.
-5. **Approval boundary** requires a human choice.
-6. **Verification** records the terminal result.
+Not every request invokes every subsystem. Straightforward work can take a shorter path; complex or consequential work can add review, agent decomposition, tools, and approval boundaries.
 
-The demo is deliberately deterministic so reviewers can test state transitions without paid APIs or network variability.
+## Responsibility layers
 
-## Reliability posture
+### Experience
 
-Agent Forge's public architecture reflects several production-grade principles:
+The browser product connects chat, projects, files, runtimes, Data Grid, traces, agents, approvals, and settings. The interface distinguishes proposed, running, blocked, failed, and completed work.
 
-- an edge/proxy health response is not treated as proof that the application is serving;
-- terminal states are explicit and cannot be inferred from silence;
-- blocking provider operations require bounded time and cancellation behavior;
-- write authority is not granted by model selection;
-- verification attaches to the artifact and behavior that matter, not only to a generated report;
-- observability records stage transitions, not just final text.
+### Orchestration
 
-## Security and privacy boundary
+The orchestration layer converts a request into staged work. It assembles context, evaluates compatible execution paths, coordinates subtasks, scopes tools, handles fallbacks, and returns structured state to the interface.
 
-This diagram is the complete public dependency model:
+### Intelligence and review
 
-![Agent Forge public architecture](../assets/diagrams/architecture.svg)
+Routing combines declared capability with live availability and accumulated evidence. Karma represents outcome evidence; Trimurti adds multi-perspective review for selected work; Rta signals contribute additional system context. These concepts are public, while their private weights, prompts, and thresholds are not.
 
-Anything not represented here should be assumed private. See [PUBLIC_BOUNDARY.md](PUBLIC_BOUNDARY.md) and [THREAT_MODEL.md](THREAT_MODEL.md).
+### State and retrieval
+
+Sessions, projects, checkpoints, approvals, traces, ratings, and routing evidence have different lifecycles. Durable storage and vector retrieval are optional dependencies with explicit health and authorization boundaries.
+
+### Runtime and tools
+
+Provider adapters, optional compatible runtimes, agent tools, and data connections sit behind controlled interfaces. Compatibility and health are checked before dispatch; runtime selection never grants action authority by itself.
+
+## Production principles
+
+- Treat edge health, application health, provider health, and task success as different signals.
+- Keep terminal states explicit; silence is not success.
+- Bound provider operations with timeouts, cancellation, and compatible fallbacks.
+- Separate model confidence from permission to act.
+- Store traces and feedback as evidence, not as infallible truth.
+- Keep secrets and provider credentials server-side.
+- Preserve project and user authorization across every retrieval and tool boundary.
+
+## Public limit
+
+The architecture is intentionally precise about responsibilities and intentionally silent about exploitable or proprietary implementation details. See [PUBLIC_BOUNDARY.md](PUBLIC_BOUNDARY.md) and [THREAT_MODEL.md](THREAT_MODEL.md).

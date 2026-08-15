@@ -2,29 +2,31 @@
 
 ## Assets to protect
 
-- private production source and Git history;
-- proprietary routing and governance policy;
-- prompts, agent instructions, and evaluation material;
-- credentials, provider inventory, quotas, and infrastructure details;
-- founder, user, customer, and runtime data;
-- the accuracy of public claims.
+- private production source and history;
+- prompts, agent instructions, routing policy, evaluation material, and operational knowledge;
+- credentials, provider configuration, quotas, endpoints, and infrastructure details;
+- private user, project, session, trace, upload, and runtime data;
+- the consistency of the Agent Forge brand and the accuracy of public claims.
 
-## Threats and mitigations
+## Threats and controls
 
-| Threat | Mitigation |
+| Threat | Control |
 |---|---|
-| Private history is exposed by repurposing an old repository | Create a new repository with one fresh root commit |
-| Runtime data is copied with source | Allowlist-only construction; forbidden-path check |
-| Secrets appear in examples | Placeholder-free synthetic demo; secret-pattern scan |
-| Screenshots reveal real sessions or identities | Capture only the standalone synthetic site; inspect every image |
-| High-level documentation reveals implementation policy | Describe responsibilities and boundaries, not weights, prompts, or algorithms |
-| Green proxy health is misrepresented as application health | Document and test application-level verification separately |
-| Public demo sends data to third parties | No analytics, external fonts, provider calls, forms, or remote APIs |
-| Dependencies introduce supply-chain risk | Zero runtime dependencies; Dependabot and CodeQL for repository tooling |
-| Marketing claims drift beyond evidence | Link claims to public code, tests, or clearly label them architectural |
+| A public repo is created from private Git history | Fresh repository with unrelated history |
+| A second UI drifts from the real product | No-duplication test; repository links use the canonical website |
+| Production code is copied as a “sample” | Documentation and responsibility maps only |
+| Live tour source exposes authenticated API behavior | Commit screenshots and links, never the application bundle |
+| Screenshots reveal private state | Capture only unauthenticated website and labeled sample-data tour surfaces |
+| Credentials or local paths enter prose or examples | Boundary scanner, GitHub secret scanning, and push protection |
+| Architecture detail reveals proprietary policy | Describe responsibilities and boundaries; withhold weights, thresholds, prompts, and algorithms |
+| Marketing statements outrun evidence | Use public links, repository evidence, or dated read-only snapshots |
+| Dependencies become stale or unsafe | Dependabot, dependency review, CodeQL, and protected branches |
+| Brand fragments across public surfaces | Official mark and documented identity; one canonical product URL |
 
-## Out of scope
+## Trust boundaries
 
-This repository is not a deployable production service and does not accept untrusted data, authenticate users, store documents, or call model providers.
+This repository does not authenticate users, accept product data, connect to model providers, or call production APIs. Links cross into the separately operated Agent Forge website and application, each with its own runtime and security boundary.
 
-Security reports about this showcase should follow [SECURITY.md](../SECURITY.md). Reports about private Agent Forge services should not include sensitive evidence in a public issue.
+## Review cadence
+
+Every content change passes automated checks and code-owner review. Screenshots, codebase counts, architecture claims, and public links should be refreshed together when the product materially changes.

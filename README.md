@@ -1,128 +1,116 @@
 <div align="center">
-  <img src="assets/brand/agent-forge-mark.svg" width="92" alt="Agent Forge">
+  <img src="assets/brand/agent_forge_logo_v3.svg" width="104" alt="Agent Forge logo">
 
   # Agent Forge
 
-  ### Governed multi-model orchestration—from intent to verified result.
+  ### Burning Within
 
-  **A curated, synthetic portfolio edition of a private production system.**
+  **Engineering dossier for a private, production multi-model AI workspace.**
 
   [![CI](https://github.com/Prashant10009/agent-forge-showcase/actions/workflows/ci.yml/badge.svg)](https://github.com/Prashant10009/agent-forge-showcase/actions/workflows/ci.yml)
   [![CodeQL](https://github.com/Prashant10009/agent-forge-showcase/actions/workflows/codeql.yml/badge.svg)](https://github.com/Prashant10009/agent-forge-showcase/actions/workflows/codeql.yml)
-  [![Pages](https://github.com/Prashant10009/agent-forge-showcase/actions/workflows/pages.yml/badge.svg)](https://prashant10009.github.io/agent-forge-showcase/)
-  [![License: MIT](https://img.shields.io/badge/License-MIT-d69b3d.svg)](LICENSE)
+  [![Website](https://img.shields.io/badge/Website-myagentforge.ai-ff4500)](https://myagentforge.ai/)
 
-  [**Explore the interactive demo**](https://prashant10009.github.io/agent-forge-showcase/) · [Read the architecture](docs/ARCHITECTURE.md) · [Inspect the public boundary](docs/PUBLIC_BOUNDARY.md)
+  [**Website**](https://myagentforge.ai/) · [**Existing product tour**](https://myagentforge.ai/tour_factual.html#demo) · [Architecture](docs/ARCHITECTURE.md) · [Codebase map](docs/CODEBASE_MAP.md) · [Brand](docs/BRAND_IDENTITY.md)
 </div>
 
-![Agent Forge synthetic orchestration cockpit](assets/screenshots/hero-console.png)
+![Agent Forge website hero](assets/screenshots/website-hero.png)
 
-## What this repository demonstrates
+## What this repository is
 
-Agent Forge is designed as a control plane for AI work: it interprets intent, assembles context, selects a fitting runtime, scopes tool use, pauses at policy boundaries, and records enough evidence to verify the result.
+This is the public GitHub representation of Agent Forge: a place to understand the product, architecture, private codebase shape, engineering decisions, verification discipline, and publication boundary.
 
-This repository showcases the system relationships and product judgment without publishing the production implementation.
+The website and interactive tour already exist. This repository links to and documents those real surfaces; it does not rebuild them or publish a second interface.
 
-| System | What you can evaluate here |
+| Evaluate | Evidence here |
 |---|---|
-| **Routing intelligence** | A task-aware, replaceable route abstraction with a visible selection reason |
-| **Governed execution** | Scoped manifests and an explicit human approval boundary before simulated writes |
-| **Durable context** | Separation of mission, route, tool, policy, and verification state |
-| **Observability** | Stage-by-stage traces with state, timing, and a verification contract |
+| Product judgment | Real website and tour captures, workflows, positioning, and operator controls |
+| System design | Request lifecycle, package map, routing, review, tools, state, and observability |
+| Engineering depth | Verified codebase snapshot, architecture notes, threat model, and decision records |
+| Delivery discipline | CI, CodeQL, dependency review, Dependabot, protected branches, and releases |
+| Publication judgment | Explicit public/private boundary with automated leak scanning |
 
-## Three-minute reviewer path
+## Ten-minute reviewer path
 
-1. Open the [interactive product tour](https://prashant10009.github.io/agent-forge-showcase/).
-2. Run the synthetic mission and approve or reject its manifest.
-3. Read the [architecture narrative](docs/ARCHITECTURE.md).
-4. Inspect the [deterministic demo engine](demo/engine.mjs), [tests](tests/demo.test.mjs), and [CI boundary gate](scripts/check-public-boundary.mjs).
+1. Open [myagentforge.ai](https://myagentforge.ai/).
+2. Walk the existing [interactive tour](https://myagentforge.ai/tour_factual.html#demo).
+3. Read the [architecture](docs/ARCHITECTURE.md) and [codebase map](docs/CODEBASE_MAP.md).
+4. Inspect the [public-boundary gate](scripts/check-public-boundary.mjs) and [repository tests](tests/repository.test.mjs).
+5. Review Actions, security configuration, releases, issues, and dependency updates.
 
-## System map
+## Product in one flow
 
-![Agent Forge four-layer public architecture](assets/diagrams/architecture.svg)
-
-The public model has four layers:
-
-1. **Experience** — chat, mission graph, approvals, Data Grid concepts, traces, and health.
-2. **Orchestration** — intake, context, planning, tool dispatch, and verification.
-3. **Intelligence + governance** — dynamic routing, policy boundaries, outcome learning, council review, and memory.
-4. **Replaceable runtimes** — model adapters, tool protocols, durable memory, and telemetry.
-
-The production algorithms, routing weights, prompts, infrastructure, and data remain private by design.
-
-## Interactive proof, not a marketing mock
-
-The demo is deterministic and uses no external provider calls. It exposes a real UI state machine for:
-
-```text
-intent → context → route → scoped tools → approval → verification
+```mermaid
+flowchart LR
+  A["Request + session"] --> B["Context + memory"]
+  B --> C["Capability and health-aware routing"]
+  C --> D["Review, agents, and tools when needed"]
+  D --> E["Selected compatible runtime"]
+  E --> F["Trace, approval, result, and feedback"]
+  F -. "routing evidence" .-> C
 ```
 
-- Run a synthetic codebase-audit mission.
-- Watch the execution trace advance.
-- Inspect the proposed action manifest.
-- Approve or reject at the governance boundary.
-- See the terminal result reflect that decision.
+Runtime selection, execution authority, and result verification remain separate concerns.
 
-![Agent Forge public system page](assets/screenshots/system-page.png)
+## Existing product surfaces
+
+The public website explains why Agent Forge exists and how work moves through it. The existing tour presents the real product shell using clearly labeled sample data.
+
+![Agent Forge interactive product tour](assets/screenshots/product-tour.png)
 
 <details>
-  <summary><strong>Responsive interface proof</strong></summary>
+  <summary><strong>Website orchestration comparison</strong></summary>
   <br>
-  <img src="assets/screenshots/mobile-tour.png" width="360" alt="Agent Forge public showcase on a mobile viewport">
+  <img src="assets/screenshots/website-home.png" alt="Agent Forge website orchestration comparison">
 </details>
 
-## Run locally
+## Private codebase snapshot
 
-Requirements: Node.js 20 or newer. No API keys or production services are needed.
+Read-only inventory captured on 2026-08-15:
 
-```bash
-git clone https://github.com/Prashant10009/agent-forge-showcase.git
-cd agent-forge-showcase
-npm install
-npm run check
-npm run serve
-```
+| Measure | Count |
+|---|---:|
+| Tracked files | 523 |
+| Source files | 394 |
+| Python modules | 341 |
+| JavaScript / TypeScript modules | 41 |
+| HTML / CSS surfaces | 12 |
+| Test files | 136 |
 
-Then open `http://localhost:4173/site/`.
+Responsibility groups include:
 
-## Engineering decisions worth inspecting
-
-- [Architecture](docs/ARCHITECTURE.md) — boundaries, lifecycle, and system responsibilities.
-- [Engineering notes](docs/ENGINEERING_NOTES.md) — why the public edition is documentation-first and deterministic.
-- [Threat model](docs/THREAT_MODEL.md) — publication and demo risks with mitigations.
-- [Public boundary](docs/PUBLIC_BOUNDARY.md) — what is intentionally included and excluded.
-- [Roadmap](docs/ROADMAP.md) — portfolio-edition improvements without production scope expansion.
-- [CI](.github/workflows/ci.yml) — tests, link checks, and repository-content policy.
-- [CodeQL](.github/workflows/codeql.yml) — static security analysis for the public JavaScript.
+- **Experience:** API, chat, projects, files, Data Grid, and browser product surfaces.
+- **Orchestration:** pipelines, routing, agents, architecture work, and tool dispatch.
+- **Intelligence:** Karma evidence, Trimurti review, Rta signals, evaluation, and scoring.
+- **State:** database, storage, memory, vector retrieval, sessions, and checkpoints.
+- **Runtimes:** model clients, provider integrations, optional user runtimes, vision, and fine-tuning support.
+- **Trust:** safety boundaries, permissions, approvals, traces, and observability.
 
 ## Public/private boundary
 
-| Included | Private by design |
-|---|---|
-| Original synthetic interface | Production application source |
-| High-level system architecture | Routing weights and proprietary policies |
-| Deterministic demo engine | Private prompts and agent instructions |
-| Synthetic fixtures and traces | Customer, founder, runtime, or telemetry data |
-| Verification and publication checks | Infrastructure details and operational runbooks |
+This repository does not publish production source, Git history, prompts, routing weights, thresholds, credentials, provider inventories, operational configuration, private sessions, evaluation data, or authenticated application bundles.
 
-See [PUBLIC_BOUNDARY.md](docs/PUBLIC_BOUNDARY.md) for the enforceable rules.
+It publishes system responsibilities, authentic public visuals, codebase structure, engineering decisions, and inspectable repository automation. See [PUBLIC_BOUNDARY.md](docs/PUBLIC_BOUNDARY.md).
 
-## Repository quality
+## Repository automation
 
-The public repository uses:
+Every pull request runs:
 
-- GitHub Actions for test, link, and public-boundary checks;
-- CodeQL and dependency review;
-- Dependabot for npm and Actions;
-- GitHub Pages for the static tour;
-- issue forms, pull-request controls, CODEOWNERS, security policy, and releases;
-- a fresh Git history unrelated to the private production repositories.
+```text
+repository tests → public-boundary scan → link validation → dossier build → CodeQL
+```
 
-## Author
+The repository also uses dependency review, Dependabot, protected `main`, code-owner review, secret scanning, push protection, build artifacts, and tagged releases.
 
-Built and architected by **Prashant Dimri** as part of the Agent Forge product program. AI systems supported design review, testing, and implementation; product ownership and publication decisions remain human-owned.
+```bash
+npm ci
+npm run check
+```
 
-## License
+Repository metadata and documentation point to the existing website and tour; no second public site is deployed from this repository.
 
-The content and code in **this public showcase repository only** are available under the [MIT License](LICENSE). The license does not apply to any private Agent Forge repository, service, model policy, dataset, prompt library, or production implementation.
+## Author and ownership
+
+Agent Forge is built and architected by **Prashant Dimri**. AI systems support research, implementation, review, and testing; product direction and publication decisions remain human-owned.
+
+Repository code and documentation are covered by [LICENSE](LICENSE). The Agent Forge name, logo, and brand identity are covered by [TRADEMARKS.md](TRADEMARKS.md); no trademark rights are granted by the software license.

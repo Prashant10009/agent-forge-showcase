@@ -1,29 +1,29 @@
 # Contributing
 
-Thanks for helping improve the Agent Forge public showcase.
+Thanks for helping improve the Agent Forge public engineering dossier.
 
 ## Start here
 
 1. Read [PUBLIC_BOUNDARY.md](docs/PUBLIC_BOUNDARY.md).
 2. Create a branch from `main`.
-3. Keep fixtures synthetic and the site dependency-free unless a dependency has a clear, reviewed benefit.
+3. Keep evidence public, sanitized, and traceable to an approved source.
 4. Run `npm run check`.
 5. Complete every item in the pull-request public-boundary checklist.
 
-## Design contributions
+## Documentation and visual contributions
 
-- Preserve the graphite/amber visual system.
-- Keep one obvious primary action per section.
-- Use motion only to communicate hierarchy, state, or flow.
-- Test keyboard access, mobile layout, and reduced-motion mode.
-- Do not use real production screenshots or account data.
+- Follow [BRAND_IDENTITY.md](docs/BRAND_IDENTITY.md); do not invent a repository-only identity.
+- Use screenshots only from the public website or its labeled sample-data tour.
+- Never capture an authenticated account, private session, project, trace, or user record.
+- Link to the existing website and tour instead of rebuilding either surface.
+- Keep architecture claims public, verified, or explicitly dated as a snapshot.
 
 ## Code contributions
 
-- Prefer small, readable modules.
-- Keep the demo deterministic and offline-capable.
-- Add or update tests for state changes.
-- Do not add analytics, remote fonts, trackers, provider clients, or production endpoints.
+- Keep repository scripts small, dependency-light, and publication-focused.
+- Add or update tests for documentation structure and boundary rules.
+- Do not add product implementation, provider clients, authentication, API calls, analytics, or production endpoints.
+- Do not add a GitHub Pages mirror; repository links must use `myagentforge.ai`.
 
 ## Security
 

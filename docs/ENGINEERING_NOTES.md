@@ -1,38 +1,38 @@
 # Engineering Notes
 
-## Why the public edition is documentation-first
+## GitHub is the evidence surface
 
-Publishing a partial production tree creates two bad outcomes: accidental disclosure and a misleading, broken repository. This edition instead publishes original demo code, system relationships, safety boundaries, and testable product behavior.
+Agent Forge already has a website and an interactive tour. Recreating either inside this repository would split the brand, duplicate maintenance, and suggest a second product implementation.
 
-That choice gives reviewers useful signal:
+The repository therefore uses GitHub for what GitHub does best:
 
-- product architecture is legible;
-- execution state is interactive;
-- governance is visible;
-- testing and release discipline are inspectable;
-- proprietary implementation remains private.
+- durable architecture and codebase documentation;
+- inspectable change history and pull-request review;
+- automated public-boundary, link, build, and security checks;
+- issues, discussions, projects, releases, and dependency maintenance;
+- authentic screenshots that link reviewers to the canonical product.
 
-## Why the demo is deterministic
+## Evidence types
 
-A portfolio reviewer should not need provider accounts, API keys, local models, GPUs, databases, or a specific cloud environment. The demo engine maps a small set of synthetic task shapes to fictional runtime aliases and produces a stable trace.
+Public claims are supported by one of four evidence types:
 
-Determinism makes the interface easy to test and prevents fake network activity from being mistaken for product proof.
+1. an already-public website or tour surface;
+2. a read-only, point-in-time inventory of the private repository;
+3. an inspectable file or workflow in this public repository;
+4. an explicitly labeled architectural description that withholds implementation policy.
 
-## Why approval is modeled separately from routing
+## Why source is not partially copied
 
-Model selection answers who should reason about a task. It does not answer whether a proposed action is authorized. The UI therefore places the approval gate after route and tool scoping, and before the verified terminal result.
+Production modules depend on private configuration, prompts, provider integrations, persistence, authentication, and operational context. Publishing isolated files would create a misleading code sample while increasing disclosure risk. Responsibility maps and verified repository counts give reviewers useful engineering signal without presenting fragments as a runnable product.
 
-## Why the public checks inspect repository content
+## Why the repository does not deploy a website
 
-Conventional CI can be green while a repository leaks data. This project adds a separate public-boundary check that rejects unsafe path classes and credential-shaped strings. The check is intentionally conservative and is complemented by manual review.
+Repository metadata, README links, and screenshots send reviewers to the canonical website and existing tour. CI packages the engineering dossier as a release artifact; it does not deploy another landing page. This preserves one brand, one public product URL, and one tour.
 
-## Visual system
+## Why screenshots are committed
 
-The public experience preserves Agent Forge's visual DNA without copying production UI code:
+Recruiters should be able to understand the product directly from the README. Captures are taken only from public, unauthenticated surfaces and visually reviewed before commit. They are evidence of the existing product—not replacement mockups.
 
-- near-black, layered surfaces;
-- warm amber for energy, routing, and selected state;
-- mono typography for system metadata;
-- asymmetrical editorial composition;
-- motion only when it communicates state or flow;
-- reduced-motion support.
+## Why publication has its own CI gate
+
+Passing application tests does not prove a repository is safe to publish. The dedicated boundary scanner examines paths, text, binary allowlists, credential patterns, local endpoints, and accidental API wiring. Human review remains mandatory because context and screenshots cannot be judged reliably by pattern matching alone.

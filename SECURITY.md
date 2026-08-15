@@ -11,8 +11,8 @@ Use GitHub's private vulnerability reporting feature for this repository. Do not
 Include:
 
 - the affected public file or page;
-- reproduction steps using synthetic data;
+- reproduction steps that do not include private production data;
 - expected impact;
 - a suggested mitigation when available.
 
-This repository is a static synthetic showcase. It does not authenticate users, store submitted data, or connect to production Agent Forge services.
+This repository is a static engineering dossier. It does not authenticate users, store submitted data, reproduce the product UI, connect to production Agent Forge services, or deploy a second website.
