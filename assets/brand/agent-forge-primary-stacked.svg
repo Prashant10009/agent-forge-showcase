@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="320" viewBox="0 0 640 320" role="img" aria-labelledby="title desc">
+  <title id="title">Agent Forge primary stacked logo</title>
+  <desc id="desc">Animated triangular forge mark above the Agent Forge wordmark and AI Orchestration tagline.</desc>
+  <style>
+    .mark { transform-origin: 44px 42px; animation: spin 3s linear infinite, fire 2.4s ease-in-out infinite alternate; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes fire { 0% { fill:#ff2200; } 25% { fill:#ff6600; } 50% { fill:#ff4500; } 75% { fill:#cc1100; } 100% { fill:#ff2200; } }
+    @media (prefers-reduced-motion: reduce) { .mark { animation:none; fill:#ff4500; } }
+  </style>
+  <rect width="640" height="320" rx="20" fill="#070709"/>
+  <svg x="294" y="34" width="52" height="45" viewBox="0 0 88 76">
+    <path class="mark" d="M44,8 L84,76 L68,76 L68,65 L20,65 L20,76 L4,76 Z M20,60 L68,60 L68,57 L20,57 Z" fill="#ff4500" fill-rule="evenodd"/>
+  </svg>
+  <text x="320" y="116" text-anchor="middle" fill="#5a5a78" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="600" letter-spacing="12">AGENT</text>
+  <text x="320" y="188" text-anchor="middle" fill="#e2dede" font-family="Arial, Helvetica, sans-serif" font-size="66" font-weight="800" letter-spacing="12">FORGE</text>
+  <line x1="220" y1="220" x2="420" y2="220" stroke="#1f1f2e"/>
+  <text x="320" y="258" text-anchor="middle" fill="#5a5a78" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" letter-spacing="6">AI ORCHESTRATION</text>
+</svg>

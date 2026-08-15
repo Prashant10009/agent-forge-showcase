@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://myagentforge.ai/">
-    <img src="assets/screenshots/website-hero.png" width="100%" alt="Agent Forge - Burning Within">
+    <img src="assets/brand/agent-forge-primary-stacked.svg" width="640" alt="Agent Forge - AI Orchestration">
   </a>
 </p>
 
@@ -65,6 +65,8 @@ Runtime selection, execution authority, and result verification remain separate 
 ## The existing product
 
 The public website explains why Agent Forge exists and how work moves through it. The existing tour presents the real product shell with clearly labeled sample data. This repository documents those surfaces; it does not rebuild them.
+
+![Agent Forge public website](assets/screenshots/website-hero.png)
 
 ![Agent Forge interactive product tour](assets/screenshots/product-tour.png)
 
@@ -134,7 +136,9 @@ Repository metadata and documentation point to the existing website and tour. Gi
 
 ## Brand continuity
 
-The public repository follows the established Agent Forge identity: dark, sharp, fire palette, alive but controlled. The official mark, real website imagery, product language, and **Burning Within** signature come from the existing brand system. See the curated [brand identity notes](docs/BRAND_IDENTITY.md) for the public-safe implementation rules.
+The public repository follows the established Agent Forge identity: dark, sharp, fire palette, alive but controlled. The triangular flame/A mark, real website imagery, product language, and **Burning Within** signature come from the existing brand system.
+
+The complete public SVG export set includes the primary stacked and horizontal lockups, four icon sizes, static, thinking, topbar, watermark, and monochrome variants. Browse or download every variant from the [official logo asset index](assets/brand/README.md), and see the curated [brand identity notes](docs/BRAND_IDENTITY.md) for usage rules.
 
 ## Author and ownership
 

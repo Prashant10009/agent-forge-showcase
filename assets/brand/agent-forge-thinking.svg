@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="104" viewBox="0 0 420 104" role="img" aria-labelledby="title desc">
+  <title id="title">Agent Forge thinking state</title>
+  <desc id="desc">Animated Agent Forge mark with a pulsing three-dot thinking indicator.</desc>
+  <style>
+    .mark{transform-origin:44px 42px;animation:spin 3s linear infinite,fire 2.4s ease-in-out infinite alternate}
+    .dot{animation:pulse 1.4s ease-in-out infinite}.dot:nth-of-type(2){animation-delay:.2s}.dot:nth-of-type(3){animation-delay:.4s}
+    @keyframes spin{to{transform:rotate(360deg)}}@keyframes fire{0%{fill:#ff2200}25%{fill:#ff6600}50%{fill:#ff4500}75%{fill:#cc1100}100%{fill:#ff2200}}@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+    @media(prefers-reduced-motion:reduce){.mark,.dot{animation:none}.mark{fill:#ff4500}}
+  </style>
+  <rect width="420" height="104" rx="14" fill="#111118"/>
+  <svg x="28" y="44" width="18" height="16" viewBox="0 0 88 76">
+    <path class="mark" d="M44,8 L84,76 L68,76 L68,65 L20,65 L20,76 L4,76 Z M20,60 L68,60 L68,57 L20,57 Z" fill="#ff4500" fill-rule="evenodd"/>
+  </svg>
+  <text x="66" y="61" fill="#9a9ab0" font-family="Arial, Helvetica, sans-serif" font-size="16">Thinking</text>
+  <circle class="dot" cx="147" cy="56" r="3" fill="#5a5a78"/>
+  <circle class="dot" cx="159" cy="56" r="3" fill="#5a5a78"/>
+  <circle class="dot" cx="171" cy="56" r="3" fill="#5a5a78"/>
+</svg>
