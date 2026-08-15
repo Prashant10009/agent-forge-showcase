@@ -1,5 +1,5 @@
-name: Showcase bug
-description: Report a reproducible problem in the public demo, documentation, or checks.
+name: Dossier bug
+description: Report a reproducible problem in the public documentation, links, assets, or checks.
 title: "[Bug]: "
 labels: [bug]
 body:
@@ -10,7 +10,7 @@ body:
     id: behavior
     attributes:
       label: What happened?
-      description: Describe the public showcase behavior only.
+      description: Describe the public repository behavior only.
     validations:
       required: true
   - type: textarea

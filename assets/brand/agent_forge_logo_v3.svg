@@ -1,0 +1,33 @@
+<svg width="100%" viewBox="0 0 680 360" xmlns="http://www.w3.org/2000/svg">
+<title style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">Agent Forge logo — clean, flat, sharp</title>
+<desc style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">Minimal Agent Forge brand mark. A precise triangle with integrated crossbar forming the letter A, spinning with the brand fire color cycle.</desc>
+
+
+
+<!-- Triangle A mark — crossbar is a cutout built into the shape so everything rotates together -->
+<g style="fill:rgb(255, 75, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <!-- Outer triangle -->
+  <polygon points="340,52 296,128 384,128" fill="#ff4500" style="fill:rgb(255, 69, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <!-- Crossbar cutout — matches background so it reads as a gap -->
+  <rect x="312" y="109" width="56" height="5" fill="transparent" style="fill:rgba(0, 0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <!-- Re-draw the triangle as a path with the crossbar gap built in -->
+</g>
+
+<!-- Redone: single path approach for the A with integrated crossbar -->
+<g style="transform-origin:340px 120px;;fill:rgb(255, 75, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <path d="&#10;    M340,52 L384,128 L368,128 L368,117 L312,117 L312,128 L296,128 Z&#10;    M312,112 L368,112 L368,109 L312,109 Z&#10;  " fill="#ff4500" fill-rule="evenodd" style="fill:rgb(255, 69, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+</g>
+
+<!-- AGENT -->
+<text x="340" y="195" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',sans-serif" font-size="13" font-weight="600" letter-spacing="8" fill="#5a5a78" style="fill:rgb(90, 90, 120);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif;font-size:13px;font-weight:600;text-anchor:middle;dominant-baseline:auto">AGENT</text>
+
+<!-- FORGE -->
+<text x="340" y="248" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',sans-serif" font-size="52" font-weight="800" letter-spacing="10" fill="#e2dede" style="fill:rgb(226, 222, 222);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif;font-size:52px;font-weight:800;text-anchor:middle;dominant-baseline:auto">FORGE</text>
+
+<!-- Thin rule -->
+<line x1="260" y1="270" x2="420" y2="270" stroke="#1f1f2e" stroke-width="1" style="fill:rgb(0, 0, 0);stroke:rgb(31, 31, 46);color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+<!-- Tagline -->
+<text x="340" y="298" text-anchor="middle" font-family="system-ui,-apple-system,'Segoe UI',sans-serif" font-size="10" font-weight="600" letter-spacing="4" fill="#5a5a78" style="fill:rgb(90, 90, 120);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif;font-size:10px;font-weight:600;text-anchor:middle;dominant-baseline:auto">AI ORCHESTRATION</text>
+
+</svg>

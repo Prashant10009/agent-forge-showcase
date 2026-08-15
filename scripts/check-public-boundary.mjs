@@ -7,6 +7,8 @@ const violations = [];
 
 const forbiddenPathPatterns = [
   /(^|\/)(data|logs?|uploads?|chroma_db|builder_logs)(\/|$)/i,
+  /(^|\/)(demo|site|website)(\/|$)/i,
+  /(^|\/)(config|prompts?|private|production)(\/|$)/i,
   /(^|\/)(\.env(?!\.example$)|\.local_password)$/i,
   /\.(bak|db|docx|jsonl|pem|pfx|sqlite\d*|zip)$/i,
   /(^|\/)(sonnet|claude|codex)[_-]?handoff/i,
@@ -16,6 +18,10 @@ const forbiddenPathPatterns = [
 const forbiddenContentPatterns = [
   { name: "private production repository", pattern: /agent-forge-production/i },
   { name: "Windows user/workspace path", pattern: /[A-Z]:\\(?:Users|agent-forge)(?:\\|$)/i },
+  { name: "personal email address", pattern: /dimriprash@gmail\.com/i },
+  { name: "embedded production API call", pattern: /fetch\s*\(\s*["']\/api\//i },
+  { name: "embedded bearer-token wiring", pattern: /Authorization["']?\s*:\s*["']Bearer/i },
+  { name: "local service endpoint", pattern: /https?:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?/i },
   { name: "MongoDB credential URI", pattern: /mongodb(?:\+srv)?:\/\/[^\s"']+:[^\s"']+@/i },
   { name: "private key block", pattern: /-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/ },
   { name: "OpenAI-style secret", pattern: /\bsk-[A-Za-z0-9_-]{20,}\b/ },

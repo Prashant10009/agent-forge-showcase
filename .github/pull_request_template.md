@@ -1,16 +1,17 @@
 ## What changed
 
-Describe the public-facing change and why it belongs in the showcase.
+Describe the public-facing change and why it belongs in the engineering dossier.
 
 ## Evidence
 
 - [ ] `npm run check` passes.
-- [ ] Desktop and mobile behavior were reviewed when UI changed.
 - [ ] Links and screenshots were inspected.
+- [ ] Visuals came only from the existing public website or labeled sample-data tour.
 
 ## Public-boundary review
 
 - [ ] No production source, prompts, routing policy, infrastructure details, logs, handoffs, or runtime data.
 - [ ] No real user, customer, provider, account, or credential information.
-- [ ] All fixtures and screenshots are synthetic and visibly labeled where appropriate.
+- [ ] No duplicate website, tour, or product implementation was introduced.
+- [ ] Screenshots contain no authenticated or private state.
 - [ ] Any new binary asset is allowlisted and manually inspected.

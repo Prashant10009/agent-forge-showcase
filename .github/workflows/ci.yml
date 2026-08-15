@@ -28,7 +28,7 @@ jobs:
       - run: npm run check
       - uses: actions/upload-artifact@v4
         with:
-          name: github-pages-preview
+          name: engineering-dossier-preview
           path: dist
           if-no-files-found: error
           retention-days: 7

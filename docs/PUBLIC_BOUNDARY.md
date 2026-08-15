@@ -1,47 +1,57 @@
 # Public Boundary
 
-This repository is a curated portfolio edition, not a mirror, fork, export, or deployment artifact of Agent Forge production.
+This repository is an engineering dossier, not a source release or parallel implementation.
 
-## Allowed content
+## Included
 
-- Original public-showcase HTML, CSS, JavaScript, SVG, and documentation.
-- Synthetic fixtures with explicit notices.
-- High-level architecture and interface relationships.
-- Generic reliability and governance patterns.
-- Tests and CI checks written specifically for this repository.
-- Brand assets created specifically for the public showcase.
+- product positioning already published at `myagentforge.ai`;
+- authentic captures of the public website and labeled interactive tour;
+- the official Agent Forge logo asset;
+- high-level architecture and responsibility maps;
+- point-in-time codebase counts and package-group descriptions;
+- publication tests, link checks, leak scanning, GitHub workflows, and release metadata;
+- contribution, security, privacy, terms, and trademark notices for this repository.
 
-## Forbidden content
+## Private by design
 
-- Files copied from private source trees unless independently reviewed and recorded as an approved public brand asset.
-- Production application code or implementation-specific algorithms.
-- Routing weights, thresholds, provider scoring, proprietary prompts, agent instructions, or evaluation answers.
-- Secrets, credential-shaped values, live endpoints, account identifiers, emails, local user paths, hostnames, or infrastructure inventories.
-- Chat history, builder logs, handoffs, incident records, telemetry, database files, backups, uploads, or caches.
-- Customer, carrier, driver, vehicle, claim, loss-run, underwriting, financial, or personal data.
-- Screenshots containing real sessions, users, documents, quotas, provider identities, or private project names.
+- production application source and Git history;
+- authenticated application bundles and API wiring;
+- prompts, agent instructions, routing weights, thresholds, and policy logic;
+- credentials, provider inventories, quotas, internal endpoints, and deployment configuration;
+- database schemas, private sessions, projects, traces, uploads, logs, and evaluation data;
+- operational runbooks, incident evidence, and internal handoff documents.
 
-## Synthetic data rules
+## No duplication rule
 
-1. Every structured fixture must identify itself as synthetic.
-2. Paths use `/workspace/sample/` or similarly fictional namespaces.
-3. Runtime names are functional aliases such as `reasoning-core`, not live provider/model inventory.
-4. Timings are illustrative and are not presented as benchmarks.
-5. Underwriting or structured-document demonstrations must visibly say `Synthetic demo data` and must not imply that a regulator supplied private records.
+The public repository must not contain a `site`, `website`, or `demo` implementation. The existing website and tour remain the product surfaces, and repository metadata links directly to them.
+
+## Visual provenance
+
+Committed screenshots must meet all of these conditions:
+
+1. captured from the public website or its explicitly labeled sample-data tour;
+2. contain no authenticated user session, private project, personal record, or production trace;
+3. visually reviewed before publication;
+4. stored only under `assets/screenshots/` and named for the public surface shown.
 
 ## Automated enforcement
 
-`npm run check:boundary` fails on:
+`scripts/check-public-boundary.mjs` rejects:
 
-- forbidden directory and file patterns;
-- private-repository names;
-- common secret formats;
-- Windows user paths;
-- database, backup, archive, environment, log, or telemetry artifacts;
-- unapproved binary assets.
+- forbidden artifact directories and archive/database formats;
+- local workspace paths and private handoff material;
+- credential-shaped strings and private keys;
+- personal email addresses;
+- embedded `/api/` fetch calls, bearer-token wiring, and local service endpoints;
+- unapproved binary files.
 
-Automation is a backstop, not the final authority. Publication also requires a complete tree review, image inspection, Git-history scan, and logged-out verification.
+The scanner is a backstop, not proof by itself. Every pull request also requires human review of prose, images, diffs, and provenance.
 
-## License boundary
+## Publication checklist
 
-The MIT license applies only to files committed to this public repository. It grants no rights to private Agent Forge code, services, data, models, policies, prompts, or infrastructure.
+- [ ] The change explains the product without copying private implementation.
+- [ ] Every claim is public, verified, or explicitly labeled as a point-in-time snapshot.
+- [ ] Images come from an approved public surface.
+- [ ] No duplicate product interface or tour was introduced.
+- [ ] `npm run check` passes.
+- [ ] The pull-request boundary checklist is complete.
