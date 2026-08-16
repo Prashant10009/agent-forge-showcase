@@ -55,8 +55,20 @@ test("includes a runnable provider-neutral public core", async () => {
     "src/agent_forge_public/governance.py",
     "src/agent_forge_public/dispatch.py",
     "src/agent_forge_public/cli.py",
+    "src/agent_forge_public/contracts.py",
+    "src/agent_forge_public/control.py",
+    "src/agent_forge_public/control_plane.py",
+    "src/agent_forge_public/execution.py",
+    "src/agent_forge_public/manifests.py",
+    "src/agent_forge_public/state.py",
+    "src/agent_forge_public/workflow_graph.py",
     "examples/governed_run.py",
-    "tests_python/test_governance_orchestrator.py"
+    "examples/control_plane_lab.py",
+    "tests_python/test_governance_orchestrator.py",
+    "tests_python/test_control_primitives.py",
+    "tests_python/test_manifests_state.py",
+    "tests_python/test_selection_execution.py",
+    "tests_python/test_control_plane_workflow.py"
   ]) await access(new URL(`../${file}`, import.meta.url));
 
   const boundary = await read("docs/PUBLIC_BOUNDARY.md");
@@ -71,9 +83,23 @@ test("includes substantive engineering documentation", async () => {
     "docs/CODEBASE_MAP.md",
     "docs/PUBLIC_BOUNDARY.md",
     "docs/PUBLIC_CORE.md",
+    "docs/PUBLIC_IMPLEMENTATION_MAP.md",
+    "docs/SYSTEM_WALKTHROUGH.md",
+    "docs/FAILURE_MODEL.md",
     "docs/THREAT_MODEL.md"
   ]) {
     const content = await read(file);
     assert.ok(content.length > 400, `${file} should be substantive`);
   }
+});
+
+test("documents and exposes the deep control-plane scenarios", async () => {
+  const readme = await read("README.md");
+  const core = await read("docs/PUBLIC_CORE.md");
+  const controlPlane = await read("src/agent_forge_public/control_plane.py");
+  assert.match(readme, /agent-forge-public lab all/);
+  assert.match(core, /exact-action (approval )?manifest/i);
+  assert.match(core, /tenant-scoped (context|state|memory)/i);
+  assert.match(controlPlane, /class PublicControlPlane/);
+  assert.match(controlPlane, /_terminalize_manifest/);
 });

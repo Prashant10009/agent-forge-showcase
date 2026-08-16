@@ -2,6 +2,22 @@
 
 All notable changes to the public showcase are documented here.
 
+## [0.4.0] - 2026-08-15
+
+### Added
+
+- Full provider-neutral control-plane vertical slice with typed lifecycle contracts.
+- Evidence-aware routing, tenant circuits, capacity claims, deadline cancellation, atomic budget reservations, and bounded fallbacks.
+- Exact-action approval manifests bound to tenant, session, run, and scope with concurrent-claim and replay protection.
+- Tenant-scoped memory and checkpoints, immutable content-addressed artifacts, multi-perspective review, and topology-preserving workflow execution.
+- Four deterministic system lab scenarios plus system walkthrough, failure model, and public implementation map.
+- Expanded Python suite from 14 to 64 tests, including concurrency, isolation, denial, degradation, and terminal-liveness cases.
+
+### Changed
+
+- Reframed the README around executable engineering evidence and verified production scale.
+- Updated the private codebase snapshot after a fresh read-only inventory.
+
 ## [0.3.0] - 2026-08-15
 
 ### Added

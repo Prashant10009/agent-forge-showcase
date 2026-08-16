@@ -4,7 +4,7 @@ Agent Forge is a private AI workspace that decides where work should run, coordi
 
 This document describes system responsibilities already presented by the public website. It does not reproduce private implementation, prompts, provider configuration, or routing policy.
 
-A compact implementation of the public lifecycle is available in [PUBLIC_CORE.md](PUBLIC_CORE.md). Its deterministic adapters and documented scoring example make the relationships executable without exposing production behavior.
+A working implementation of the public lifecycle is available in [PUBLIC_CORE.md](PUBLIC_CORE.md). Its deterministic adapters, exact-action governance, failure controls, tenant state, artifacts, workflow scheduler, and documented scoring example make the relationships executable without exposing production behavior.
 
 ## Request lifecycle
 
@@ -56,7 +56,9 @@ Provider adapters, optional compatible runtimes, agent tools, and data connectio
 - Store traces and feedback as evidence, not as infallible truth.
 - Keep secrets and provider credentials server-side.
 - Preserve project and user authorization across every retrieval and tool boundary.
+- Bind approvals to the exact captured action list and ownership envelope, then consume them once.
+- Terminalize both the run and any action capability on success, failure, rejection, expiry, or cancellation.
 
 ## Public limit
 
-The architecture is intentionally precise about responsibilities and intentionally silent about exploitable or proprietary implementation details. See [PUBLIC_BOUNDARY.md](PUBLIC_BOUNDARY.md) and [THREAT_MODEL.md](THREAT_MODEL.md).
+The architecture is intentionally precise about responsibilities and intentionally silent about exploitable or proprietary implementation details. See [PUBLIC_IMPLEMENTATION_MAP.md](PUBLIC_IMPLEMENTATION_MAP.md), [FAILURE_MODEL.md](FAILURE_MODEL.md), [PUBLIC_BOUNDARY.md](PUBLIC_BOUNDARY.md), and [THREAT_MODEL.md](THREAT_MODEL.md).

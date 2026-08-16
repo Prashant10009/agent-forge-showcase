@@ -8,6 +8,7 @@ from typing import Sequence
 
 from .models import ActionKind
 from .orchestrator import AgentForge
+from .scenarios import SCENARIOS, run_all_scenarios, run_scenario
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -34,12 +35,20 @@ def build_parser() -> argparse.ArgumentParser:
     route = subparsers.add_parser("route", help="inspect routing without execution")
     route.add_argument("instruction")
 
+    lab = subparsers.add_parser("lab", help="run resilience and governance scenarios")
+    lab.add_argument("scenario", choices=(*SCENARIOS, "all"), default="all", nargs="?")
+
     return parser
 
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     forge = AgentForge()
+
+    if args.command == "lab":
+        payload = run_all_scenarios() if args.scenario == "all" else run_scenario(args.scenario)
+        print(json.dumps(payload, indent=2, sort_keys=True))
+        return 0
 
     if args.command == "route":
         task = forge.make_task(args.instruction, action=ActionKind.READ)
