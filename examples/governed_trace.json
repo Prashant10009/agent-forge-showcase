@@ -1,0 +1,24 @@
+{
+  "fixture": "governed-write",
+  "synthetic": true,
+  "production_trace": false,
+  "description": "Sanitized stage transcript from the deterministic public control-plane scenario.",
+  "events": [
+    { "sequence": 1, "stage": "intake", "state": "accepted" },
+    { "sequence": 2, "stage": "classification", "state": "classified" },
+    { "sequence": 3, "stage": "context", "state": "context_ready", "tenant_scoped": true },
+    { "sequence": 4, "stage": "review", "state": "reviewed" },
+    { "sequence": 5, "stage": "routing", "state": "routed", "fallback_bounded": true },
+    { "sequence": 6, "stage": "governance", "state": "approval_required", "exact_action_count": 1 },
+    { "sequence": 7, "stage": "governance", "state": "running", "owner_bound": true },
+    {
+      "sequence": 8,
+      "stage": "verification",
+      "state": "verifying",
+      "actions_succeeded": true,
+      "artifact_integrity": true,
+      "expected_artifacts_match": true
+    },
+    { "sequence": 9, "stage": "completion", "state": "completed", "terminal": true }
+  ]
+}

@@ -14,12 +14,16 @@ permissions:
 
 jobs:
   analyze:
-    name: JavaScript security analysis
+    name: ${{ matrix.language }} security analysis
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [javascript-typescript, python]
     steps:
       - uses: actions/checkout@v7
       - uses: github/codeql-action/init@v3
         with:
-          languages: javascript-typescript
+          languages: ${{ matrix.language }}
       - uses: github/codeql-action/analyze@v3

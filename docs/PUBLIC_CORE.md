@@ -1,73 +1,112 @@
-# Runnable Public Core
+# Runnable Public Control Plane
 
-The public core is a compact, provider-neutral reference implementation of the Agent Forge operating model. It is executable evidence of orchestration engineering, not a copy of the private product and not production policy.
+This package is independently authored, provider-neutral executable evidence of the Agent Forge operating model. It is intentionally smaller than the private application, but it is not a two-line mock: it implements the control relationships that make orchestration difficult to do safely.
 
-## What it demonstrates
+It contains no provider credential, external model call, private prompt, production policy, or copied application source.
 
-- transparent task classification with inspectable evidence;
-- capability-aware runtime selection with an explained score breakdown;
-- unavailable and incompatible runtime exclusion;
-- explicit approval boundaries for write, execute, and network actions;
-- one-time approval challenges with replay rejection;
-- deterministic runtime adapters that need no account or API key;
-- ordered lifecycle traces and atomic JSON checkpoints;
-- dependency validation and parallel execution of independent task waves;
-- a standard-library-only Python package, CLI, example, and unit suite.
-
-## Run it
+## Run the four system scenarios
 
 Python 3.11 or newer is the only runtime dependency.
 
 ```bash
 python -m pip install -e .
-agent-forge-public route "Implement and verify a Python parser"
-agent-forge-public demo --action write --approve "Implement and verify a Python parser"
+agent-forge-public lab all
 python -m unittest discover -s tests_python -v
 ```
 
-The demo prints structured JSON. A side-effecting task first enters `approval_required`; execution continues only after the exact one-time challenge is consumed. The bundled adapters are deterministic simulations, so the command never calls an external model or service.
+`lab all` exercises:
 
-## Lifecycle
+| Scenario | Evidence produced |
+|---|---|
+| `happy` | classification, evidence-scored routing, execution, tool claim, verification, memory, checkpoint, one terminal event |
+| `fallback` | transient primary failure, recorded attempt, compatible fallback, budget commit, successful completion |
+| `governed` | review findings, exact-action manifest, approval pause, artifact creation, immutable reference, verification |
+| `rejected` | operator denial, cancellation, rejected capability, zero action execution |
+
+The JSON output includes every route candidate, exclusion or score component, attempt, action result, verification result, and lifecycle event.
+
+## End-to-end lifecycle
 
 ```mermaid
-flowchart LR
-  A["Task intake"] --> B["Transparent classification"]
-  B --> C["Capability routing"]
-  C --> D{"Approval required?"}
-  D -- "yes" --> E["One-time approval"]
-  D -- "no" --> F["Runtime adapter"]
-  E --> F
-  F --> G["Verification"]
-  G --> H["Ordered trace"]
+flowchart TD
+  A["Typed request and identity"] --> B["Classification evidence"]
+  B --> C["Tenant-scoped context"]
+  C --> D["Bounded multi-perspective review"]
+  D --> E["Capability, health, circuit, evidence, cost and latency scoring"]
+  E --> F["Exact server-captured action manifest"]
+  F --> G{"Consequential action?"}
+  G -- "yes" --> H["Approval bound to tenant, session, run and scope"]
+  G -- "no" --> I["Atomic manifest claim"]
+  H --> I
+  I --> J["Budgeted and cancellable runtime execution"]
+  J --> K["Compatible fallback chain"]
+  K --> L["Typed local tool execution"]
+  L --> M["Artifact and output verification"]
+  M --> N["Memory, checkpoint and outcome evidence"]
+  N --> O["Exactly one terminal event"]
 ```
 
-`AgentForge` composes the lifecycle. `RuntimeRegistry` keeps selection separate from execution. `ApprovalGate` keeps model choice separate from authority. `TraceRecorder` makes every stage inspectable. `TaskGraph` and `GraphDispatcher` show how independent work can run concurrently while dependency order remains explicit.
+Selection is not authority. Approval is not execution. Execution is not completion. The code makes each boundary explicit and testable.
+
+## Implementation map
+
+| Module | Responsibility | Important invariant |
+|---|---|---|
+| `contracts.py` | Typed request, runtime, route, action, attempt, result and artifact contracts | Completed results must be terminal |
+| `events.py` | Append-only lifecycle journal | Nothing may emit after the first terminal event |
+| `control.py` | Cancellation, deadlines, circuits, budget reservation, capacity and outcome evidence | Operational controls are tenant-aware and concurrency-safe |
+| `selection.py` | Explained eligibility filtering and evidence scoring | Incompatible, unavailable, open-circuit or unauthorized runtimes cannot win |
+| `adapters.py` | Neutral deterministic runtimes and scripted failures | Resilience behavior is reproducible without a service account |
+| `execution.py` | Bounded attempts, fallback, cost accounting and feedback | Every reservation is committed or released |
+| `review.py` | Bounded creation, preservation, risk and verification perspectives | Governance-bypass requests stop before routing |
+| `manifests.py` | Exact-action approval registry | Approval is bound to action fingerprint, tenant, session, run and scope |
+| `actions.py` | Typed safe-local tools | Only an atomically claimed manifest can execute |
+| `state.py` | Tenant memory, checkpoints, run states and immutable artifacts | Reads cannot cross a tenant boundary |
+| `streaming.py` | Delta, heartbeat, inactivity and terminal stream contracts | Partial output survives a stall and every stream terminates exactly once |
+| `task_state.py` | Tenant-scoped vector-space and similarity contracts | Dimensions, vector space and tenant identity must match before retrieval |
+| `protocols.py` | Neutral MCP/A2A capability envelopes | Only registered protocols and declared capabilities may be invoked |
+| `workflow_graph.py` | DAG validation and parallel wave scheduler | Topology and dependency failure context are preserved |
+| `control_plane.py` | Full vertical slice | Failure, cancellation and success terminalize both run and action capability |
+| `scenarios.py` | Recruiter-readable system demonstrations | Happy, degraded, governed and denied paths stay deterministic |
+| `cli.py` | Terminal entry point | Detailed evidence is available without a GUI clone |
+
+`PublicControlPlane` is the one supported orchestration entry point. The CLI, scenarios and example all use it, so the repository does not present a second simplified implementation as a competing source of truth.
+
+## What the test suite proves
+
+The standard-library unit suite covers more than happy paths. It asserts:
+
+- tenant/session/run/scope ownership binding;
+- canonical action fingerprints and exact payload comparison;
+- idempotent pending approval reuse and terminal replay suppression;
+- a single winner under concurrent manifest claims;
+- expired and completed approval behavior;
+- one terminal event and late-event rejection;
+- tenant-scoped memory, circuits, outcome evidence and artifacts;
+- tenant-qualified budget reservations even when different tenants reuse a run identifier;
+- atomic budget reservation and capacity release;
+- capacity contention without corrupting runtime-health or circuit evidence;
+- transient fallback and permanent-failure stop behavior;
+- runtime compatibility, health, circuit and tool-authority exclusions;
+- approval pause, rejection without side effects and manifest terminalization;
+- stored-byte artifact integrity, exact expected-name matching, memory persistence and checkpoint creation;
+- partial-preserving inactivity cutoff, early-EOF detection and exactly one stream terminal;
+- tenant-scoped vector retrieval with strict space and dimension contracts;
+- registered protocol and declared-capability enforcement;
+- DAG cycle detection, parallel waves, downstream skips and failure context.
+
+See [SYSTEM_WALKTHROUGH.md](SYSTEM_WALKTHROUGH.md) for a narrated run, [QUALITY_EVIDENCE.md](QUALITY_EVIDENCE.md) for the claim-to-test map, [decisions/README.md](decisions/README.md) for the architecture decisions, and [FAILURE_MODEL.md](FAILURE_MODEL.md) for the operational contract.
 
 ## Deliberate public substitutions
 
-| Production concern | Public-core representation |
+| Private-system concern | Safe public representation |
 |---|---|
-| Model and provider integrations | Deterministic local adapters with neutral names |
-| Proprietary routing policy | Small documented scoring example |
-| Internal prompts and agent instructions | Plain user-supplied task text only |
-| Operational permissions | Self-contained one-time approval gate |
-| Durable application state | Atomic JSON checkpoint example |
-| Private telemetry | In-memory ordered trace events |
+| Runtime and provider integrations | Deterministic adapters with neutral names |
+| Proprietary routing and review policy | Small, labeled, documented demonstration policy |
+| Internal instructions and prompts | Rule-based review using only supplied task text |
+| Durable service-backed state | Thread-safe in-memory contracts and immutable references |
+| Real network and tool side effects | Typed inspect, artifact and simulated-network tools |
+| Private telemetry and evaluation data | Synthetic per-tenant outcome counters and ordered events |
+| Distributed execution infrastructure | Local bounded fallback and DAG scheduling |
 
-These substitutions preserve architectural relationships while withholding implementation details that would expose operational or proprietary behavior. The public implementation is independently authored for this repository and should not be interpreted as the production source, its exact configuration, or its decision policy.
-
-## Code map
-
-| Module | Responsibility |
-|---|---|
-| `classification.py` | Derive task capabilities and retain human-readable evidence |
-| `routing.py` | Filter candidates and produce an explained route decision |
-| `governance.py` | Pause consequential actions and reject approval replay |
-| `runtime.py` | Register adapters behind a narrow execution interface |
-| `orchestrator.py` | Coordinate intake, routing, governance, execution, and verification |
-| `dispatch.py` | Validate dependency graphs and execute ready tasks concurrently |
-| `checkpoint.py` | Save and load path-safe, atomic JSON checkpoints |
-| `tracing.py` | Record ordered, thread-safe lifecycle evidence |
-| `cli.py` | Expose routing and governed execution from the terminal |
-
-The public boundary and automated scanner are documented in [PUBLIC_BOUNDARY.md](PUBLIC_BOUNDARY.md).
+These substitutions preserve architectural relationships while withholding operational details. The precise inclusion and exclusion rationale is in [PUBLIC_IMPLEMENTATION_MAP.md](PUBLIC_IMPLEMENTATION_MAP.md), and the automated publication rules are in [PUBLIC_BOUNDARY.md](PUBLIC_BOUNDARY.md).

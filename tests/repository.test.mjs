@@ -50,14 +50,34 @@ test("contains no duplicate website or demo implementation", async () => {
 test("includes a runnable provider-neutral public core", async () => {
   for (const file of [
     "pyproject.toml",
+    "src/agent_forge_public/cli.py",
+    "src/agent_forge_public/contracts.py",
+    "src/agent_forge_public/control.py",
+    "src/agent_forge_public/control_plane.py",
+    "src/agent_forge_public/execution.py",
+    "src/agent_forge_public/manifests.py",
+    "src/agent_forge_public/protocols.py",
+    "src/agent_forge_public/state.py",
+    "src/agent_forge_public/streaming.py",
+    "src/agent_forge_public/task_state.py",
+    "src/agent_forge_public/workflow_graph.py",
+    "examples/control_plane_lab.py",
+    "examples/governed_trace.json",
+    "tests_python/test_control_primitives.py",
+    "tests_python/test_manifests_state.py",
+    "tests_python/test_protocols.py",
+    "tests_python/test_selection_execution.py",
+    "tests_python/test_control_plane_workflow.py",
+    "tests_python/test_streaming.py",
+    "tests_python/test_task_state.py"
+  ]) await access(new URL(`../${file}`, import.meta.url));
+
+  for (const obsolete of [
     "src/agent_forge_public/orchestrator.py",
     "src/agent_forge_public/routing.py",
     "src/agent_forge_public/governance.py",
-    "src/agent_forge_public/dispatch.py",
-    "src/agent_forge_public/cli.py",
-    "examples/governed_run.py",
-    "tests_python/test_governance_orchestrator.py"
-  ]) await access(new URL(`../${file}`, import.meta.url));
+    "src/agent_forge_public/dispatch.py"
+  ]) await assert.rejects(access(new URL(`../${obsolete}`, import.meta.url)));
 
   const boundary = await read("docs/PUBLIC_BOUNDARY.md");
   assert.match(boundary, /provider-neutral public core/i);
@@ -71,9 +91,39 @@ test("includes substantive engineering documentation", async () => {
     "docs/CODEBASE_MAP.md",
     "docs/PUBLIC_BOUNDARY.md",
     "docs/PUBLIC_CORE.md",
+    "docs/PUBLIC_IMPLEMENTATION_MAP.md",
+    "docs/SYSTEM_WALKTHROUGH.md",
+    "docs/FAILURE_MODEL.md",
+    "docs/QUALITY_EVIDENCE.md",
     "docs/THREAT_MODEL.md"
   ]) {
     const content = await read(file);
     assert.ok(content.length > 400, `${file} should be substantive`);
   }
+});
+
+test("documents and exposes the deep control-plane scenarios", async () => {
+  const readme = await read("README.md");
+  const core = await read("docs/PUBLIC_CORE.md");
+  const controlPlane = await read("src/agent_forge_public/control_plane.py");
+  assert.match(readme, /agent-forge-public lab all/);
+  assert.match(core, /exact-action (approval )?manifest/i);
+  assert.match(core, /tenant-scoped (context|state|memory)/i);
+  assert.match(controlPlane, /class PublicControlPlane/);
+  assert.match(controlPlane, /_terminalize_manifest/);
+});
+
+test("publishes architecture decisions and a sanitized trace", async () => {
+  for (const file of [
+    "docs/decisions/README.md",
+    "docs/decisions/0001-separate-selection-from-authority.md",
+    "docs/decisions/0002-cancellation-and-terminal-events.md",
+    "docs/decisions/0003-tenant-identity-at-state-boundaries.md"
+  ]) await access(new URL(`../${file}`, import.meta.url));
+
+  const trace = JSON.parse(await read("examples/governed_trace.json"));
+  assert.equal(trace.synthetic, true);
+  assert.equal(trace.production_trace, false);
+  assert.equal(trace.events.at(-1).terminal, true);
+  assert.deepEqual(trace.events.map((event) => event.sequence), [1, 2, 3, 4, 5, 6, 7, 8, 9]);
 });

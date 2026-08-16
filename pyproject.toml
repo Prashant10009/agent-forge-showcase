@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agent-forge-public-core"
-version = "0.3.0"
+version = "0.4.0"
 description = "Provider-neutral runnable reference core for Agent Forge"
 readme = "README.md"
 requires-python = ">=3.11"

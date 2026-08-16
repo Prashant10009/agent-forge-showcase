@@ -1,18 +1,18 @@
-"""Runnable, security-reviewed public core for Agent Forge."""
+"""Canonical public control-plane API for Agent Forge."""
 
-from .models import ActionKind, Capability, RunStatus, TaskSpec
-from .orchestrator import AgentForge
-from .runtime import DeterministicAdapter, RuntimeRegistry, default_registry
+from .models import ActionKind, Capability
+from .contracts import LifecycleState, RiskLevel, RunIdentity, WorkRequest
+from .control_plane import ControlPlaneOutcome, PublicControlPlane
 
 __all__ = [
     "ActionKind",
-    "AgentForge",
     "Capability",
-    "DeterministicAdapter",
-    "RunStatus",
-    "RuntimeRegistry",
-    "TaskSpec",
-    "default_registry",
+    "ControlPlaneOutcome",
+    "LifecycleState",
+    "PublicControlPlane",
+    "RiskLevel",
+    "RunIdentity",
+    "WorkRequest",
 ]
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"

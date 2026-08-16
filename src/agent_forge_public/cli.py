@@ -6,8 +6,9 @@ import argparse
 import json
 from typing import Sequence
 
+from .control_plane import PublicControlPlane
 from .models import ActionKind
-from .orchestrator import AgentForge
+from .scenarios import SCENARIOS, run_all_scenarios, run_scenario
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -34,22 +35,36 @@ def build_parser() -> argparse.ArgumentParser:
     route = subparsers.add_parser("route", help="inspect routing without execution")
     route.add_argument("instruction")
 
+    lab = subparsers.add_parser("lab", help="run resilience and governance scenarios")
+    lab.add_argument("scenario", choices=(*SCENARIOS, "all"), default="all", nargs="?")
+
     return parser
 
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
-    forge = AgentForge()
+    plane = PublicControlPlane()
 
-    if args.command == "route":
-        task = forge.make_task(args.instruction, action=ActionKind.READ)
-        decision = forge.router.choose(task, forge.registry.descriptors())
-        print(json.dumps(decision.to_dict(), indent=2, sort_keys=True))
+    if args.command == "lab":
+        payload = run_all_scenarios() if args.scenario == "all" else run_scenario(args.scenario)
+        print(json.dumps(payload, indent=2, sort_keys=True))
         return 0
 
-    task = forge.make_task(args.instruction, action=ActionKind(args.action))
-    outcome = forge.submit(task)
-    if args.approve and outcome.approval:
-        outcome = forge.resume(outcome.approval.approval_id, outcome.approval.challenge)
+    if args.command == "route":
+        request = plane.request(args.instruction, action=ActionKind.READ)
+        plan = plane.router.plan(request, plane.adapters.profiles())
+        print(json.dumps(plan.to_dict(), indent=2, sort_keys=True))
+        return 0
+
+    action = ActionKind(args.action)
+    expected_artifacts = ("public-result.txt",) if action is ActionKind.WRITE else ()
+    request = plane.request(
+        args.instruction,
+        action=action,
+        expected_artifacts=expected_artifacts,
+    )
+    outcome = plane.start(request)
+    if args.approve and outcome.manifest is not None:
+        outcome = plane.approve(outcome.manifest.manifest_id, request.identity)
     print(json.dumps(outcome.to_dict(), indent=2, sort_keys=True))
     return 0

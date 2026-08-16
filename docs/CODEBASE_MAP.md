@@ -8,14 +8,18 @@ Snapshot date: 2026-08-15.
 
 | Measure | Count |
 |---|---:|
-| Tracked files | 523 |
-| Source files | 394 |
-| Python modules | 341 |
+| Tracked files | 525 |
+| Source files | 395 |
+| Python modules | 343 |
 | JavaScript files | 23 |
 | TypeScript files | 17 |
 | HTML files | 9 |
 | CSS files | 3 |
 | Test files | 136 |
+| Python lines in the main application package | 90,937 |
+| Python test files | 119 |
+| Python test lines | 23,411 |
+| Python test functions | 867 |
 
 Counts are a point-in-time inventory, not a claim that every file has equal product significance.
 
@@ -57,4 +61,4 @@ flowchart LR
 
 No file contents, prompts, credentials, endpoint inventories, routing coefficients, thresholds, database schemas, operational commands, customer data, or private Git history are included.
 
-Reviewers who want executable evidence can inspect the independently authored [runnable public core](PUBLIC_CORE.md). It mirrors only the responsibility boundaries above and replaces private integrations and policy with neutral, deterministic examples.
+Reviewers who want executable evidence can inspect the independently authored [runnable public core](PUBLIC_CORE.md) and its [implementation map](PUBLIC_IMPLEMENTATION_MAP.md). It mirrors only the responsibility boundaries above and replaces private integrations and policy with neutral, deterministic examples.
