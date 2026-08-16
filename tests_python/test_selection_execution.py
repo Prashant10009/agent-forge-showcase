@@ -2,6 +2,7 @@ import unittest
 
 from agent_forge_public.adapters import AdapterRegistry, ScriptedAdapter
 from agent_forge_public.contracts import (
+    CircuitState,
     LifecycleState,
     RoutingPlan,
     RunIdentity,
@@ -15,7 +16,15 @@ from agent_forge_public.models import ActionKind, Capability
 from agent_forge_public.selection import EvidenceRouter, NoEligibleRuntime
 
 
-def profile(name, *, health=RuntimeHealth.HEALTHY, reliability=0.9, cost=0.05, tools=False):
+def profile(
+    name,
+    *,
+    health=RuntimeHealth.HEALTHY,
+    reliability=0.9,
+    cost=0.05,
+    tools=False,
+    concurrency=2,
+):
     return RuntimeProfile(
         name,
         frozenset({Capability.TEXT, Capability.REASONING}),
@@ -23,6 +32,7 @@ def profile(name, *, health=RuntimeHealth.HEALTHY, reliability=0.9, cost=0.05, t
         reliability,
         100,
         cost,
+        concurrency_limit=concurrency,
         supports_tools=tools,
     )
 
@@ -82,13 +92,13 @@ class SelectionAndExecutionTests(unittest.TestCase):
         )
         self.assertEqual(plan.selected, "observed")
 
-    def _executor(self, adapters, circuits=None, budgets=None):
+    def _executor(self, adapters, circuits=None, budgets=None, capacity=None):
         return ResilientExecutor(
             AdapterRegistry(adapters),
             circuits or self.circuits,
             budgets or BudgetLedger(),
             self.outcomes,
-            CapacityRegistry(),
+            capacity or CapacityRegistry(),
         )
 
     def test_transient_failure_falls_back(self):
@@ -139,6 +149,34 @@ class SelectionAndExecutionTests(unittest.TestCase):
                 request(), RoutingPlan("run", "worker", (), ()), CancellationToken(1000)
             )
         self.assertEqual(budgets.spent("tenant"), 0.0)
+
+    def test_capacity_contention_falls_back_without_poisoning_health(self):
+        circuits = CircuitRegistry(1, 999)
+        outcomes = OutcomeLedger()
+        capacity = CapacityRegistry()
+        primary = ScriptedAdapter(profile("primary", concurrency=1))
+        backup = ScriptedAdapter(profile("backup"))
+        executor = ResilientExecutor(
+            AdapterRegistry((primary, backup)),
+            circuits,
+            BudgetLedger(),
+            outcomes,
+            capacity,
+        )
+        with capacity.claim("primary", 1):
+            report = executor.execute(
+                request(),
+                RoutingPlan("run", "primary", ("backup",), ()),
+                CancellationToken(1000),
+            )
+        self.assertTrue(report.success)
+        self.assertEqual(report.runtime_name, "backup")
+        self.assertEqual(report.attempts[0].error_kind, "capacity_exceeded")
+        self.assertEqual(
+            circuits.snapshot("tenant", "primary").state,
+            CircuitState.CLOSED,
+        )
+        self.assertEqual(outcomes.get("tenant", "primary").failures, 0)
 
 
 if __name__ == "__main__":

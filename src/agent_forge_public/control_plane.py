@@ -111,7 +111,7 @@ class PublicControlPlane:
         instruction: str,
         *,
         run_id: str = "run-1",
-        tenant_id: str = "portfolio",
+        tenant_id: str = "public-example",
         session_id: str = "session-1",
         approval_scope: str = "turn-1",
         action: ActionKind = ActionKind.READ,
@@ -195,7 +195,14 @@ class PublicControlPlane:
             {"selected": plan.selected, "fallbacks": list(plan.fallbacks)},
         )
 
-        actions = plan_public_actions(request.instruction, request.expected_artifacts)
+        try:
+            actions = plan_public_actions(
+                request.instruction,
+                request.expected_artifacts,
+                request.action,
+            )
+        except ValueError as error:
+            return self._terminal_failure(request, plan, journal, str(error))
         manifest, disposition = self.manifests.create_or_reuse(request.identity, actions)
         approval_required = any(
             action.risk in {RiskLevel.MEDIUM, RiskLevel.HIGH, RiskLevel.CRITICAL}
@@ -260,10 +267,11 @@ class PublicControlPlane:
         reason: str = "rejected by operator",
     ) -> ControlPlaneOutcome:
         with self._lock:
-            pending = self._pending.pop(manifest_id, None)
-        if pending is None:
-            raise KeyError("unknown pending run")
-        manifest = self.manifests.reject(manifest_id, identity, reason)
+            pending = self._pending.get(manifest_id)
+            if pending is None:
+                raise KeyError("unknown pending run")
+            manifest = self.manifests.reject(manifest_id, identity, reason)
+            self._pending.pop(manifest_id, None)
         pending.token.cancel(reason)
         result = RunResult(
             pending.request.identity.run_id,
@@ -329,6 +337,14 @@ class PublicControlPlane:
                 for action_result in action_results
                 for artifact_id in action_result.artifact_ids
             )
+            verified_artifacts = tuple(
+                self.artifacts.verify(artifact_id, request.identity.tenant_id)
+                for artifact_id in artifact_ids
+            )
+            actual_artifact_names = tuple(
+                artifact.logical_name for artifact in verified_artifacts
+            )
+            expected_artifact_names = tuple(request.expected_artifacts)
             journal.emit(
                 "verification",
                 LifecycleState.VERIFYING,
@@ -336,12 +352,15 @@ class PublicControlPlane:
                     "non_empty_output": bool(execution.output.strip()),
                     "actions_succeeded": all(result.success for result in action_results),
                     "artifact_count": len(artifact_ids),
+                    "artifact_integrity": len(verified_artifacts) == len(artifact_ids),
                 },
             )
             verification = {
                 "non_empty_output": bool(execution.output.strip()),
                 "actions_succeeded": all(result.success for result in action_results),
-                "expected_artifacts_present": len(artifact_ids) >= len(request.expected_artifacts),
+                "artifact_integrity": len(verified_artifacts) == len(artifact_ids),
+                "expected_artifacts_match": sorted(actual_artifact_names)
+                == sorted(expected_artifact_names),
             }
             if not all(verification.values()):
                 return self._terminal_failure(

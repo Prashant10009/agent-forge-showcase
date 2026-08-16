@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   verify:
-    name: Tests, links, boundary, and build
+    name: Dossier, boundary, and repository tests
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -29,9 +29,27 @@ jobs:
           python-version: "3.12"
       - run: npm ci
       - run: npm run check
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: engineering-dossier-preview
           path: dist
           if-no-files-found: error
           retention-days: 7
+
+  python:
+    name: Python ${{ matrix.python-version }} contracts
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python -m pip install --no-deps -e .
+      - run: python -m compileall -q src
+      - run: python -m unittest discover -s tests_python -v
+      - run: agent-forge-public lab all > /dev/null

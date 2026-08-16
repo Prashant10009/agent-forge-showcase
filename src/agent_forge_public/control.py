@@ -158,14 +158,15 @@ class BudgetLedger:
 
     def __init__(self) -> None:
         self._spent: dict[str, float] = {}
-        self._reservations: dict[str, _Reservation] = {}
+        self._reservations: dict[tuple[str, str], _Reservation] = {}
         self._lock = RLock()
 
     def reserve(self, run_id: str, tenant_id: str, amount: float, limit: float) -> None:
         if amount < 0 or limit < 0:
             raise ValueError("budget values cannot be negative")
+        key = (tenant_id, run_id)
         with self._lock:
-            if run_id in self._reservations:
+            if key in self._reservations:
                 raise ValueError("run already has a reservation")
             reserved_elsewhere = sum(
                 reservation.reserved
@@ -177,13 +178,13 @@ class BudgetLedger:
                 raise BudgetExceeded(
                     f"reservation {amount:.4f} exceeds tenant limit {limit:.4f}"
                 )
-            self._reservations[run_id] = _Reservation(tenant_id, amount)
+            self._reservations[key] = _Reservation(tenant_id, amount)
 
-    def commit(self, run_id: str, actual: float) -> float:
+    def commit(self, run_id: str, tenant_id: str, actual: float) -> float:
         if actual < 0:
             raise ValueError("actual cost cannot be negative")
         with self._lock:
-            reservation = self._reservations.pop(run_id, None)
+            reservation = self._reservations.pop((tenant_id, run_id), None)
             if reservation is None:
                 raise KeyError("unknown budget reservation")
             if actual > reservation.reserved:
@@ -193,9 +194,9 @@ class BudgetLedger:
             )
             return reservation.reserved - actual
 
-    def release(self, run_id: str) -> float:
+    def release(self, run_id: str, tenant_id: str) -> float:
         with self._lock:
-            reservation = self._reservations.pop(run_id, None)
+            reservation = self._reservations.pop((tenant_id, run_id), None)
             return reservation.reserved if reservation else 0.0
 
     def spent(self, tenant_id: str) -> float:

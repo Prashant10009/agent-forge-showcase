@@ -91,7 +91,11 @@ class ResilientExecutor:
                             response.cost,
                         )
                     )
-                    self.budgets.commit(request.identity.run_id, spent)
+                    self.budgets.commit(
+                        request.identity.run_id,
+                        request.identity.tenant_id,
+                        spent,
+                    )
                     return ExecutionReport(
                         True,
                         response.output,
@@ -99,7 +103,21 @@ class ResilientExecutor:
                         tuple(attempts),
                         spent,
                     )
-                except (RuntimeFailure, CapacityExceeded) as error:
+                except CapacityExceeded as error:
+                    last_error = str(error)
+                    attempts.append(
+                        AttemptRecord(
+                            runtime_name,
+                            attempt_number,
+                            False,
+                            0.0,
+                            0.0,
+                            "capacity_exceeded",
+                            True,
+                        )
+                    )
+                    continue
+                except RuntimeFailure as error:
                     retryable = bool(getattr(error, "retryable", True))
                     last_error = str(error)
                     self.circuits.record_failure(request.identity.tenant_id, runtime_name)
@@ -123,8 +141,15 @@ class ResilientExecutor:
                     )
                     if not retryable:
                         break
-            self.budgets.commit(request.identity.run_id, spent)
+            self.budgets.commit(
+                request.identity.run_id,
+                request.identity.tenant_id,
+                spent,
+            )
             return ExecutionReport(False, "", "", tuple(attempts), spent, last_error or "all runtimes failed")
         except Exception:
-            self.budgets.release(request.identity.run_id)
+            self.budgets.release(
+                request.identity.run_id,
+                request.identity.tenant_id,
+            )
             raise

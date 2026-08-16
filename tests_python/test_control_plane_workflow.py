@@ -1,9 +1,15 @@
 import unittest
 
 from agent_forge_public.adapters import AdapterRegistry, ScriptedAdapter
-from agent_forge_public.contracts import LifecycleState, ManifestState, RuntimeProfile
+from agent_forge_public.contracts import (
+    LifecycleState,
+    ManifestState,
+    RunIdentity,
+    RuntimeProfile,
+)
 from agent_forge_public.control import CancellationToken
 from agent_forge_public.control_plane import PublicControlPlane
+from agent_forge_public.manifests import ManifestOwnershipError
 from agent_forge_public.models import ActionKind, Capability
 from agent_forge_public.workflow_graph import InvalidWorkflow, NodeState, WorkNode, WorkflowGraph, WorkflowScheduler
 
@@ -24,7 +30,7 @@ class ControlPlaneTests(unittest.TestCase):
         outcome = plane.start(request)
         self.assertEqual(outcome.state, LifecycleState.APPROVAL_REQUIRED)
         self.assertEqual(outcome.manifest.state, ManifestState.PENDING)
-        self.assertEqual(plane.artifacts.list_for_tenant("portfolio"), ())
+        self.assertEqual(plane.artifacts.list_for_tenant("public-example"), ())
 
     def test_approval_executes_exact_manifest_and_creates_artifact(self):
         plane = PublicControlPlane()
@@ -36,6 +42,8 @@ class ControlPlaneTests(unittest.TestCase):
         self.assertEqual(outcome.state, LifecycleState.COMPLETED)
         self.assertEqual(outcome.manifest.state, ManifestState.COMPLETED)
         self.assertEqual(len(outcome.result.artifact_ids), 1)
+        self.assertTrue(outcome.result.verification["artifact_integrity"])
+        self.assertTrue(outcome.result.verification["expected_artifacts_match"])
 
     def test_rejection_is_terminal_without_side_effects(self):
         plane = PublicControlPlane()
@@ -46,7 +54,22 @@ class ControlPlaneTests(unittest.TestCase):
         outcome = plane.reject(pending.manifest.manifest_id, request.identity, "not authorized")
         self.assertEqual(outcome.state, LifecycleState.CANCELLED)
         self.assertEqual(outcome.manifest.state, ManifestState.REJECTED)
-        self.assertEqual(plane.artifacts.list_for_tenant("portfolio"), ())
+        self.assertEqual(plane.artifacts.list_for_tenant("public-example"), ())
+
+    def test_wrong_owner_cannot_destroy_pending_run(self):
+        plane = PublicControlPlane()
+        request = plane.request(
+            "Implement a report",
+            run_id="owner-bound",
+            action=ActionKind.WRITE,
+            expected_artifacts=("report.txt",),
+        )
+        pending = plane.start(request)
+        wrong = RunIdentity("owner-bound", "other-tenant", "session-1", "turn-1")
+        with self.assertRaises(ManifestOwnershipError):
+            plane.reject(pending.manifest.manifest_id, wrong)
+        completed = plane.approve(pending.manifest.manifest_id, request.identity)
+        self.assertEqual(completed.state, LifecycleState.COMPLETED)
 
     def test_governance_bypass_request_is_denied_before_routing(self):
         plane = PublicControlPlane()
@@ -56,6 +79,27 @@ class ControlPlaneTests(unittest.TestCase):
         outcome = plane.start(request)
         self.assertEqual(outcome.state, LifecycleState.FAILED)
         self.assertIsNone(outcome.plan)
+
+    def test_write_without_declared_artifact_fails_closed(self):
+        plane = PublicControlPlane()
+        request = plane.request("Implement a report", run_id="missing", action=ActionKind.WRITE)
+        outcome = plane.start(request)
+        self.assertEqual(outcome.state, LifecycleState.FAILED)
+        self.assertIn("require an expected artifact", outcome.result.error)
+
+    def test_network_action_pauses_with_matching_manifest_authority(self):
+        plane = PublicControlPlane()
+        request = plane.request("Inspect a remote schema", run_id="network", action=ActionKind.NETWORK)
+        outcome = plane.start(request)
+        self.assertEqual(outcome.state, LifecycleState.APPROVAL_REQUIRED)
+        self.assertEqual(outcome.manifest.actions[0]["action"], ActionKind.NETWORK.value)
+
+    def test_execute_action_pauses_with_matching_manifest_authority(self):
+        plane = PublicControlPlane()
+        request = plane.request("Execute a validation", run_id="execute", action=ActionKind.EXECUTE)
+        outcome = plane.start(request)
+        self.assertEqual(outcome.state, LifecycleState.APPROVAL_REQUIRED)
+        self.assertEqual(outcome.manifest.actions[0]["action"], ActionKind.EXECUTE.value)
 
     def test_no_eligible_runtime_is_terminal_failure(self):
         profile = RuntimeProfile("text-only", frozenset({Capability.TEXT}))
@@ -77,8 +121,8 @@ class ControlPlaneTests(unittest.TestCase):
         plane = PublicControlPlane()
         request = plane.request("Analyze architecture", run_id="persist")
         plane.start(request)
-        self.assertEqual(len(plane.state.recent("portfolio", session_id="session-1")), 2)
-        self.assertIsNotNone(plane.state.latest_checkpoint("persist", "portfolio"))
+        self.assertEqual(len(plane.state.recent("public-example", session_id="session-1")), 2)
+        self.assertIsNotNone(plane.state.latest_checkpoint("persist", "public-example"))
 
 
 class WorkflowTests(unittest.TestCase):

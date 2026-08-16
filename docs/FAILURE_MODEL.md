@@ -10,7 +10,7 @@ The public core treats failure as part of the system contract. A run must finish
 | Recovery probe contention | Atomic half-open claim | One probe proceeds | Other callers see unavailable circuit |
 | Transient adapter failure | Typed retryable error | Move to bounded compatible fallback | Failed attempt plus successful attempt |
 | Permanent adapter failure | Typed non-retryable error | Stop fallback chain | Terminal failed run |
-| Capacity saturation | Atomic capacity claim | Attempt fails without oversubscription | Capacity error attempt |
+| Capacity saturation | Atomic capacity claim | Try a compatible fallback without changing health evidence | Capacity error attempt; circuit remains healthy |
 | Budget overrun risk | Pre-dispatch reservation | Dispatch rejected before spend | Budget error and released reservation |
 | Operator cancellation | Cooperative token | Checked before and inside execution boundaries | Cancelled terminal event |
 | Deadline expiry | Monotonic deadline | Same cancellation path | Cancelled result with deadline reason |
@@ -19,7 +19,13 @@ The public core treats failure as part of the system contract. A run must finish
 | Approval replay/race | Atomic state transition | One claimant; terminal tombstone blocks reuse | Replay error |
 | Tool validation failure | Registered typed contract | Manifest completes unsuccessfully | Failed action capability and run |
 | Missing expected artifact | Post-action verification | Run does not complete successfully | Verification failure |
+| Corrupted artifact bytes | Digest and size recomputation | Run does not complete successfully | Integrity failure |
 | Cross-tenant artifact read | Ownership check at retrieval | Read denied | Tenant-boundary error |
+| Stream inactivity after partial output | Monotonic activity bound | Preserve partial output and close normally | `done` with `inactivity_cutoff` |
+| Stream inactivity without output | Monotonic activity bound | Close without claiming success | `incomplete` terminal event |
+| Early stream EOF | Required terminal assertion | Surface transport failure | Stream-contract error |
+| Vector space or dimension mismatch | Typed vector contract | Reject before similarity | Vector-contract error |
+| Undeclared protocol capability | Registry capability check | Reject before adapter invocation | Protocol-boundary error |
 | Workflow cycle | Graph construction | Workflow never starts | Invalid-workflow error |
 | Dependency failure | Prior node outcome | Downstream skip or explicit continuation | Dependency context on node result |
 | Late completion/event | Terminal-state guard | Mutation rejected | Terminal-event or transition error |

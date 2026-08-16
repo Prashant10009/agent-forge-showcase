@@ -10,7 +10,13 @@ from agent_forge_public.manifests import (
     action_fingerprint,
 )
 from agent_forge_public.models import ActionKind
-from agent_forge_public.state import ArtifactStore, InvalidTransition, TenantBoundaryError, TenantStateStore
+from agent_forge_public.state import (
+    ArtifactIntegrityError,
+    ArtifactStore,
+    InvalidTransition,
+    TenantBoundaryError,
+    TenantStateStore,
+)
 
 
 def identity(tenant="tenant", run="run", scope="turn"):
@@ -108,6 +114,22 @@ class ManifestAndStateTests(unittest.TestCase):
         ref = store.put("a", "report.txt", b"content")
         with self.assertRaises(TenantBoundaryError):
             store.get(ref.artifact_id, "b")
+
+    def test_artifact_verification_recomputes_stored_bytes(self):
+        store = ArtifactStore()
+        ref = store.put("tenant", "report.txt", b"content", "text/plain")
+        self.assertEqual(
+            store.verify(
+                ref.artifact_id,
+                "tenant",
+                expected_name="report.txt",
+                expected_media_type="text/plain",
+            ),
+            ref,
+        )
+        store._content[ref.artifact_id] = b"tampered"
+        with self.assertRaises(ArtifactIntegrityError):
+            store.verify(ref.artifact_id, "tenant")
 
     def test_memory_queries_never_cross_tenants(self):
         state = TenantStateStore()

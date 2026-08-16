@@ -122,6 +122,14 @@ def default_tool_registry(artifact_store: ArtifactStore) -> ToolRegistry:
             f"simulated read of {resource} for run {identity.run_id}",
         )
 
+    def simulated_execution(arguments: Mapping[str, Any], identity: RunIdentity) -> ActionResult:
+        instruction = str(arguments["instruction"])
+        return ActionResult(
+            "simulated_execution",
+            True,
+            f"simulated bounded execution for run {identity.run_id}: {instruction}",
+        )
+
     registry.register(
         ToolSpec(
             "inspect_text",
@@ -149,14 +157,29 @@ def default_tool_registry(artifact_store: ArtifactStore) -> ToolRegistry:
             simulated_network,
         )
     )
+    registry.register(
+        ToolSpec(
+            "simulated_execution",
+            ActionKind.EXECUTE,
+            RiskLevel.HIGH,
+            frozenset({"instruction"}),
+            simulated_execution,
+        )
+    )
     return registry
 
 
-def plan_public_actions(instruction: str, expected_artifacts: Iterable[str]) -> tuple[ActionRequest, ...]:
+def plan_public_actions(
+    instruction: str,
+    expected_artifacts: Iterable[str],
+    requested_action: ActionKind,
+) -> tuple[ActionRequest, ...]:
     """Deterministic planner used only by the offline public scenarios."""
 
     artifacts = tuple(expected_artifacts)
     if artifacts:
+        if requested_action is not ActionKind.WRITE:
+            raise ToolValidationError("artifact creation requires write authority")
         return tuple(
             ActionRequest(
                 "create_artifact",
@@ -169,6 +192,26 @@ def plan_public_actions(instruction: str, expected_artifacts: Iterable[str]) -> 
                 RiskLevel.HIGH,
             )
             for name in artifacts
+        )
+    if requested_action is ActionKind.WRITE:
+        raise ToolValidationError("public write requests require an expected artifact")
+    if requested_action is ActionKind.NETWORK:
+        return (
+            ActionRequest(
+                "simulated_network",
+                {"resource": "public-offline-fixture"},
+                ActionKind.NETWORK,
+                RiskLevel.MEDIUM,
+            ),
+        )
+    if requested_action is ActionKind.EXECUTE:
+        return (
+            ActionRequest(
+                "simulated_execution",
+                {"instruction": instruction},
+                ActionKind.EXECUTE,
+                RiskLevel.HIGH,
+            ),
         )
     return (
         ActionRequest(

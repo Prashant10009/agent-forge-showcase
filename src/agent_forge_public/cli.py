@@ -6,8 +6,8 @@ import argparse
 import json
 from typing import Sequence
 
+from .control_plane import PublicControlPlane
 from .models import ActionKind
-from .orchestrator import AgentForge
 from .scenarios import SCENARIOS, run_all_scenarios, run_scenario
 
 
@@ -43,7 +43,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
-    forge = AgentForge()
+    plane = PublicControlPlane()
 
     if args.command == "lab":
         payload = run_all_scenarios() if args.scenario == "all" else run_scenario(args.scenario)
@@ -51,14 +51,20 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 0
 
     if args.command == "route":
-        task = forge.make_task(args.instruction, action=ActionKind.READ)
-        decision = forge.router.choose(task, forge.registry.descriptors())
-        print(json.dumps(decision.to_dict(), indent=2, sort_keys=True))
+        request = plane.request(args.instruction, action=ActionKind.READ)
+        plan = plane.router.plan(request, plane.adapters.profiles())
+        print(json.dumps(plan.to_dict(), indent=2, sort_keys=True))
         return 0
 
-    task = forge.make_task(args.instruction, action=ActionKind(args.action))
-    outcome = forge.submit(task)
-    if args.approve and outcome.approval:
-        outcome = forge.resume(outcome.approval.approval_id, outcome.approval.challenge)
+    action = ActionKind(args.action)
+    expected_artifacts = ("public-result.txt",) if action is ActionKind.WRITE else ()
+    request = plane.request(
+        args.instruction,
+        action=action,
+        expected_artifacts=expected_artifacts,
+    )
+    outcome = plane.start(request)
+    if args.approve and outcome.manifest is not None:
+        outcome = plane.approve(outcome.manifest.manifest_id, request.identity)
     print(json.dumps(outcome.to_dict(), indent=2, sort_keys=True))
     return 0

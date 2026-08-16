@@ -16,10 +16,10 @@ Snapshot date: 2026-08-15.
 | HTML files | 9 |
 | CSS files | 3 |
 | Test files | 136 |
-| Python lines in the main application package | ~80,000 |
+| Python lines in the main application package | 90,937 |
 | Python test files | 119 |
-| Python test lines | ~19,000 |
-| Python test functions | ~862 |
+| Python test lines | 23,411 |
+| Python test functions | 867 |
 
 Counts are a point-in-time inventory, not a claim that every file has equal product significance.
 

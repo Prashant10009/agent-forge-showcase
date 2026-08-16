@@ -1,6 +1,6 @@
 """Rich public contracts for a governed, event-driven orchestration run.
 
-These contracts are independently authored for the portfolio edition.  They
+These contracts are independently authored for the public engineering dossier. They
 model the relationships a control plane must enforce without containing any
 production provider, prompt, threshold, or persistence schema.
 """

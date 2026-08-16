@@ -39,20 +39,28 @@ At execution time the tool executor submits the action list again. A byte-equiva
 
 Before dispatch, the executor reserves the maximum estimated cost of the bounded route chain. Each attempt checks cancellation and deadline, claims runtime capacity, consults the circuit breaker, invokes a narrow adapter, and records outcome evidence.
 
-A retryable failure may move to the next compatible runtime. A permanent failure stops the chain. Success commits actual cost; exceptions release the reservation. Runtime success still does not mean run completion.
+A retryable failure may move to the next compatible runtime. A permanent failure stops the chain. Capacity contention may also move to a fallback, but it is not recorded as runtime failure and cannot poison circuit evidence. Success commits actual cost; exceptions release the tenant-and-run-qualified reservation. Runtime success still does not mean run completion.
 
 ## 7. Tools and artifacts remain governed
 
-Only the claimed manifest can reach tool handlers. The included handlers are safe local demonstrations. Created artifacts are content-addressed, immutable references whose identifiers include tenant and logical-name context.
+Only the claimed manifest can reach tool handlers. The included handlers are safe local demonstrations. Created artifacts are content-addressed, immutable references whose identifiers include tenant and logical-name context. Verification re-reads the stored bytes, recomputes the digest and size, and compares the exact expected logical names.
 
 ## 8. Verification closes the run
 
-The control plane checks non-empty runtime output, action success and expected artifact count. Only then does it append conversation memory, save a checkpoint, record completion and emit the terminal event.
+The control plane checks non-empty runtime output, action success, stored-byte integrity and exact expected artifact names. Only then does it append conversation memory, save a checkpoint, record completion and emit the terminal event.
 
 Failure and cancellation also terminalize any pending or executing action manifest. This prevents an orphaned approval from surviving the run that created it.
 
 ## 9. Graph work preserves topology
 
 For decomposed work, `WorkflowGraph` rejects unknown dependencies, duplicate nodes, self-dependencies and cycles. The scheduler runs only nodes in the current ready wave. Downstream nodes are skipped with dependency context unless they explicitly opt into continuation.
+
+## 10. Streams make liveness explicit
+
+The public stream contract distinguishes deltas, heartbeats and terminal events. A healthy heartbeat renews activity. An inactivity cutoff preserves visible partial output as a terminal `done`; a stall with no output becomes `incomplete`. Early end-of-stream without any terminal event is an error, and nothing may emit after the first terminal.
+
+## 11. Retrieval and protocols preserve boundaries
+
+Task-state retrieval requires the same tenant, named vector space and declared dimension contract before similarity is computed. Protocol adapters are registered explicitly and may receive only capabilities they declared. The public implementation contains no real endpoint, credential, transport or production embedding policy.
 
 The result is a small but real control plane: its complexity comes from explicit contracts across failure, authority, concurrency, state and evidence—not from counting model calls.

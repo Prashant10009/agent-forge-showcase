@@ -46,14 +46,23 @@ class ControlPrimitiveTests(unittest.TestCase):
     def test_budget_commit_charges_actual_not_reserved(self):
         ledger = BudgetLedger()
         ledger.reserve("a", "tenant", 0.8, 1.0)
-        self.assertAlmostEqual(ledger.commit("a", 0.25), 0.55)
+        self.assertAlmostEqual(ledger.commit("a", "tenant", 0.25), 0.55)
         self.assertAlmostEqual(ledger.spent("tenant"), 0.25)
 
     def test_budget_release_does_not_charge(self):
         ledger = BudgetLedger()
         ledger.reserve("a", "tenant", 0.4, 1.0)
-        self.assertEqual(ledger.release("a"), 0.4)
+        self.assertEqual(ledger.release("a", "tenant"), 0.4)
         self.assertEqual(ledger.spent("tenant"), 0.0)
+
+    def test_same_run_id_is_independent_across_tenants(self):
+        ledger = BudgetLedger()
+        ledger.reserve("shared", "tenant-a", 0.4, 1.0)
+        ledger.reserve("shared", "tenant-b", 0.3, 1.0)
+        ledger.commit("shared", "tenant-a", 0.2)
+        ledger.commit("shared", "tenant-b", 0.1)
+        self.assertAlmostEqual(ledger.spent("tenant-a"), 0.2)
+        self.assertAlmostEqual(ledger.spent("tenant-b"), 0.1)
 
     def test_capacity_claim_is_released(self):
         capacity = CapacityRegistry()

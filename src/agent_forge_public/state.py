@@ -20,6 +20,10 @@ class InvalidTransition(RuntimeError):
     pass
 
 
+class ArtifactIntegrityError(RuntimeError):
+    pass
+
+
 @dataclass(frozen=True, slots=True)
 class MemoryRecord:
     record_id: str
@@ -194,6 +198,26 @@ class ArtifactStore:
             if ref.tenant_id != tenant_id:
                 raise TenantBoundaryError("artifact belongs to another tenant")
             return ref, bytes(self._content[artifact_id])
+
+    def verify(
+        self,
+        artifact_id: str,
+        tenant_id: str,
+        *,
+        expected_name: str | None = None,
+        expected_media_type: str | None = None,
+    ) -> ArtifactRef:
+        """Recompute stored-byte integrity and enforce the declared contract."""
+
+        ref, content = self.get(artifact_id, tenant_id)
+        digest = hashlib.sha256(content).hexdigest()
+        if digest != ref.digest or len(content) != ref.size:
+            raise ArtifactIntegrityError("artifact bytes do not match immutable metadata")
+        if expected_name is not None and ref.logical_name != expected_name:
+            raise ArtifactIntegrityError("artifact logical name does not match expectation")
+        if expected_media_type is not None and ref.media_type != expected_media_type:
+            raise ArtifactIntegrityError("artifact media type does not match expectation")
+        return ref
 
     def list_for_tenant(self, tenant_id: str) -> tuple[ArtifactRef, ...]:
         with self._lock:

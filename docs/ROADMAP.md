@@ -9,7 +9,6 @@
 
 ## Next
 
-- Add concise architecture decision records for major private-system boundaries.
 - Publish sanitized benchmark methodology without private evaluation data.
 - Add a short captioned walkthrough video sourced from the public sample-data tour.
 - Add automated accessibility checks for committed documentation and redirect markup.

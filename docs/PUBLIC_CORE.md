@@ -62,12 +62,15 @@ Selection is not authority. Approval is not execution. Execution is not completi
 | `manifests.py` | Exact-action approval registry | Approval is bound to action fingerprint, tenant, session, run and scope |
 | `actions.py` | Typed safe-local tools | Only an atomically claimed manifest can execute |
 | `state.py` | Tenant memory, checkpoints, run states and immutable artifacts | Reads cannot cross a tenant boundary |
+| `streaming.py` | Delta, heartbeat, inactivity and terminal stream contracts | Partial output survives a stall and every stream terminates exactly once |
+| `task_state.py` | Tenant-scoped vector-space and similarity contracts | Dimensions, vector space and tenant identity must match before retrieval |
+| `protocols.py` | Neutral MCP/A2A capability envelopes | Only registered protocols and declared capabilities may be invoked |
 | `workflow_graph.py` | DAG validation and parallel wave scheduler | Topology and dependency failure context are preserved |
 | `control_plane.py` | Full vertical slice | Failure, cancellation and success terminalize both run and action capability |
 | `scenarios.py` | Recruiter-readable system demonstrations | Happy, degraded, governed and denied paths stay deterministic |
 | `cli.py` | Terminal entry point | Detailed evidence is available without a GUI clone |
 
-The earlier compact modules remain as an introductory layer. The control-plane modules above are the deeper system demonstration.
+`PublicControlPlane` is the one supported orchestration entry point. The CLI, scenarios and example all use it, so the repository does not present a second simplified implementation as a competing source of truth.
 
 ## What the test suite proves
 
@@ -80,14 +83,19 @@ The standard-library unit suite covers more than happy paths. It asserts:
 - expired and completed approval behavior;
 - one terminal event and late-event rejection;
 - tenant-scoped memory, circuits, outcome evidence and artifacts;
+- tenant-qualified budget reservations even when different tenants reuse a run identifier;
 - atomic budget reservation and capacity release;
+- capacity contention without corrupting runtime-health or circuit evidence;
 - transient fallback and permanent-failure stop behavior;
 - runtime compatibility, health, circuit and tool-authority exclusions;
 - approval pause, rejection without side effects and manifest terminalization;
-- artifact verification, memory persistence and checkpoint creation;
+- stored-byte artifact integrity, exact expected-name matching, memory persistence and checkpoint creation;
+- partial-preserving inactivity cutoff, early-EOF detection and exactly one stream terminal;
+- tenant-scoped vector retrieval with strict space and dimension contracts;
+- registered protocol and declared-capability enforcement;
 - DAG cycle detection, parallel waves, downstream skips and failure context.
 
-See [SYSTEM_WALKTHROUGH.md](SYSTEM_WALKTHROUGH.md) for a narrated run and [FAILURE_MODEL.md](FAILURE_MODEL.md) for the operational contract.
+See [SYSTEM_WALKTHROUGH.md](SYSTEM_WALKTHROUGH.md) for a narrated run, [QUALITY_EVIDENCE.md](QUALITY_EVIDENCE.md) for the claim-to-test map, [decisions/README.md](decisions/README.md) for the architecture decisions, and [FAILURE_MODEL.md](FAILURE_MODEL.md) for the operational contract.
 
 ## Deliberate public substitutions
 

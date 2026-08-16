@@ -20,6 +20,8 @@
   &nbsp;|&nbsp;
   <a href="docs/PUBLIC_CORE.md">RUNNABLE CORE</a>
   &nbsp;|&nbsp;
+  <a href="docs/QUALITY_EVIDENCE.md">QUALITY EVIDENCE</a>
+  &nbsp;|&nbsp;
   <a href="docs/BRAND_IDENTITY.md">BRAND</a>
 </p>
 
@@ -38,7 +40,7 @@ This repository is its public engineering record. It makes the product thinking,
 |---|---|
 | Product judgment | Authentic website and tour captures, positioning, workflows, and operator controls |
 | System design | Request lifecycle, package map, routing, review, tools, state, and observability |
-| Engineering depth | Runnable control plane, 64 tests, verified codebase inventory, failure model, architecture notes, and decision records |
+| Engineering depth | One canonical runnable control plane, 72 tests, verified codebase inventory, failure model, and architecture decisions |
 | Delivery discipline | CI, CodeQL, dependency review, Dependabot, protected branches, and releases |
 | Publication judgment | Explicit public/private boundary backed by automated leak scanning |
 
@@ -46,7 +48,7 @@ This repository is its public engineering record. It makes the product thinking,
 
 1. Enter [myagentforge.ai](https://myagentforge.ai/).
 2. Walk the [existing product tour](https://myagentforge.ai/tour_factual.html#demo).
-3. Run the [provider-neutral public control plane](docs/PUBLIC_CORE.md), then follow the [system walkthrough](docs/SYSTEM_WALKTHROUGH.md) and [failure model](docs/FAILURE_MODEL.md).
+3. Run the [provider-neutral public control plane](docs/PUBLIC_CORE.md), then follow the [system walkthrough](docs/SYSTEM_WALKTHROUGH.md), [quality evidence](docs/QUALITY_EVIDENCE.md), and [failure model](docs/FAILURE_MODEL.md).
 4. Inspect the [public-boundary gate](scripts/check-public-boundary.mjs), [Python tests](tests_python/), and [repository tests](tests/repository.test.mjs).
 5. Review the Actions, security configuration, dependency updates, issues, and releases.
 
@@ -67,7 +69,7 @@ Runtime selection, execution authority, and result verification remain separate 
 
 ## Run the public core
 
-The Python package under [`src/agent_forge_public`](src/agent_forge_public) is a working reference implementation of that lifecycle. Its deeper control-plane path includes typed contracts, tenant-scoped state, bounded review, evidence routing, circuits, deadlines, budget reservation, capacity claims, compatible fallback, exact-action approval manifests, immutable artifacts, verification, outcome feedback, terminal-event enforcement, and dependency-aware workflow scheduling.
+The Python package under [`src/agent_forge_public`](src/agent_forge_public) is a working reference implementation of that lifecycle. Its single canonical control-plane path includes typed contracts, tenant-scoped state, bounded review, evidence routing, circuits, deadlines, budget reservation, capacity claims, compatible fallback, exact-action approval manifests, immutable artifact verification, outcome feedback, terminal stream semantics, task-state vector boundaries, protocol capability envelopes, and dependency-aware workflow scheduling.
 
 ```bash
 python -m pip install -e .
@@ -77,7 +79,7 @@ agent-forge-public lab all
 python -m unittest discover -s tests_python -v
 ```
 
-It has no external package dependency, account requirement, provider credential, network call, or production configuration. The full module map is in [docs/PUBLIC_CORE.md](docs/PUBLIC_CORE.md); the production-concern-to-public-evidence rationale is in [docs/PUBLIC_IMPLEMENTATION_MAP.md](docs/PUBLIC_IMPLEMENTATION_MAP.md).
+It has no external package dependency, account requirement, provider credential, network call, or production configuration. The full module map is in [docs/PUBLIC_CORE.md](docs/PUBLIC_CORE.md); the production-concern-to-public-evidence rationale is in [docs/PUBLIC_IMPLEMENTATION_MAP.md](docs/PUBLIC_IMPLEMENTATION_MAP.md). A compact [sanitized event trace](examples/governed_trace.json) lets reviewers inspect a complete governed lifecycle without running the CLI.
 
 ## The existing product
 
@@ -115,7 +117,7 @@ Responsibility groups include:
 - **Runtimes:** model clients, provider integrations, optional user runtimes, vision, and fine-tuning support.
 - **Trust:** safety boundaries, permissions, approvals, traces, and observability.
 
-The detailed public map is in [docs/CODEBASE_MAP.md](docs/CODEBASE_MAP.md). The snapshot includes roughly 80,000 lines of Python in the main application package and roughly 19,000 lines across 119 Python test files; those counts communicate scale, while the map describes responsibilities rather than proprietary implementations.
+The detailed public map is in [docs/CODEBASE_MAP.md](docs/CODEBASE_MAP.md). This dated snapshot includes 90,937 lines of Python in the main application package and 23,411 lines across 119 Python test files; those counts communicate scale, while the map describes responsibilities rather than proprietary implementations.
 
 ## Public/private boundary
 
@@ -140,7 +142,7 @@ It publishes system responsibilities, authentic public visuals, codebase structu
 Every pull request runs:
 
 ```text
-repository tests -> public-core tests -> public-boundary scan -> link validation -> dossier build -> CodeQL
+repository tests -> Python 3.11/3.12 tests -> compile/package smoke -> public-boundary scan -> links -> dossier -> JavaScript/Python CodeQL
 ```
 
 The repository also uses dependency review, Dependabot, protected `main`, code-owner review, secret scanning, push protection, build artifacts, issue forms, pull-request templates, and tagged releases.
