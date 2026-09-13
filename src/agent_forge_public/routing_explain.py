@@ -9,7 +9,7 @@ from __future__ import annotations
 from typing import Any
 
 from .contracts import CandidateScore, RoutingPlan
-from .roles import AgentRole
+from .worker_templates import WorkerKind
 
 
 def _candidate_view(candidate: CandidateScore) -> dict[str, Any]:
@@ -25,11 +25,11 @@ def _candidate_view(candidate: CandidateScore) -> dict[str, Any]:
 def explain_plan(
     plan: RoutingPlan,
     *,
-    role: AgentRole | str | None = None,
+    worker: WorkerKind | str | None = None,
 ) -> dict[str, Any]:
     """Return an audit-friendly explanation of a public routing plan."""
 
-    resolved_role = AgentRole(role).value if role is not None else None
+    resolved_worker = WorkerKind(worker).value if worker is not None else None
     selected = next(
         candidate
         for candidate in plan.candidates
@@ -41,16 +41,12 @@ def explain_plan(
         if not candidate.eligible
     ]
     eligible = sorted(
-        (
-            candidate
-            for candidate in plan.candidates
-            if candidate.eligible
-        ),
+        (candidate for candidate in plan.candidates if candidate.eligible),
         key=lambda candidate: (-candidate.total, candidate.runtime_name),
     )
     return {
         "run_id": plan.run_id,
-        "agent_role": resolved_role,
+        "specialist_worker": resolved_worker,
         "selected_runtime": plan.selected,
         "selected_score": selected.total,
         "fallbacks": list(plan.fallbacks),
