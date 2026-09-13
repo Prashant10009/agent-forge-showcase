@@ -6,13 +6,15 @@
 
 <p align="center">
   <strong>ONE AI SHOULD NOT HAVE TO DO EVERYTHING.</strong><br>
-  <sub>Agent Forge coordinates agents, specialist models, tools, memory, and governed actions through one orchestration layer.</sub>
+  <sub>Agent Forge coordinates control systems, specialist workers, models, tools, memory, and governed actions through one orchestration layer.</sub>
 </p>
 
 <p align="center">
   <a href="https://myagentforge.ai/"><strong>WEBSITE</strong></a>
   &nbsp;|&nbsp;
   <a href="https://myagentforge.ai/tour_factual.html#demo"><strong>PRODUCT TOUR</strong></a>
+  &nbsp;|&nbsp;
+  <a href="docs/EXECUTABLE_PROOF.md"><strong>EXECUTABLE PROOF</strong></a>
   &nbsp;|&nbsp;
   <a href="docs/PRODUCTION_CAPABILITIES.md"><strong>PRODUCTION CAPABILITIES</strong></a>
   &nbsp;|&nbsp;
@@ -29,54 +31,60 @@
 
 Thousands of models and specialist runtimes are being built for coding, reasoning, research, documents, media, vision, business workflows, and domain-specific work. Agent Forge is built around a simple premise:
 
-**agents have responsibilities; models are execution resources.**
+**control logic, specialist-worker responsibility, and model/runtime execution should not be collapsed into one object.**
 
-A coding agent should not permanently *be* one model. A research agent should not permanently *be* another. The role can stay stable while the orchestration layer selects a compatible execution resource using capability, health, availability, limits, cost, latency, and bounded outcome evidence.
+The production system therefore separates Python control and intelligence subsystems from reusable configured specialist workers and from the model/backend resources used to execute work. A configured coding worker does not permanently *be* one model. The worker responsibility can remain stable while the routing layer selects a compatible execution resource using capability, health, availability, limits, cost, latency, and bounded evidence.
 
-Agent Forge turns that idea into a system that can classify a request, assemble context, coordinate specialist agents, select runtimes, govern consequential actions, verify results, persist state, and learn from outcomes without treating any single model as the whole product.
+Agent Forge turns that separation into a system that can classify a request, assemble persistent context, deliberate, coordinate and dispatch specialist workers, select runtimes, govern consequential actions, verify results, persist state, and use measured evidence in later decisions without treating any single model as the product.
 
 ```mermaid
 flowchart LR
-  U["User / business task"] --> O["Agent Forge orchestrator"]
-  O --> C{"Simple or coordinated work?"}
-  C -- "simple" --> R["Runtime selection"]
-  C -- "coordinated" --> A["Specialist agents + review"]
-  A --> R
-  R --> M1["Specialist model/runtime"]
-  R --> M2["Specialist model/runtime"]
-  R --> M3["Specialist model/runtime"]
+  U["User / business task"] --> O["Python Orchestrator"]
+  O --> T["Trimurti / planning / control"]
+  O --> S["State + memory + governance"]
+  T --> W["Configured specialist workers"]
+  S --> W
+  W --> R["Runtime selection"]
+  R --> M1["Model / backend runtime"]
+  R --> M2["Model / backend runtime"]
+  R --> M3["Model / backend runtime"]
   M1 --> V["Verification + governed actions"]
   M2 --> V
   M3 --> V
   V --> X["Result + trace + persistent state"]
-  X -. "bounded outcome evidence" .-> R
+  X -. "Karma / runtime evidence" .-> R
+  R -. "runtime state" .-> Q["RTA"]
 ```
 
-The important separation is between **role**, **execution**, and **authority**. The agent defines responsibility. The routing layer chooses where work should run. Governance controls what the selected runtime is allowed to do. Verification determines whether the result can be accepted.
+The key boundaries are **control**, **worker responsibility**, **execution**, and **authority**. Orchestrator, Trimurti, Sentinel gates, Karma, and RTA are not presented as generic YAML workers. Reusable specialist workers form a separate configured layer. Runtime selection decides where their work executes, while governance controls what actions are allowed and verification determines whether the result can be accepted.
 
 ## What exists in production
 
-The deployed product includes responsibilities for multi-model orchestration, evidence-aware routing, specialist-agent coordination, persistent context, review, tool governance, cost controls, failure handling, observability, interoperability, structured outputs, and artifact verification.
+The deployed product includes responsibilities for multi-model orchestration, reusable specialist-worker dispatch, persistent context, deliberation, runtime-state management, evidence-aware routing, tool governance, cost controls, failure handling, observability, interoperability, structured outputs, and artifact verification.
 
-Three Agent Forge concepts make the intelligence layer easier to reason about publicly:
+Several Agent Forge subsystems are important to the public architecture:
 
-- **Trimurti** — bounded multi-perspective review for selected significant work.
-- **Karma** — outcome evidence used to inform later execution decisions without becoming unquestioned truth.
-- **RTA signals** — additional context for selecting an execution slot independently of the agent role.
+- **Orchestrator** — the Python control system that owns the request lifecycle and wires routing, memory, Trimurti, tools, and worker creation.
+- **Trimurti** — a Python deliberation subsystem with per-request and background components, memory, sentinel integration, and pipeline responsibilities.
+- **Sentinel gates** — validation/gating machinery at selected control boundaries.
+- **Karma** — monitoring plus outcome/capability evidence that can inform routing and system-health decisions.
+- **RTA** — a runtime-state and decision subsystem with backend lifecycle, flow/capacity, and strategy components.
+- **Configured specialist workers** — reusable worker definitions instantiated and dispatched for specialist work.
+- **Execution runtimes** — replaceable model/backend resources used to perform computation.
 
-The exact production prompts, routing policy, weights, thresholds, learned parameters, provider inventory, credentials, and operational configuration remain private. The public capability map explains the system at the level appropriate for external review: [Production capabilities](docs/PRODUCTION_CAPABILITIES.md).
+The exact production prompts, routing policy, feature construction, weights, thresholds, learned parameters, worker definitions, provider inventory, credentials, and operational configuration remain private. The public capability map explains the system at the level appropriate for external review: [Production capabilities](docs/PRODUCTION_CAPABILITIES.md).
 
-For a concrete but fully synthetic example, inspect [`examples/specialist_routing_trace.json`](examples/specialist_routing_trace.json). It shows one agent role evaluated against abstract execution resources, followed by governed authority, verification, and bounded feedback without exposing production policy.
+For runnable evidence of the architectural boundary, see [Executable proof](docs/EXECUTABLE_PROOF.md). It demonstrates, with synthetic provider-neutral code, that control subsystems remain distinct from configured specialist workers and that a worker responsibility can remain stable while runtime selection changes. For a compact static trace, inspect [`examples/specialist_routing_trace.json`](examples/specialist_routing_trace.json).
 
 ## What you can inspect here
 
-This repository is not a screenshots-only portfolio. It contains an independently authored, provider-neutral implementation of the central Agent Forge control-plane pattern so reviewers can execute the architecture without receiving the private production engine.
+This repository is not a screenshots-only portfolio. It contains an independently authored, provider-neutral implementation of central Agent Forge control-plane patterns so reviewers can execute architectural ideas without receiving the private production engine.
 
 | What to evaluate | Public evidence |
 |---|---|
-| Product thesis | Multi-model specialist routing with agents separated from models |
-| System design | Request lifecycle, routing, review, tools, state, governance, and verification |
-| Executable engineering | Runnable public control plane with typed contracts and deterministic fixtures |
+| Product thesis | Control systems, configured specialist workers, and execution runtimes are distinct layers |
+| System design | Request lifecycle, deliberation, routing, tools, state, governance, and verification |
+| Executable engineering | Runnable public control plane plus worker/runtime separation demo and deterministic fixtures |
 | Reliability | Failure model, deadlines, fallback, circuits, terminal-state rules, and artifact checks |
 | Quality | Python contract tests, repository tests, CI, CodeQL, dependency review, and release checks |
 | Production depth | Sanitized capability map, codebase map, authentic product captures, and dated structural inventory |
@@ -85,9 +93,9 @@ This repository is not a screenshots-only portfolio. It contains an independentl
 
 1. Visit [myagentforge.ai](https://myagentforge.ai/) for the product thesis and existing product surface.
 2. Walk the [existing product tour](https://myagentforge.ai/tour_factual.html#demo) for the real shell with labeled sample data.
-3. Read [Production capabilities](docs/PRODUCTION_CAPABILITIES.md) and [Architecture](docs/ARCHITECTURE.md) to understand how Agent Forge separates agents, runtimes, governance, and evidence.
-4. Inspect the [synthetic specialist-routing trace](examples/specialist_routing_trace.json), then run the [provider-neutral public core](docs/PUBLIC_CORE.md).
-5. Inspect the [system walkthrough](docs/SYSTEM_WALKTHROUGH.md), [quality evidence](docs/QUALITY_EVIDENCE.md), [failure model](docs/FAILURE_MODEL.md), and repository automation.
+3. Read [Executable proof](docs/EXECUTABLE_PROOF.md) for the runnable control / configured-worker / runtime boundary.
+4. Read [Production capabilities](docs/PRODUCTION_CAPABILITIES.md) and [Architecture](docs/ARCHITECTURE.md) for the broader verified system map.
+5. Run the [provider-neutral public core](docs/PUBLIC_CORE.md), then inspect the [system walkthrough](docs/SYSTEM_WALKTHROUGH.md), [quality evidence](docs/QUALITY_EVIDENCE.md), and [failure model](docs/FAILURE_MODEL.md).
 
 ## Run the public core
 
@@ -95,6 +103,7 @@ The Python package under [`src/agent_forge_public`](src/agent_forge_public) is a
 
 ```bash
 python -m pip install -e .
+python examples/worker_runtime_learning_demo.py
 agent-forge-public route "Implement and verify a Python parser"
 agent-forge-public demo --action write --approve "Implement and verify a Python parser"
 agent-forge-public lab all
@@ -133,17 +142,17 @@ Read-only inventory captured on 2026-08-15:
 Responsibility groups include:
 
 - **Experience:** API, chat, projects, files, Data Grid, and browser product surfaces.
-- **Orchestration:** pipelines, routing, agents, architecture work, and tool dispatch.
-- **Intelligence:** Karma evidence, Trimurti review, RTA signals, evaluation, and scoring.
-- **State:** database, storage, memory, vector retrieval, sessions, and checkpoints.
+- **Orchestration:** pipelines, routing, configured workers, architecture work, and tool dispatch.
+- **Intelligence:** Karma, Trimurti, RTA, evaluation, routing evidence, and scoring.
+- **State:** database, storage, memory, vector retrieval, sessions, plans, and checkpoints.
 - **Runtimes:** model clients, provider integrations, optional user runtimes, vision, and fine-tuning support.
-- **Trust:** safety boundaries, permissions, approvals, traces, and observability.
+- **Trust:** safety boundaries, permissions, approvals, sentinel validation, traces, and observability.
 
 The detailed public map is in [docs/CODEBASE_MAP.md](docs/CODEBASE_MAP.md). This dated snapshot includes 90,937 lines of Python in the main application package and 23,411 lines across 119 Python test files. Those counts communicate scale; the map describes responsibilities rather than proprietary implementations.
 
 ## Why the production engine remains private
 
-The value of a public showcase is to make the architecture and engineering inspectable, not to publish credentials, customer/runtime data, operational configuration, private prompts, or the learned policy that determines production behavior.
+The value of a public showcase is to make the architecture and engineering inspectable, not to publish credentials, customer/runtime data, operational configuration, private prompts, worker definitions, or the learned policy that determines production behavior.
 
 This repository therefore publishes architecture, responsibility maps, authentic public visuals, selected engineering decisions, deterministic reference code, tests, and repository automation while keeping the production application and its history private.
 
@@ -151,7 +160,7 @@ This repository therefore publishes architecture, responsibility maps, authentic
 |---|---|
 | Architecture and responsibility maps | Production application source and Git history |
 | Sanitized production capability descriptions | Prompts, policies, weights, thresholds, and learned parameters |
-| Provider-neutral reference core and tests | Proprietary adapters and runtime-selection implementation |
+| Provider-neutral reference core and tests | Proprietary adapters, worker definitions, and runtime-selection implementation |
 | Authentic public product captures | Authenticated application bundles and private product state |
 | Repository checks and security controls | Credentials, internal configuration, private traces, and customer/session data |
 
