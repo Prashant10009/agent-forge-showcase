@@ -1,0 +1,60 @@
+{
+  "example": "sanitized-specialist-routing",
+  "synthetic": true,
+  "purpose": "Demonstrate the public Agent Forge separation between agent role, runtime selection, governance, verification, and outcome evidence without exposing production policy.",
+  "request": {
+    "task": "Implement and verify a small parser change",
+    "agent_role": "coding",
+    "requires_tools": true,
+    "requires_governed_write": true
+  },
+  "routing": {
+    "eligible_signals": [
+      "task capability",
+      "runtime health",
+      "availability",
+      "resource limits",
+      "cost envelope",
+      "latency envelope",
+      "bounded prior outcome evidence"
+    ],
+    "candidates": [
+      {
+        "runtime": "specialist-runtime-a",
+        "status": "eligible",
+        "public_reason": "coding-compatible and healthy"
+      },
+      {
+        "runtime": "general-runtime-b",
+        "status": "eligible",
+        "public_reason": "compatible fallback"
+      },
+      {
+        "runtime": "specialist-runtime-c",
+        "status": "excluded",
+        "public_reason": "temporarily unavailable"
+      }
+    ],
+    "selected": "specialist-runtime-a",
+    "selection_note": "The example intentionally omits production scores, weights, thresholds, inventories, prompts, and learned parameters."
+  },
+  "authority": {
+    "runtime_selection_grants_write_permission": false,
+    "requested_action": "write",
+    "governance_state": "approved-for-captured-action-only"
+  },
+  "execution": {
+    "result": "completed",
+    "fallback_used": false
+  },
+  "verification": {
+    "structured_result_checked": true,
+    "artifact_checked": true,
+    "terminal_state": "success"
+  },
+  "feedback": {
+    "recorded_as": "bounded-outcome-evidence",
+    "may_inform_future_selection": true,
+    "treated_as_ground_truth": false
+  }
+}
