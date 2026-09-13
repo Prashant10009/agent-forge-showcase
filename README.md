@@ -5,8 +5,8 @@
 </p>
 
 <p align="center">
-  <strong>FIRE MEETS MACHINE.</strong><br>
-  <sub>A private AI workspace that decides where work should run.</sub>
+  <strong>ONE AI SHOULD NOT HAVE TO DO EVERYTHING.</strong><br>
+  <sub>Agent Forge coordinates agents, specialist models, tools, memory, and governed actions through one orchestration layer.</sub>
 </p>
 
 <p align="center">
@@ -14,62 +14,82 @@
   &nbsp;|&nbsp;
   <a href="https://myagentforge.ai/tour_factual.html#demo"><strong>PRODUCT TOUR</strong></a>
   &nbsp;|&nbsp;
-  <a href="docs/ARCHITECTURE.md">ARCHITECTURE</a>
+  <a href="docs/PRODUCTION_CAPABILITIES.md"><strong>PRODUCTION CAPABILITIES</strong></a>
   &nbsp;|&nbsp;
-  <a href="docs/CODEBASE_MAP.md">CODEBASE MAP</a>
+  <a href="docs/ARCHITECTURE.md">ARCHITECTURE</a>
   &nbsp;|&nbsp;
   <a href="docs/PUBLIC_CORE.md">RUNNABLE CORE</a>
   &nbsp;|&nbsp;
   <a href="docs/QUALITY_EVIDENCE.md">QUALITY EVIDENCE</a>
-  &nbsp;|&nbsp;
-  <a href="docs/BRAND_IDENTITY.md">BRAND</a>
 </p>
 
 ---
 
-## The work
+## The idea
 
-Agent Forge discovers configured models, routes requests using capability, health, limits, and outcome evidence, coordinates agents and dependency-aware work, stores persistent context, governs consequential actions, and records enough evidence to explain what happened.
+Thousands of models and specialist runtimes are being built for coding, reasoning, research, documents, media, vision, business workflows, and domain-specific work. Agent Forge is built around a simple premise:
 
-This repository is its public engineering record. It makes the product thinking, system architecture, codebase shape, security posture, and delivery discipline inspectable without publishing the private production implementation. It also contains a runnable, independently authored reference core so reviewers can execute the central orchestration pattern rather than only read about it.
+**agents have responsibilities; models are execution resources.**
 
-> **PUBLICATION BOUNDARY**
-> No replica UI. No synthetic replacement product. No production source. The provider-neutral public core demonstrates architecture and control flow; it is not production policy. The website and tour linked above are the existing Agent Forge product surfaces.
+A coding agent should not permanently *be* one model. A research agent should not permanently *be* another. The role can stay stable while the orchestration layer selects a compatible execution resource using capability, health, availability, limits, cost, latency, and bounded outcome evidence.
 
-| What to evaluate | Evidence in this repository |
-|---|---|
-| Product judgment | Authentic website and tour captures, positioning, workflows, and operator controls |
-| System design | Request lifecycle, package map, routing, review, tools, state, and observability |
-| Engineering depth | One canonical runnable control plane, 72 tests, verified codebase inventory, failure model, and architecture decisions |
-| Delivery discipline | CI, CodeQL, dependency review, Dependabot, protected branches, and releases |
-| Publication judgment | Explicit public/private boundary backed by automated leak scanning |
-
-## Start here
-
-1. Enter [myagentforge.ai](https://myagentforge.ai/).
-2. Walk the [existing product tour](https://myagentforge.ai/tour_factual.html#demo).
-3. Run the [provider-neutral public control plane](docs/PUBLIC_CORE.md), then follow the [system walkthrough](docs/SYSTEM_WALKTHROUGH.md), [quality evidence](docs/QUALITY_EVIDENCE.md), and [failure model](docs/FAILURE_MODEL.md).
-4. Inspect the [public-boundary gate](scripts/check-public-boundary.mjs), [Python tests](tests_python/), and [repository tests](tests/repository.test.mjs).
-5. Review the Actions, security configuration, dependency updates, issues, and releases.
-
-## How work moves
+Agent Forge turns that idea into a system that can classify a request, assemble context, coordinate specialist agents, select runtimes, govern consequential actions, verify results, persist state, and learn from outcomes without treating any single model as the whole product.
 
 ```mermaid
 flowchart LR
-  A["Identity + request"] --> B["Tenant context + review"]
-  B --> C["Eligibility + evidence routing"]
-  C --> D["Exact action manifest"]
-  D --> E["Bounded runtime + fallback"]
-  E --> F["Tools + artifact verification"]
-  F --> G["Terminal event + checkpoint"]
-  G -. "outcome evidence" .-> C
+  U["User / business task"] --> O["Agent Forge orchestrator"]
+  O --> C{"Simple or coordinated work?"}
+  C -- "simple" --> R["Runtime selection"]
+  C -- "coordinated" --> A["Specialist agents + review"]
+  A --> R
+  R --> M1["Specialist model/runtime"]
+  R --> M2["Specialist model/runtime"]
+  R --> M3["Specialist model/runtime"]
+  M1 --> V["Verification + governed actions"]
+  M2 --> V
+  M3 --> V
+  V --> X["Result + trace + persistent state"]
+  X -. "bounded outcome evidence" .-> R
 ```
 
-Runtime selection, execution authority, and result verification remain separate concerns. That separation is what makes the system observable, governable, and replaceable at the runtime edge.
+The important separation is between **role**, **execution**, and **authority**. The agent defines responsibility. The routing layer chooses where work should run. Governance controls what the selected runtime is allowed to do. Verification determines whether the result can be accepted.
+
+## What exists in production
+
+The deployed product includes responsibilities for multi-model orchestration, evidence-aware routing, specialist-agent coordination, persistent context, review, tool governance, cost controls, failure handling, observability, interoperability, structured outputs, and artifact verification.
+
+Three Agent Forge concepts make the intelligence layer easier to reason about publicly:
+
+- **Trimurti** — bounded multi-perspective review for selected significant work.
+- **Karma** — outcome evidence used to inform later execution decisions without becoming unquestioned truth.
+- **RTA signals** — additional context for selecting an execution slot independently of the agent role.
+
+The exact production prompts, routing policy, weights, thresholds, learned parameters, provider inventory, credentials, and operational configuration remain private. The public capability map explains the system at the level appropriate for external review: [Production capabilities](docs/PRODUCTION_CAPABILITIES.md).
+
+## What you can inspect here
+
+This repository is not a screenshots-only portfolio. It contains an independently authored, provider-neutral implementation of the central Agent Forge control-plane pattern so reviewers can execute the architecture without receiving the private production engine.
+
+| What to evaluate | Public evidence |
+|---|---|
+| Product thesis | Multi-model specialist routing with agents separated from models |
+| System design | Request lifecycle, routing, review, tools, state, governance, and verification |
+| Executable engineering | Runnable public control plane with typed contracts and deterministic fixtures |
+| Reliability | Failure model, deadlines, fallback, circuits, terminal-state rules, and artifact checks |
+| Quality | Python contract tests, repository tests, CI, CodeQL, dependency review, and release checks |
+| Production depth | Sanitized capability map, codebase map, authentic product captures, and dated structural inventory |
+
+## Start here
+
+1. Visit [myagentforge.ai](https://myagentforge.ai/) for the product thesis and existing product surface.
+2. Walk the [product tour](https://myagentforge.ai/tour_factual.html#demo) for the real shell with labeled sample data.
+3. Read [Production capabilities](docs/PRODUCTION_CAPABILITIES.md) and [Architecture](docs/ARCHITECTURE.md) to understand how Agent Forge separates agents, runtimes, governance, and evidence.
+4. Run the [provider-neutral public core](docs/PUBLIC_CORE.md).
+5. Inspect the [system walkthrough](docs/SYSTEM_WALKTHROUGH.md), [quality evidence](docs/QUALITY_EVIDENCE.md), [failure model](docs/FAILURE_MODEL.md), and repository automation.
 
 ## Run the public core
 
-The Python package under [`src/agent_forge_public`](src/agent_forge_public) is a working reference implementation of that lifecycle. Its single canonical control-plane path includes typed contracts, tenant-scoped state, bounded review, evidence routing, circuits, deadlines, budget reservation, capacity claims, compatible fallback, exact-action approval manifests, immutable artifact verification, outcome feedback, terminal stream semantics, task-state vector boundaries, protocol capability envelopes, and dependency-aware workflow scheduling.
+The Python package under [`src/agent_forge_public`](src/agent_forge_public) is a working reference implementation of the public lifecycle. Its canonical control-plane path includes typed contracts, tenant-scoped state, bounded review, evidence routing, circuits, deadlines, budget reservation, capacity claims, compatible fallback, exact-action approval manifests, immutable artifact verification, outcome feedback, terminal stream semantics, task-state vector boundaries, protocol capability envelopes, and dependency-aware workflow scheduling.
 
 ```bash
 python -m pip install -e .
@@ -83,7 +103,7 @@ It has no external package dependency, account requirement, provider credential,
 
 ## The existing product
 
-The public website explains why Agent Forge exists and how work moves through it. The existing tour presents the real product shell with clearly labeled sample data. This repository documents those surfaces; it does not rebuild them.
+The website and tour are the canonical product surfaces. This repository documents and demonstrates the engineering behind them rather than rebuilding a second UI.
 
 ![Agent Forge public website](assets/screenshots/website-hero.png)
 
@@ -112,27 +132,28 @@ Responsibility groups include:
 
 - **Experience:** API, chat, projects, files, Data Grid, and browser product surfaces.
 - **Orchestration:** pipelines, routing, agents, architecture work, and tool dispatch.
-- **Intelligence:** Karma evidence, Trimurti review, Rta signals, evaluation, and scoring.
+- **Intelligence:** Karma evidence, Trimurti review, RTA signals, evaluation, and scoring.
 - **State:** database, storage, memory, vector retrieval, sessions, and checkpoints.
 - **Runtimes:** model clients, provider integrations, optional user runtimes, vision, and fine-tuning support.
 - **Trust:** safety boundaries, permissions, approvals, traces, and observability.
 
-The detailed public map is in [docs/CODEBASE_MAP.md](docs/CODEBASE_MAP.md). This dated snapshot includes 90,937 lines of Python in the main application package and 23,411 lines across 119 Python test files; those counts communicate scale, while the map describes responsibilities rather than proprietary implementations.
+The detailed public map is in [docs/CODEBASE_MAP.md](docs/CODEBASE_MAP.md). This dated snapshot includes 90,937 lines of Python in the main application package and 23,411 lines across 119 Python test files. Those counts communicate scale; the map describes responsibilities rather than proprietary implementations.
 
-## Public/private boundary
+## Why the production engine remains private
 
-This repository does not publish production source, Git history, prompts, routing weights, thresholds, credentials, provider inventories, operational configuration, private sessions, evaluation data, or authenticated application bundles. The included public core is new, provider-neutral reference code with documented substitutions.
+The value of a public showcase is to make the architecture and engineering inspectable, not to publish credentials, customer/runtime data, operational configuration, private prompts, or the learned policy that determines production behavior.
 
-It publishes system responsibilities, authentic public visuals, codebase structure, engineering decisions, and inspectable repository automation. The enforceable rules are documented in [docs/PUBLIC_BOUNDARY.md](docs/PUBLIC_BOUNDARY.md).
+This repository therefore publishes architecture, responsibility maps, authentic public visuals, selected engineering decisions, deterministic reference code, tests, and repository automation while keeping the production application and its history private.
 
 | Public here | Private by design |
 |---|---|
-| Architecture and responsibility maps | Production application source and history |
-| Authentic public website captures | Authenticated application bundles |
-| Curated engineering decisions | Prompts, policies, weights, and thresholds |
-| Provider-neutral reference core and tests | Proprietary policies, adapters, and production source |
-| Repository checks and security controls | Credentials, configuration, and runtime data |
-| Clearly labeled structural counts | Customer, session, telemetry, and evaluation data |
+| Architecture and responsibility maps | Production application source and Git history |
+| Sanitized production capability descriptions | Prompts, policies, weights, thresholds, and learned parameters |
+| Provider-neutral reference core and tests | Proprietary adapters and runtime-selection implementation |
+| Authentic public product captures | Authenticated application bundles and private product state |
+| Repository checks and security controls | Credentials, internal configuration, private traces, and customer/session data |
+
+The enforceable rules are documented in [docs/PUBLIC_BOUNDARY.md](docs/PUBLIC_BOUNDARY.md).
 
 ## Repository signals
 
@@ -152,13 +173,11 @@ npm ci
 npm run check
 ```
 
-Repository metadata and documentation point to the existing website and tour. GitHub Pages is intentionally disabled so this repository cannot become a competing product surface.
-
 ## Brand continuity
 
 The public repository follows the established Agent Forge identity: dark, sharp, fire palette, alive but controlled. The triangular flame/A mark, real website imagery, product language, and **Burning Within** signature come from the existing brand system.
 
-The complete public SVG export set includes the primary stacked and horizontal lockups, four icon sizes, static, thinking, topbar, watermark, and monochrome variants. Browse or download every variant from the [official logo asset index](assets/brand/README.md), and see the curated [brand identity notes](docs/BRAND_IDENTITY.md) for usage rules.
+Browse the public SVG variants in the [official logo asset index](assets/brand/README.md), and see [brand identity notes](docs/BRAND_IDENTITY.md) for usage rules.
 
 ## Author and ownership
 
