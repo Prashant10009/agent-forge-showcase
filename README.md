@@ -105,7 +105,7 @@ It has no external package dependency, account requirement, provider credential,
 
 ## The existing product
 
-The website and tour are the canonical product surfaces. This repository documents and demonstrates the engineering behind them rather than rebuilding a second UI.
+The website and existing product tour are the canonical product surfaces. This repository documents those surfaces; it does not rebuild them.
 
 ![Agent Forge public website](assets/screenshots/website-hero.png)
 
