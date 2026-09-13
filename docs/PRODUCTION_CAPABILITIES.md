@@ -36,17 +36,37 @@ The separation matters: an agent's role can remain stable while the model or run
 |---|---|
 | Multi-model orchestration | A single request can be routed, decomposed, delegated, synthesized, and verified across compatible execution resources. |
 | Evidence-aware routing | Selection can consider declared capability plus live operating signals and accumulated outcome evidence rather than a fixed favorite model. |
+| Provider/runtime abstraction | Execution resources sit behind compatible interfaces so the orchestration layer does not need to become one provider-specific application. |
 | Agent coordination | Complex work can be decomposed into dependency-aware tasks and coordinated across specialist agents. |
 | Trimurti review | Selected significant work can receive bounded multi-perspective review before or during execution. |
 | Karma evidence | Model/runtime outcomes contribute evidence that can influence later selection without being treated as infallible truth. |
 | RTA signals | Additional runtime-selection context helps distinguish the role being performed from the execution slot used to perform it. |
-| Persistent context | Conversations, projects, checkpoints, retrieval, and memory can survive beyond a single model call. |
+| Persistent context and checkpoints | Conversations, projects, checkpoints, retrieval, and memory can survive beyond a single model call. |
 | Governed tools | Runtime selection does not itself grant authority to act; consequential actions can be scoped, reviewed, approved, and audited separately. |
 | Cost governance | Execution can be bounded by spend and resource constraints instead of optimizing only for nominal model quality. |
 | Failure handling | Timeouts, health signals, circuit state, cancellation, compatible fallback, and explicit terminal states prevent silent success assumptions. |
 | Evaluation and observability | Traces, structured outcomes, ratings, and evaluation signals provide inspectable evidence about what happened. |
 | Protocol interoperability | Tool and agent interoperability can sit behind controlled interfaces rather than being hard-wired into the orchestration core. |
 | Structured outputs and artifacts | Results can be validated as structured state or immutable artifacts rather than accepted only as free-form text. |
+| Prompt lifecycle | Prompt behavior can be treated as versioned application state rather than invisible strings scattered through the system; production prompt content remains private. |
+| Response reuse | Reusable results can be cached behind bounded validity rules rather than forcing every repeat request through fresh inference. |
+
+## How the responsibilities fit together
+
+The production system spans more than routing. A useful public grouping is:
+
+| Layer | Representative responsibilities |
+|---|---|
+| Experience | Chat, projects, files, structured work, operator state, approvals |
+| Orchestration | Intake, classification, decomposition, dependency planning, dispatch, synthesis |
+| Intelligence | Eligibility, runtime selection, Karma evidence, RTA signals, bounded review |
+| Execution | Runtime/provider adapters, tools, compatible fallback, structured outputs |
+| State | Memory, retrieval, checkpoints, artifacts, run/session state |
+| Trust | Governance, exact action scope, cost/resource boundaries, verification |
+| Quality | Evaluation, tracing, health evidence, explicit terminal states |
+| Interoperability | Controlled tool and agent protocol boundaries |
+
+These are responsibility groups, not a disclosure of the private package structure or execution policy.
 
 ## Conceptual layers
 
@@ -69,6 +89,12 @@ Model confidence and execution authority are separate concerns. Selected work ca
 ### Outcome evidence
 
 Successful and failed executions produce evidence for later decisions. Evidence is scoped and bounded: it informs routing but does not become an unquestioned truth source.
+
+## Inspect a sanitized routing example
+
+[`../examples/specialist_routing_trace.json`](../examples/specialist_routing_trace.json) is a completely synthetic trace showing the public relationship between an agent role, candidate execution resources, a selected runtime, governed write authority, verification, and feedback.
+
+The example intentionally uses neutral runtime names and qualitative reasons. It does not contain real production scores, provider inventory, thresholds, prompts, telemetry, or learned routing parameters.
 
 ## What this repository proves
 
