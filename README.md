@@ -66,6 +66,8 @@ Three Agent Forge concepts make the intelligence layer easier to reason about pu
 
 The exact production prompts, routing policy, weights, thresholds, learned parameters, provider inventory, credentials, and operational configuration remain private. The public capability map explains the system at the level appropriate for external review: [Production capabilities](docs/PRODUCTION_CAPABILITIES.md).
 
+For a concrete but fully synthetic example, inspect [`examples/specialist_routing_trace.json`](examples/specialist_routing_trace.json). It shows one agent role evaluated against abstract execution resources, followed by governed authority, verification, and bounded feedback without exposing production policy.
+
 ## What you can inspect here
 
 This repository is not a screenshots-only portfolio. It contains an independently authored, provider-neutral implementation of the central Agent Forge control-plane pattern so reviewers can execute the architecture without receiving the private production engine.
@@ -84,7 +86,7 @@ This repository is not a screenshots-only portfolio. It contains an independentl
 1. Visit [myagentforge.ai](https://myagentforge.ai/) for the product thesis and existing product surface.
 2. Walk the [product tour](https://myagentforge.ai/tour_factual.html#demo) for the real shell with labeled sample data.
 3. Read [Production capabilities](docs/PRODUCTION_CAPABILITIES.md) and [Architecture](docs/ARCHITECTURE.md) to understand how Agent Forge separates agents, runtimes, governance, and evidence.
-4. Run the [provider-neutral public core](docs/PUBLIC_CORE.md).
+4. Inspect the [synthetic specialist-routing trace](examples/specialist_routing_trace.json), then run the [provider-neutral public core](docs/PUBLIC_CORE.md).
 5. Inspect the [system walkthrough](docs/SYSTEM_WALKTHROUGH.md), [quality evidence](docs/QUALITY_EVIDENCE.md), [failure model](docs/FAILURE_MODEL.md), and repository automation.
 
 ## Run the public core
