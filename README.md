@@ -84,7 +84,7 @@ This repository is not a screenshots-only portfolio. It contains an independentl
 ## Start here
 
 1. Visit [myagentforge.ai](https://myagentforge.ai/) for the product thesis and existing product surface.
-2. Walk the [product tour](https://myagentforge.ai/tour_factual.html#demo) for the real shell with labeled sample data.
+2. Walk the [existing product tour](https://myagentforge.ai/tour_factual.html#demo) for the real shell with labeled sample data.
 3. Read [Production capabilities](docs/PRODUCTION_CAPABILITIES.md) and [Architecture](docs/ARCHITECTURE.md) to understand how Agent Forge separates agents, runtimes, governance, and evidence.
 4. Inspect the [synthetic specialist-routing trace](examples/specialist_routing_trace.json), then run the [provider-neutral public core](docs/PUBLIC_CORE.md).
 5. Inspect the [system walkthrough](docs/SYSTEM_WALKTHROUGH.md), [quality evidence](docs/QUALITY_EVIDENCE.md), [failure model](docs/FAILURE_MODEL.md), and repository automation.
