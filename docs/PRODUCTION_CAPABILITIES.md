@@ -105,3 +105,5 @@ For implementation-level public evidence, continue with `PUBLIC_CORE.md`, `SYSTE
 ## Publication boundary
 
 This page is descriptive, not a production specification. Names of public architectural concepts may match the deployed product, but implementation details remain private. In particular, this repository does not publish production source/history, secrets, internal endpoints, deployment identifiers, provider credentials, prompt text, routing weights or thresholds, private telemetry, customer/session data, or unmerged production work.
+
+The synthetic example and public control-plane code are intentionally independent representations. They should be read as evidence of the architecture and engineering approach, not as a specification from which the private runtime-selection policy can be reconstructed.
