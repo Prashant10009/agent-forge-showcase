@@ -61,3 +61,7 @@ These are recommended practices for builders. They are not a claim that every hi
 The [offline example](../examples/evaluation_learning_loop.py) contains synthetic episodes with task family, actual runtime, verification status, outcome attribution, intervention status, and measured resources. It keeps an audit record for every episode but admits only qualifying outcomes to a public demonstration ledger.
 
 Use it to understand the boundary, then define the richer contract your own application needs. It contains no real training rows, private answer keys, prompts, or production policy.
+
+## Evaluate the control decisions too
+
+The [behavior evaluation](BEHAVIOR_EVALUATION.md) maps eight questions surrounding execution and reports the first measured trivial-message and council-selection candidates. It includes false positives, missed positives, class imbalance, label review, and inactive candidates. The [system guide](HOW_AGENT_FORGE_WORKS.md) shows where those questions arise in a task.

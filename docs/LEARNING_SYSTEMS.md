@@ -14,7 +14,8 @@ Agent Forge keeps the models that execute work replaceable while retaining evide
 | Retrieval encoder | Reviewed platform-specific training material | Finding relevant stored context | Fine-tuned GTE-ModernBERT is selected for several paths; migration remains per path |
 | Learned decision heads | Curated decisions, outcomes, and reviewed behavior examples | Local answers to specific decision questions | Trained and measured, but disabled in the October 5 configuration |
 | Structured decision service | Typed questions about a task and its state | Selected turn-start decisions; evidence for further evaluation | Jev is enabled on selected paths; most registered subsystem callers remain observational |
-| Local watcher | Intended live workflow events and question catalogue | Notice issues and ask for a structured assessment | Planned, not enabled |
+| Python event watcher | Typed workflow events and bounded task context | Ask structured questions and collect assessments | Implemented and configured on; answers logged only |
+| Local-model watcher | Proposed observation of workflow signals | Notice an issue and select a question for assessment | Planned; evaluated candidates have not qualified |
 
 This is a committed-code and configuration snapshot reviewed October 5, 2026, not an assertion about the current health of a running instance.
 
@@ -37,3 +38,9 @@ Raw build conversations, operational records, and answer keys remain private. Th
 The public `OutcomeLedger` and `EvidenceRouter` implement a small, deterministic example of outcome-informed selection. They are not a full reproduction of Karma, RTA, encoder training, or the Architect. The [evaluation-to-learning example](../examples/evaluation_learning_loop.py) adds a visible acceptance step; the [worker/runtime demo](../examples/worker_runtime_learning_demo.py) shows how accepted synthetic evidence can change the selected runtime without changing the worker's responsibility.
 
 The external models' weights do not change when the public ledger changes. This distinction also matters in production: routing adaptation, memory, and training an in-house component are different mechanisms.
+
+## Learning to manage work
+
+The behavior pipeline targets council selection, work splitting, step capability, completion, scope, escalation, task identity, and continuation. It mines different source shapes for different questions rather than treating every conversation as one generic training pair. See the [behavior evaluation](BEHAVIOR_EVALUATION.md) for concrete measurements and the [system guide](HOW_AGENT_FORGE_WORKS.md) for how those decisions connect.
+
+The Architect also retains decided proposals and rejection reasons. That memory can improve a later proposal without updating a model’s weights. The Python watcher supplies another observation path: workflow event → typed question → logged assessment → review against outcomes. Neither a stored assessment nor an approved proposal is automatically a successful training label.

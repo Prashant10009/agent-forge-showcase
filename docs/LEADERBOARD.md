@@ -31,3 +31,7 @@ The maintainer's dated benchmark specification, consolidated ledger, and per-run
 Future additions should identify task/version, sample count, independent review, assistance, contamination status, resource measurement, and whether the result supersedes an older score.
 
 See the [evaluation framework](EVALUATION_FRAMEWORK.md) to build a comparable evaluation for your own system, or run the [synthetic learning example](../examples/evaluation_learning_loop.py) to inspect how acceptance can precede routing feedback.
+
+## Component evidence is a separate comparison
+
+See [behavior evaluation](BEHAVIOR_EVALUATION.md) for October 3 decision-head measurements: 83/85 versus 78/85 on trivial-message classification, and 70/75 versus 67/75 on council selection. The latter improves false council calls while missing more needed councils. Both candidates remain disabled. Those results, retrieval measurements, and watcher experiments answer different questions from the model task scores above; they do not form one combined ranking.

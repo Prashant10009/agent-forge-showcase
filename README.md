@@ -33,7 +33,7 @@ Thousands of models and specialist runtimes are being built for coding, reasonin
 
 **control logic, specialist-worker responsibility, and model/runtime execution should not be collapsed into one object.**
 
-The production system therefore separates Python control and intelligence subsystems from reusable configured specialist workers and from the model/backend resources used to execute work. A configured coding worker does not permanently *be* one model. The worker responsibility can remain stable while the routing layer selects a compatible execution resource using capability, health, availability, limits, cost, latency, and bounded evidence.
+The production system therefore separates Python control and intelligence subsystems from reusable configured specialist workers and from the model/backend resources used to execute work. A configured coding worker does not permanently *be* one model. The worker responsibility can remain stable while the routing layer selects a compatible execution resource using capability, health, availability, limits, latency, and bounded evidence. Cost controls and usage accounting constrain and measure execution separately.
 
 Agent Forge turns that separation into a system that can classify a request, assemble persistent context, deliberate, coordinate and dispatch specialist workers, select runtimes, govern consequential actions, verify results, persist state, and use measured evidence in later decisions without treating any single model as the product.
 
@@ -66,6 +66,8 @@ The useful loop is **plan → execute → verify → correct → curate → eval
 
 | Explore | What you can take away |
 |---|---|
+| [How Agent Forge works](docs/HOW_AGENT_FORGE_WORKS.md) | Follow a task through council planning, model assignment, completion checks, proposal memory, and learning |
+| [Behavior evaluation](docs/BEHAVIOR_EVALUATION.md) | Eight operational questions, reviewed-label measurements, and why a higher score may still need more evidence |
 | [Build your own](docs/BUILD_YOUR_OWN.md) | Component recipes for an orchestrator, council, Karma-like evidence layer, Architect, workers, and memory |
 | [Evaluation framework](docs/EVALUATION_FRAMEWORK.md) | Ground-truth tasks, regression cases, workflow checks, human review, and held-out evaluation |
 | [Historical leaderboard](docs/LEADERBOARD.md) | Recorded task scores with dates, review conditions, and comparison limits |

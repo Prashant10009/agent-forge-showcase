@@ -64,3 +64,10 @@ All notable changes to the public showcase are documented here.
 - GitHub Actions for CI, CodeQL, dependency review, Pages, and releases.
 - Contribution, security, issue, pull-request, and ownership controls.
 
+
+### Deeper system and learning documentation — October 5, 2026
+
+- Explain the task lifecycle, ordered council roles, capability assignment, continuation context, and Architect proposal memory.
+- Publish eight behavior-evaluation concepts and selected historical candidate measurements, including limitations and inactive status.
+- Correct the watcher distinction: Python event observation is implemented and logged-only; the local-model watcher remains planned.
+- Turn the proposed seven-day direction into reviewable stages and outputs.

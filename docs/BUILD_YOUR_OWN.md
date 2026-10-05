@@ -104,3 +104,7 @@ agent-forge-public lab all
 The first example emits a synthetic evidence ledger with acceptance reasons. The second reports `worker_unchanged: true` and `runtime_changed: true`. The lab exercises the existing control plane. These show inspectable mechanisms, not a claim that synthetic results establish real-model performance.
 
 Continue with the [evaluation framework](EVALUATION_FRAMEWORK.md), [learning systems](LEARNING_SYSTEMS.md), [historical leaderboard](LEADERBOARD.md), and [development update](DEVELOPMENT_UPDATE.md).
+
+## Choose a small decision to learn first
+
+Start with a question whose outcome you can inspect: whether a message continues a task, whether a deliverable exists, or which capability a plan step requires. Keep the inputs, proposed label, source episode, review, and result connected. Measure false positives and false negatives against your current approach. The [behavior guide](BEHAVIOR_EVALUATION.md) shows why an accuracy gain can hide a recall loss; the [system guide](HOW_AGENT_FORGE_WORKS.md) connects the concepts to real responsibilities.
