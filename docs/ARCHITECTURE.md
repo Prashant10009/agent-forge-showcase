@@ -14,6 +14,10 @@ This document describes public system responsibilities. It does not reproduce pr
 
 A working implementation of the public lifecycle is available in [PUBLIC_CORE.md](PUBLIC_CORE.md). A runnable proof of the worker/runtime boundary is in [EXECUTABLE_PROOF.md](EXECUTABLE_PROOF.md). The broader production responsibility map is documented in [PRODUCTION_CAPABILITIES.md](PRODUCTION_CAPABILITIES.md).
 
+## Design your own components
+
+The [build-your-own guide](BUILD_YOUR_OWN.md) maps these responsibilities to familiar concepts and runnable public modules. The [evaluation framework](EVALUATION_FRAMEWORK.md) and [learning systems](LEARNING_SYSTEMS.md) explain how verified outcomes become evidence for later decisions.
+
 ## System shape
 
 ```mermaid
@@ -131,3 +135,4 @@ That makes model choice replaceable without flattening the surrounding control p
 The architecture is intentionally precise about responsibilities and intentionally silent about proprietary or exploitable production details.
 
 Continue with [EXECUTABLE_PROOF.md](EXECUTABLE_PROOF.md), [PRODUCTION_CAPABILITIES.md](PRODUCTION_CAPABILITIES.md), [PUBLIC_IMPLEMENTATION_MAP.md](PUBLIC_IMPLEMENTATION_MAP.md), [FAILURE_MODEL.md](FAILURE_MODEL.md), [PUBLIC_BOUNDARY.md](PUBLIC_BOUNDARY.md), and [THREAT_MODEL.md](THREAT_MODEL.md).
+

@@ -58,6 +58,23 @@ flowchart LR
 
 The key boundaries are **control**, **worker responsibility**, **execution**, and **authority**. Orchestrator, Trimurti, Sentinel gates, Karma, and RTA are not presented as generic YAML workers. Reusable specialist workers form a separate configured layer. Runtime selection decides where their work executes, while governance controls what actions are allowed and verification determines whether the result can be accepted.
 
+## Learn from the system and build your own
+
+Agent Forge is also an evolving record of how complex AI work gets done. Structural planning and build cycles can span one to two days of sustained conversation, implementation, independent review, and correction. Reviewed decisions and outcomes from that work help train and evaluate the platform's own components.
+
+The useful loop is **plan → execute → verify → correct → curate → evaluate again**. The system coordinates the work; the training corpus preserves what can be learned from it.
+
+| Explore | What you can take away |
+|---|---|
+| [Build your own](docs/BUILD_YOUR_OWN.md) | Component recipes for an orchestrator, council, Karma-like evidence layer, Architect, workers, and memory |
+| [Evaluation framework](docs/EVALUATION_FRAMEWORK.md) | Ground-truth tasks, regression cases, workflow checks, human review, and held-out evaluation |
+| [Historical leaderboard](docs/LEADERBOARD.md) | Recorded task scores with dates, review conditions, and comparison limits |
+| [Learning systems](docs/LEARNING_SYSTEMS.md) | How outcomes, feedback, strategy, memory, encoders, and decision heads fit together |
+| [Development update](docs/DEVELOPMENT_UPDATE.md) | October 5 implementation snapshot and October 6–12 priorities |
+| [Offline evaluation example](examples/evaluation_learning_loop.py) | How to admit verified evidence without treating an outage or an unsupported success claim as model quality |
+
+These guides expose reusable concepts and working reference mechanisms. Raw training conversations and production policy remain private. You can adapt the public code and documentation under this repository's MIT license; the Agent Forge brand remains subject to the trademark notice.
+
 ## What exists in production
 
 The deployed product includes responsibilities for multi-model orchestration, reusable specialist-worker dispatch, persistent context, deliberation, runtime-state management, evidence-aware routing, tool governance, cost controls, failure handling, observability, interoperability, structured outputs, and artifact verification.
@@ -68,6 +85,7 @@ Several Agent Forge subsystems are important to the public architecture:
 - **Trimurti** — a Python deliberation subsystem with per-request and background components, memory, sentinel integration, and pipeline responsibilities.
 - **Sentinel gates** — validation/gating machinery at selected control boundaries.
 - **Karma** — monitoring plus outcome/capability evidence that can inform routing and system-health decisions.
+- **Architect** — system-level investigation and improvement proposals, informed by build context and feedback.
 - **RTA** — a runtime-state and decision subsystem with backend lifecycle, flow/capacity, and strategy components.
 - **Configured specialist workers** — reusable worker definitions instantiated and dispatched for specialist work.
 - **Execution runtimes** — replaceable model/backend resources used to perform computation.
@@ -103,6 +121,7 @@ The Python package under [`src/agent_forge_public`](src/agent_forge_public) is a
 
 ```bash
 python -m pip install -e .
+python examples/evaluation_learning_loop.py
 python examples/worker_runtime_learning_demo.py
 agent-forge-public route "Implement and verify a Python parser"
 agent-forge-public demo --action write --approve "Implement and verify a Python parser"
@@ -150,11 +169,11 @@ Responsibility groups include:
 
 The detailed public map is in [docs/CODEBASE_MAP.md](docs/CODEBASE_MAP.md). This dated snapshot includes 90,937 lines of Python in the main application package and 23,411 lines across 119 Python test files. Those counts communicate scale; the map describes responsibilities rather than proprietary implementations.
 
-## Why the production engine remains private
+## What we share
 
-The value of a public showcase is to make the architecture and engineering inspectable, not to publish credentials, customer/runtime data, operational configuration, private prompts, worker definitions, or the learned policy that determines production behavior.
+The showcase shares the design reasoning, evaluation approach, selected historical results, and runnable patterns that others can learn from and adapt. The public core makes the relationships between components inspectable without requiring a production account.
 
-This repository therefore publishes architecture, responsibility maps, authentic public visuals, selected engineering decisions, deterministic reference code, tests, and repository automation while keeping the production application and its history private.
+It includes architecture, responsibility maps, authentic public visuals, selected engineering decisions, reference code, tests, and repository automation. Private conversations, customer data, operational configuration, and learned production policy stay outside this release.
 
 | Public here | Private by design |
 |---|---|
@@ -195,3 +214,4 @@ Browse the public SVG variants in the [official logo asset index](assets/brand/R
 Agent Forge is built and architected by **Prashant Dimri**. AI systems support research, implementation, review, and testing; product direction and publication decisions remain human-owned.
 
 Repository code and documentation are covered by [LICENSE](LICENSE). The Agent Forge name, logo, and brand identity are covered by [TRADEMARKS.md](TRADEMARKS.md); no trademark rights are granted by the software license.
+

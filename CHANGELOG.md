@@ -2,6 +2,14 @@
 
 All notable changes to the public showcase are documented here.
 
+## Unreleased — October 5, 2026
+
+- Concept-led evaluation framework, learning-system map, and dated historical leaderboard.
+- Build-your-own recipes for orchestration, council review, outcome learning, and an Architect proposal loop.
+- October 5 implementation snapshot and October 6–12 development priorities, with planned capabilities clearly identified.
+- Offline, synthetic evaluation-to-learning example with evidence admission and six behavioral tests.
+- Explicit public boundary for selected score summaries while retaining raw training and evaluation records privately.
+
 ## [0.4.0] - 2026-08-15
 
 ### Added
@@ -55,3 +63,4 @@ All notable changes to the public showcase are documented here.
 - Repository content boundary scanner and local-link validator.
 - GitHub Actions for CI, CodeQL, dependency review, Pages, and releases.
 - Contribution, security, issue, pull-request, and ownership controls.
+
