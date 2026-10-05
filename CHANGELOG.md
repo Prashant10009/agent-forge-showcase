@@ -71,3 +71,6 @@ All notable changes to the public showcase are documented here.
 - Publish eight behavior-evaluation concepts and selected historical candidate measurements, including limitations and inactive status.
 - Correct the watcher distinction: Python event observation is implemented and logged-only; the local-model watcher remains planned.
 - Turn the proposed seven-day direction into reviewable stages and outputs.
+
+- Add a dedicated decision/retrieval stack guide covering Jev, GTE-ModernBERT, ModernColBERT, ONNX, and per-path BGE-M3 retirement status.
+- Align the immediate production-transition target to October 6, as confirmed by the founder; replace the previously proposed seven-day implementation sequence.

@@ -44,3 +44,7 @@ The external models' weights do not change when the public ledger changes. This 
 The behavior pipeline targets council selection, work splitting, step capability, completion, scope, escalation, task identity, and continuation. It mines different source shapes for different questions rather than treating every conversation as one generic training pair. See the [behavior evaluation](BEHAVIOR_EVALUATION.md) for concrete measurements and the [system guide](HOW_AGENT_FORGE_WORKS.md) for how those decisions connect.
 
 The Architect also retains decided proposals and rejection reasons. That memory can improve a later proposal without updating a model’s weights. The Python watcher supplies another observation path: workflow event → typed question → logged assessment → review against outcomes. Neither a stored assessment nor an approved proposal is automatically a successful training label.
+
+## Decision and retrieval migration
+
+The [decision and retrieval stack](DECISION_AND_RETRIEVAL_STACK.md) explains Jev’s current role, the distinction between active GTE-ModernBERT retrieval and inactive learned decision heads, the planned ModernColBERT reranker, and the BGE-M3 dependencies still being migrated. The target is evaluated in-house decisions and context selection, with hosted decision support where appropriate. The founder’s production-completion target for this connected transition is October 6; the table above remains the verified October 5 starting state.
