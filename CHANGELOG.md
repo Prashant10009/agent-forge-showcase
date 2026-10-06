@@ -2,6 +2,13 @@
 
 All notable changes to the public showcase are documented here.
 
+## Connected-engine release
+
+- Concept-led evaluation framework, learning-system map, and dated historical leaderboard.
+- Build-your-own recipes for orchestration, council review, outcome learning, and an Architect proposal loop.
+- Offline, synthetic evaluation-to-learning example with evidence admission and six behavioral tests.
+- Explicit public boundary for selected score summaries while retaining raw training and evaluation records privately.
+
 ## [0.4.0] - 2026-08-15
 
 ### Added
@@ -55,3 +62,15 @@ All notable changes to the public showcase are documented here.
 - Repository content boundary scanner and local-link validator.
 - GitHub Actions for CI, CodeQL, dependency review, Pages, and releases.
 - Contribution, security, issue, pull-request, and ownership controls.
+
+
+### System and learning documentation
+
+- Explain the task lifecycle, ordered council roles, capability assignment, continuation context, and Architect proposal memory.
+- Publish eight behavior-evaluation concepts and selected historical candidate measurements, including historical conditions and limitations.
+
+
+### Connected-engine launch documentation
+
+- Present the release architecture through Jev decisions, trained ModernBERT components, ModernColBERT retrieval, and the Forge encoder foundation.
+- Add system walkthroughs, historical evaluation evidence, and reusable component guides.

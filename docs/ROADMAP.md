@@ -1,24 +1,21 @@
-# Public Repository Roadmap
+# Public repository roadmap
 
-## Current
+## Available now
 
-- Maintain the GitHub repository as an engineering dossier, not a duplicate website.
-- Keep the canonical website and existing interactive tour prominent.
-- Keep CI, CodeQL, dependency review, link checks, and publication scanning green.
-- Update authentic screenshots when the public product changes materially.
+- Runnable provider-neutral core, worker/runtime demonstration, and synthetic evaluation-to-learning example.
+- [Evaluation framework](EVALUATION_FRAMEWORK.md), [historical leaderboard](LEADERBOARD.md), and [learning systems](LEARNING_SYSTEMS.md).
+- [Build-your-own guide](BUILD_YOUR_OWN.md) for an orchestrator, council, Karma-like evidence layer, Architect, and supporting components.
+- [Release overview](DEVELOPMENT_UPDATE.md) and [decision/retrieval architecture](DECISION_AND_RETRIEVAL_STACK.md).
 
-## Next
+## Next public evidence
 
-- Publish sanitized benchmark methodology without private evaluation data.
-- Add a short captioned walkthrough video sourced from the public sample-data tour.
-- Add automated accessibility checks for committed documentation and redirect markup.
-- Use GitHub Discussions for architecture questions and public product feedback.
+- Extend the leaderboard with comparable, independently reviewed results.
+- Show a longer sanitized planning → execution → correction walkthrough.
+- Extend the evidence record as new components and workflow evaluations qualify.
+- Refresh authentic public screenshots when the website changes materially.
 
-## Deliberately not planned
+## Scope
 
-- copying production modules into the public repository;
-- rebuilding the website or interactive tour;
-- publishing provider configuration, prompts, routing policy, or operational data;
-- connecting repository examples to production APIs.
+This repository shares reusable contracts, design rationale, reference code, tests, and selected historical results. The website remains the product surface. Raw training conversations, private answer keys, production implementation, prompts, operational configuration, and customer data remain private.
 
-The roadmap expands public evidence, not the disclosure boundary.
+Future capabilities are priorities, not promises of a fixed release date. See [Public boundary](PUBLIC_BOUNDARY.md) for the distinction between a reusable public example and production policy.

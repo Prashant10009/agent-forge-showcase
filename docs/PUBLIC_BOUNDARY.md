@@ -7,7 +7,8 @@ This repository is an engineering dossier with an independently authored, provid
 - product positioning already published at `myagentforge.ai`;
 - authentic captures of the public website and labeled interactive tour;
 - the official Agent Forge logo asset;
-- high-level architecture and responsibility maps;
+- architecture and responsibility maps, component-building recipes, and concept-level evaluation and learning methodology;
+- selected, dated historical benchmark score summaries with limitations and provenance, explicitly approved for this public showcase;
 - runnable reference code for classification, routing, approvals, deterministic execution, tracing, checkpoints, and task-graph dispatch;
 - unit tests and a CLI for that provider-neutral public core;
 - point-in-time codebase counts and package-group descriptions;
@@ -20,8 +21,10 @@ This repository is an engineering dossier with an independently authored, provid
 - authenticated application bundles and API wiring;
 - prompts, agent instructions, routing weights, thresholds, and policy logic;
 - credentials, provider inventories, quotas, internal endpoints, and deployment configuration;
-- database schemas, private sessions, projects, traces, uploads, logs, and evaluation data;
+- production database schemas, private sessions, projects, traces, uploads, logs, raw evaluation records, answer keys, and training conversations;
 - operational runbooks, incident evidence, and internal handoff documents.
+
+The public methods, synthetic examples, and selected score summaries invite reuse without distributing the underlying private training corpus. New production measurements still require a deliberate publication review.
 
 ## Reference-code rule
 
@@ -61,3 +64,4 @@ The scanner is a backstop, not proof by itself. Every pull request also requires
 - [ ] No duplicate product interface or tour was introduced.
 - [ ] `npm run check` passes.
 - [ ] The pull-request boundary checklist is complete.
+

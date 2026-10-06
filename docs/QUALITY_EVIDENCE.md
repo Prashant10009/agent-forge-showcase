@@ -2,6 +2,12 @@
 
 This matrix ties public engineering claims to executable evidence. It is intentionally about invariants rather than private implementation breadth. All fixtures are deterministic and synthetic; no production trace, account, prompt, provider, endpoint, weight, threshold or customer record is included.
 
+## Evaluation and learning
+
+The [evaluation framework](EVALUATION_FRAMEWORK.md) describes the broader methodology. The [leaderboard](LEADERBOARD.md) is a dated historical record, separate from the synthetic public tests.
+
+The new [offline example](../examples/evaluation_learning_loop.py) audits every episode and demonstrates evidence admission before outcome learning. Its tests verify that provider failures, unverified success, assisted work, duplicate rows, and unresolved attribution do not silently teach model quality; task families and tenants remain separate.
+
 ## Control-plane claims
 
 | Claim | Public implementation | Executable evidence |
@@ -35,8 +41,9 @@ This matrix ties public engineering claims to executable evidence. It is intenti
 
 1. Read the [sanitized governed trace](../examples/governed_trace.json).
 2. Run `agent-forge-public lab all` to reproduce the four deterministic paths.
-3. Run `python -m unittest discover -s tests_python -v` for the 72 contract tests.
+3. Run `python -m unittest discover -s tests_python -v` for the public contract and example tests.
 4. Run `npm run check` for repository, boundary, link and dossier verification.
 5. Read the [architecture decisions](decisions/README.md) to understand why the boundaries exist.
 
 Passing tests demonstrate the public model exactly as documented. They do not claim production equivalence, disclose production policy, or substitute for the private system's deployment and service-level verification.
+

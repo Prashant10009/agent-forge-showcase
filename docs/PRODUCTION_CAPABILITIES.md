@@ -2,6 +2,8 @@
 
 Agent Forge is a deployed multi-model orchestration system. This page describes production responsibilities at a deliberately high level. It does **not** reproduce production source, prompts, worker definitions, routing weights, thresholds, provider credentials, endpoint configuration, deployment topology, private traces, or customer/runtime data.
 
+For the connected decision, retrieval, and learning architecture, see the [release overview](DEVELOPMENT_UPDATE.md). To apply these patterns yourself, use the [component guide](BUILD_YOUR_OWN.md) and [evaluation framework](EVALUATION_FRAMEWORK.md).
+
 ## The core idea
 
 Agent Forge separates **control-plane subsystems**, **reusable configured specialist workers**, and **replaceable model/backend execution resources**.
@@ -40,6 +42,7 @@ The separation matters: control systems, worker responsibility, runtime executio
 | Provider/runtime abstraction | Execution resources sit behind compatible interfaces so orchestration does not become one provider-specific application. |
 | Trimurti | A Python deliberation subsystem with per-request and background responsibilities, memory, sentinel integration, and pipeline components. |
 | Sentinel gates | Validation/gating machinery can inspect selected control boundaries rather than treating generated output as automatically acceptable. |
+| Architect | System-level investigation, research, feedback, and improvement proposals connect the owner’s goals to reviewable changes. |
 | Karma | Monitoring plus outcome/capability evidence can inform routing and system-health decisions. |
 | RTA | Runtime-state and decision machinery covers backend lifecycle, flow/capacity, and strategy responsibilities. |
 | Persistent context, plans, and checkpoints | Conversations, projects, plans, checkpoints, retrieval, and memory can survive beyond a single model call. |
@@ -128,3 +131,4 @@ For implementation-level public evidence, continue with `EXECUTABLE_PROOF.md`, `
 This page is descriptive, not a production specification. Names of public architectural concepts may match the deployed product, but implementation details remain private. In particular, this repository does not publish production source/history, secrets, internal endpoints, deployment identifiers, provider credentials, prompt text, private worker definitions, routing weights or thresholds, private telemetry, customer/session data, or unmerged production work.
 
 The synthetic examples and public control-plane code are intentionally independent representations. They should be read as evidence of the architecture and engineering approach, not as a specification from which the private production engine can be reconstructed.
+
