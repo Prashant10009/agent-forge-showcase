@@ -34,4 +34,4 @@ See the [evaluation framework](EVALUATION_FRAMEWORK.md) to build a comparable ev
 
 ## Component evidence is a separate comparison
 
-See [behavior evaluation](BEHAVIOR_EVALUATION.md) for October 3 decision-head measurements: 83/85 versus 78/85 on trivial-message classification, and 70/75 versus 67/75 on council selection. The latter improves false council calls while missing more needed councils. Both candidates remain disabled. Those results, retrieval measurements, and watcher experiments answer different questions from the model task scores above; they do not form one combined ranking.
+See [behavior evaluation](BEHAVIOR_EVALUATION.md) for October 3 decision-head measurements: 83/85 versus 78/85 on trivial-message classification, and 70/75 versus 67/75 on council selection. The latter improves false council calls while missing more needed councils. These are early candidate measurements, with the evaluation conditions preserved in the linked report. Those results, retrieval measurements, and watcher experiments answer different questions from the model task scores above; they do not form one combined ranking.

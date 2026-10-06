@@ -5,13 +5,13 @@
 - Runnable provider-neutral core, worker/runtime demonstration, and synthetic evaluation-to-learning example.
 - [Evaluation framework](EVALUATION_FRAMEWORK.md), [historical leaderboard](LEADERBOARD.md), and [learning systems](LEARNING_SYSTEMS.md).
 - [Build-your-own guide](BUILD_YOUR_OWN.md) for an orchestrator, council, Karma-like evidence layer, Architect, and supporting components.
-- [October 5 implementation update and October 6–12 priorities](DEVELOPMENT_UPDATE.md).
+- [Release overview](DEVELOPMENT_UPDATE.md) and [decision/retrieval architecture](DECISION_AND_RETRIEVAL_STACK.md).
 
 ## Next public evidence
 
 - Extend the leaderboard with comparable, independently reviewed results.
 - Show a longer sanitized planning → execution → correction walkthrough.
-- Update the dated implementation snapshot as evaluated components are activated.
+- Extend the evidence record as new components and workflow evaluations qualify.
 - Refresh authentic public screenshots when the website changes materially.
 
 ## Scope

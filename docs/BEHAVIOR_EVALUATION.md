@@ -15,7 +15,7 @@ The behavior dataset builder and review process target eight practical questions
 | Task identity | Is this the same task, a related task, or different work? | Similar words describing different projects |
 | Continuation | Is this message trivial or does it advance existing work? | “And the tests?” after an implementation request |
 
-These are targets for dataset construction and evaluation. They are not eight fully deployed learned policies.
+Each behavior has its own dataset, evaluation, and acceptance criteria. A retrieval improvement alone does not establish decision quality.
 
 ## What a reviewed example carries
 
@@ -40,7 +40,7 @@ The selected trivial-message candidate made no false “trivial” calls on the 
 
 Review was material: raw teacher labels included continuation and council-selection mistakes. Training on reviewed labels changed the behavior. This is why the system treats teacher answers as proposed labels and keeps the review history.
 
-Both measured decision candidates remain disabled in the October 5 configuration. These are maintainer-reported historical measurements, not independently reproducible public benchmark results. They came from one founder's data, one reviewer, one training seed, and a small replay set; negative labels in the broader behavior set were sampled rather than exhaustively reviewed.
+At the time of this first measurement, the candidates were held for further evaluation. These are maintainer-reported historical measurements, not independently reproducible public benchmark results. They came from one founder's data, one reviewer, one training seed, and a small replay set; negative labels in the broader behavior set were sampled rather than exhaustively reviewed.
 
 ## Evaluate retrieval for its own job
 

@@ -2,7 +2,7 @@
 
 Agent Forge is a deployed multi-model orchestration system. This page describes production responsibilities at a deliberately high level. It does **not** reproduce production source, prompts, worker definitions, routing weights, thresholds, provider credentials, endpoint configuration, deployment topology, private traces, or customer/runtime data.
 
-For the dated October 5 implementation state and the next seven days’ priorities, see the [development update](DEVELOPMENT_UPDATE.md). To apply these patterns yourself, use the [component guide](BUILD_YOUR_OWN.md) and [evaluation framework](EVALUATION_FRAMEWORK.md).
+For the connected decision, retrieval, and learning architecture, see the [release overview](DEVELOPMENT_UPDATE.md). To apply these patterns yourself, use the [component guide](BUILD_YOUR_OWN.md) and [evaluation framework](EVALUATION_FRAMEWORK.md).
 
 ## The core idea
 

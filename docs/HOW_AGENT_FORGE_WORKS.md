@@ -2,7 +2,7 @@
 
 Agent Forge is an orchestration system that carries a goal through planning, model selection, tool work, review, and correction. Building and using that system also creates a growing body of material for training its own components. The useful unit of experience is a decision made in context, followed by evidence of what happened.
 
-This guide describes production concepts reviewed on October 5, 2026. The [public core](PUBLIC_CORE.md) is an independently authored reference implementation. The example below is illustrative, not a private conversation or measured production run.
+This guide follows the responsibilities and feedback loops in Agent Forge. The [public core](PUBLIC_CORE.md) is an independently authored reference implementation. The example below is illustrative, not a private conversation or measured production run.
 
 ## Follow one piece of work
 
@@ -64,9 +64,9 @@ A proposal has a lifecycle. Approval is distinct from successful execution. Edit
 
 ## Observation becomes a question before it becomes an action
 
-The implemented Python watcher listens to workflow events and asks typed questions through the shared decision service: is this work complete, did this step finish, does a failure need recovery, or which part caused it? It runs outside the main turn's work through bounded queues and records its assessments in logged-only mode.
+Workflow observation connects engine events to typed questions through the shared decision service: is this work complete, did this step finish, does a failure need recovery, or which part caused it? Bounded background processing keeps observation separate from the main turn's work.
 
-This lets the team examine the questions, answers, and eventual outcomes before changing policy. It does not autonomously repair the application. A separate local-model watcher remains a research direction: its proposed role is to notice issues and ask questions, with actions handled through existing control systems.
+The watcher raises a question, the decision layer assesses it, and Python control systems govern any response. Questions, answers, and eventual outcomes are recorded for evaluation and learning. This separation keeps interpretation connected to evidence and actions connected to authority.
 
 ## The system produces the material it learns from
 

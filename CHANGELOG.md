@@ -2,11 +2,10 @@
 
 All notable changes to the public showcase are documented here.
 
-## Unreleased — October 5, 2026
+## Connected-engine release
 
 - Concept-led evaluation framework, learning-system map, and dated historical leaderboard.
 - Build-your-own recipes for orchestration, council review, outcome learning, and an Architect proposal loop.
-- October 5 implementation snapshot and October 6–12 development priorities, with planned capabilities clearly identified.
 - Offline, synthetic evaluation-to-learning example with evidence admission and six behavioral tests.
 - Explicit public boundary for selected score summaries while retaining raw training and evaluation records privately.
 
@@ -65,12 +64,13 @@ All notable changes to the public showcase are documented here.
 - Contribution, security, issue, pull-request, and ownership controls.
 
 
-### Deeper system and learning documentation — October 5, 2026
+### System and learning documentation
 
 - Explain the task lifecycle, ordered council roles, capability assignment, continuation context, and Architect proposal memory.
-- Publish eight behavior-evaluation concepts and selected historical candidate measurements, including limitations and inactive status.
-- Correct the watcher distinction: Python event observation is implemented and logged-only; the local-model watcher remains planned.
-- Turn the proposed seven-day direction into reviewable stages and outputs.
+- Publish eight behavior-evaluation concepts and selected historical candidate measurements, including historical conditions and limitations.
 
-- Add a dedicated decision/retrieval stack guide covering Jev, GTE-ModernBERT, ModernColBERT, ONNX, and per-path BGE-M3 retirement status.
-- Align the immediate production-transition target to October 6, as confirmed by the founder; replace the previously proposed seven-day implementation sequence.
+
+### Connected-engine launch documentation
+
+- Present the release architecture through Jev decisions, trained ModernBERT components, ModernColBERT retrieval, and the Forge encoder foundation.
+- Add system walkthroughs, historical evaluation evidence, and reusable component guides.

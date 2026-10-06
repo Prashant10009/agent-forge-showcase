@@ -67,13 +67,13 @@ The useful loop is **plan → execute → verify → correct → curate → eval
 | Explore | What you can take away |
 |---|---|
 | [How Agent Forge works](docs/HOW_AGENT_FORGE_WORKS.md) | Follow a task through council planning, model assignment, completion checks, proposal memory, and learning |
-| [Decision and retrieval stack](docs/DECISION_AND_RETRIEVAL_STACK.md) | Jev, GTE-ModernBERT, decision heads, ModernColBERT, ONNX, and the remaining BGE migration |
+| [Decision and retrieval stack](docs/DECISION_AND_RETRIEVAL_STACK.md) | How Jev, GTE-ModernBERT, decision heads, ModernColBERT, and ONNX work together |
 | [Behavior evaluation](docs/BEHAVIOR_EVALUATION.md) | Eight operational questions, reviewed-label measurements, and why a higher score may still need more evidence |
 | [Build your own](docs/BUILD_YOUR_OWN.md) | Component recipes for an orchestrator, council, Karma-like evidence layer, Architect, workers, and memory |
 | [Evaluation framework](docs/EVALUATION_FRAMEWORK.md) | Ground-truth tasks, regression cases, workflow checks, human review, and held-out evaluation |
 | [Historical leaderboard](docs/LEADERBOARD.md) | Recorded task scores with dates, review conditions, and comparison limits |
 | [Learning systems](docs/LEARNING_SYSTEMS.md) | How outcomes, feedback, strategy, memory, encoders, and decision heads fit together |
-| [Development update](docs/DEVELOPMENT_UPDATE.md) | October 6 production-transition target, October 5 baseline, and follow-through priorities |
+| [Release overview](docs/DEVELOPMENT_UPDATE.md) | The connected orchestration, decision, retrieval, and learning architecture |
 | [Offline evaluation example](examples/evaluation_learning_loop.py) | How to admit verified evidence without treating an outage or an unsupported success claim as model quality |
 
 These guides expose reusable concepts and working reference mechanisms. Raw training conversations and production policy remain private. You can adapt the public code and documentation under this repository's MIT license; the Agent Forge brand remains subject to the trademark notice.

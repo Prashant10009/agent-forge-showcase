@@ -1,23 +1,22 @@
 # Learning systems
 
-Agent Forge keeps the models that execute work replaceable while retaining evidence about how the work went. Learning can change a route, improve retrieval, support a future classifier, or preserve a correction. Those are separate responsibilities.
+Agent Forge keeps the models that execute work replaceable while retaining evidence about how the work went. Learning can change a route, improve retrieval, improve a classifier, or preserve a correction. Those are separate responsibilities.
 
 ## Concept map
 
-| System | Evidence it uses | What it can influence | Current boundary |
+| System | Evidence it uses | What it can influence | Evidence discipline |
 |---|---|---|---|
-| Karma | Eligible task outcomes, model capabilities, quality ratings, performance history | Candidate ranking and capability evidence | Guarded automatic learning is configured on; raw telemetry is broader than accepted learning |
+| Karma | Eligible task outcomes, model capabilities, quality ratings, performance history | Candidate ranking and capability evidence | Raw telemetry is broader than accepted learning evidence |
 | RTA / Niyati | Task and strategy outcomes plus runtime conditions | Strategy and runtime-management signals | Uses fallbacks when evidence is insufficient; outcome epochs separate incompatible history |
 | Sampler learning | Call settings linked to later quality outcomes | Inference settings for a task/model/backend | Requires evidence before replacing presets |
 | Task-pattern and council memory | Successful prior processes and recurring task shapes | Reuse of relevant routing or planning experience | Similarity, freshness, success, and vector-space checks constrain reuse |
 | Feedback and learned rules | Explicit ratings, corrections, and confirmed classifications | Quality history, memory suitability, and future behavior | A saved conversation is not automatically an accepted training example |
-| Retrieval encoder | Reviewed platform-specific training material | Finding relevant stored context | Fine-tuned GTE-ModernBERT is selected for several paths; migration remains per path |
-| Learned decision heads | Curated decisions, outcomes, and reviewed behavior examples | Local answers to specific decision questions | Trained and measured, but disabled in the October 5 configuration |
-| Structured decision service | Typed questions about a task and its state | Selected turn-start decisions; evidence for further evaluation | Jev is enabled on selected paths; most registered subsystem callers remain observational |
-| Python event watcher | Typed workflow events and bounded task context | Ask structured questions and collect assessments | Implemented and configured on; answers logged only |
-| Local-model watcher | Proposed observation of workflow signals | Notice an issue and select a question for assessment | Planned; evaluated candidates have not qualified |
+| Retrieval encoder | Reviewed platform-specific training material | Finding relevant stored context | GTE-ModernBERT retrieval and ModernColBERT reranking are evaluated for relevance and serving cost |
+| Learned decision heads | Curated decisions, outcomes, and reviewed behavior examples | Local answers to specific decision questions | Each head qualifies against the decision it replaces |
+| Structured decision service | Typed questions about a task and its state | Workflow assessments and evidence for further evaluation | Typed answers are validated; each caller retains its authority and fallback behavior |
+| Workflow observation | Typed workflow events and bounded task context | Ask structured questions and collect assessments | Observation, assessment, and action are separate responsibilities |
 
-This is a committed-code and configuration snapshot reviewed October 5, 2026, not an assertion about the current health of a running instance.
+These mechanisms connect the task lifecycle to learning at the model, strategy, memory, and component levels.
 
 ## From observation to learning
 
@@ -45,6 +44,6 @@ The behavior pipeline targets council selection, work splitting, step capability
 
 The Architect also retains decided proposals and rejection reasons. That memory can improve a later proposal without updating a model’s weights. The Python watcher supplies another observation path: workflow event → typed question → logged assessment → review against outcomes. Neither a stored assessment nor an approved proposal is automatically a successful training label.
 
-## Decision and retrieval migration
+## Decision and retrieval architecture
 
-The [decision and retrieval stack](DECISION_AND_RETRIEVAL_STACK.md) explains Jev’s current role, the distinction between active GTE-ModernBERT retrieval and inactive learned decision heads, the planned ModernColBERT reranker, and the BGE-M3 dependencies still being migrated. The target is evaluated in-house decisions and context selection, with hosted decision support where appropriate. The founder’s production-completion target for this connected transition is October 6; the table above remains the verified October 5 starting state.
+The [stack guide](DECISION_AND_RETRIEVAL_STACK.md) explains how Jev, GTE-ModernBERT retrieval, learned decision heads, ModernColBERT reranking, and ONNX work together. The platform retains operational knowledge while the models executing specialist work remain replaceable.
