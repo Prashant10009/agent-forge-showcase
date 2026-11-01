@@ -2,7 +2,27 @@
 
 This map gives reviewers a concrete view of the production system without copying private source. Names describe stable responsibility areas observed read-only in the private repository.
 
-## Verified snapshot
+## Verified snapshot, November 2026
+
+Snapshot date: 2026-11-01. Measured read-only from the private repository's main branch with `git ls-files`, `wc -l` and a Python AST count of test functions.
+
+| Measure | Count | August 2026 |
+|---|---:|---:|
+| Tracked files | 3,743 | 525 |
+| Python modules in the main application package | 529 | 343 |
+| Python lines in the main application package | 267,651 | 90,937 |
+| JavaScript files | 66 | 23 |
+| TypeScript files | 164 | 17 |
+| HTML files | 14 | 9 |
+| CSS files | 5 | 3 |
+| Test files (Python + browser specs) | 1,676 | 136 |
+| Python test files | 1,546 | 119 |
+| Python test lines | 270,771 | 23,411 |
+| Python test functions | 11,310 | 867 |
+
+The August snapshot below is kept unchanged as the earlier record.
+
+## Verified snapshot, August 2026
 
 Snapshot date: 2026-08-15.
 
