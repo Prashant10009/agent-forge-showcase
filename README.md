@@ -58,6 +58,21 @@ flowchart LR
 
 The key boundaries are **control**, **worker responsibility**, **execution**, and **authority**. Orchestrator, Trimurti, Sentinel gates, Karma, and RTA are not presented as generic YAML workers. Reusable specialist workers form a separate configured layer. Runtime selection decides where their work executes, while governance controls what actions are allowed and verification determines whether the result can be accepted.
 
+## One turn, end to end
+
+<p align="center">
+  <img src="docs/diagrams/turn-overview.svg" width="900" alt="How Agent Forge runs one turn: browser, edge, container, the six steps of the turn engine, and the routing, memory, files, learning and background services around it">
+</p>
+
+Architecture snapshot, 1 November 2026. The editable source is [`docs/diagrams/turn-overview.excalidraw`](docs/diagrams/turn-overview.excalidraw).
+
+1. **Turn-start decisions.** Typed questions (is this trivial? which strategy?) are answered through one decision service, and Ṛta advises on the execution strategy.
+2. **Continuity.** The chat's active plan is loaded, so "continue" picks up where the last turn stopped, and the request is classified.
+3. **The council gate.** For real work, Bodha names the deliverables, Dharma the steps and their order, and Tapas the cuts and checks. Their parts merge into one plan, which becomes the active plan.
+4. **The model-and-tool loop.** Measured routing places each call. Workers run in parallel, and agents can spawn helpers of their own.
+5. **Authority and verification.** Risky writes wait for approval. Runnable artifacts are loaded in a headless browser, and a reply is marked *not verified* if they still fail. A final review checks the answer.
+6. **Record.** Plan progress and turn outcomes are saved, and the scores credit the model that actually did the work.
+
 ## What exists in production
 
 The deployed product includes responsibilities for multi-model orchestration, reusable specialist-worker dispatch, persistent context, deliberation, runtime-state management, evidence-aware routing, tool governance, cost controls, failure handling, observability, interoperability, structured outputs, and artifact verification.
@@ -71,6 +86,18 @@ Several Agent Forge subsystems are important to the public architecture:
 - **RTA** — a runtime-state and decision subsystem with backend lifecycle, flow/capacity, and strategy components.
 - **Configured specialist workers** — reusable worker definitions instantiated and dispatched for specialist work.
 - **Execution runtimes** — replaceable model/backend resources used to perform computation.
+
+### Added between September and November 2026
+
+- **Plans that survive.** The council's plan becomes an active plan stored with the chat, so follow-up messages continue the same work and nothing is planned twice.
+- **Agent trees.** Agents and council voices can spawn helper workers recursively. A plan can split one file into sections written by different workers, and a deeper helper's report is checked by a truth sentinel before its parent reads it.
+- **Typed decisions with in-house students.** Recurring questions go through one decision service. Agent Forge's own ModernBERT heads learn from a hosted teacher: on 1 November, one decides at turn start and four run in shadow. See [learning systems](docs/LEARNING_SYSTEMS.md).
+- **An encoder trained for this work.** A fine-tuned GTE-ModernBERT encoder serves every memory store. When memory cannot be read, the platform says so instead of returning a silent empty result.
+- **Every call accounted for.** Each model call gets one ledger row with its tokens and cost, and outcome scores credit the model that actually executed the work.
+- **Runtime verification.** Runnable artifacts are loaded in a headless browser before a reply can claim they work.
+- **Turns that outlive the connection.** A turn keeps running if the browser drops, and the browser can re-attach to it.
+- **Documents read the way underwriting reads them.** Text-layer documents are read directly. Scanned documents are OCR'd as a tracked job with a progress bar under the attachment. Images are OCR'd only on request.
+- **Surfaces.** Insurance underwriting, the Data Grid (chat with a database, with charts), Media Studio (images and video), and read-only replay links for published turns.
 
 The exact production prompts, routing policy, feature construction, weights, thresholds, learned parameters, worker definitions, provider inventory, credentials, and operational configuration remain private. The public capability map explains the system at the level appropriate for external review: [Production capabilities](docs/PRODUCTION_CAPABILITIES.md).
 
@@ -96,6 +123,7 @@ This repository is not a screenshots-only portfolio. It contains an independentl
 3. Read [Executable proof](docs/EXECUTABLE_PROOF.md) for the runnable control / configured-worker / runtime boundary.
 4. Read [Production capabilities](docs/PRODUCTION_CAPABILITIES.md) and [Architecture](docs/ARCHITECTURE.md) for the broader verified system map.
 5. Run the [provider-neutral public core](docs/PUBLIC_CORE.md), then inspect the [system walkthrough](docs/SYSTEM_WALKTHROUGH.md), [quality evidence](docs/QUALITY_EVIDENCE.md), and [failure model](docs/FAILURE_MODEL.md).
+6. Learn the patterns: [how Agent Forge works](docs/HOW_AGENT_FORGE_WORKS.md), [learning systems](docs/LEARNING_SYSTEMS.md), [behaviour evaluation](docs/BEHAVIOR_EVALUATION.md), the [evaluation framework](docs/EVALUATION_FRAMEWORK.md), the historical [Forge-Bench leaderboard](docs/LEADERBOARD.md), and [build your own](docs/BUILD_YOUR_OWN.md) with its [runnable evaluation-to-learning example](examples/evaluation_learning_loop.py).
 
 ## Run the public core
 

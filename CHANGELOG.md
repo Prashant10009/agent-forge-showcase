@@ -2,6 +2,20 @@
 
 All notable changes to the public showcase are documented here.
 
+## [Unreleased] - 2026-11-01
+
+### Added
+
+- A one-page turn diagram (`docs/diagrams/turn-overview.svg`, editable `.excalidraw` source) and a "One turn, end to end" README section.
+- "Added between September and November 2026" in the production section: plans that survive, agent trees, typed decisions with in-house students, the trained encoder, per-call accounting, runtime verification, re-attachable turns, document reading, and surfaces.
+- `docs/LEARNING_SYSTEMS.md`, checked against the November architecture.
+- Pattern guides carried over from the closed October draft: how Agent Forge works, behaviour evaluation, the evaluation framework, the historical Forge-Bench leaderboard, build your own, and the runnable evaluation-to-learning example with its tests.
+- A November 2026 codebase snapshot beside the August one.
+
+### Not carried over
+
+- The October draft's retrieval-reranking claims, which did not match production.
+
 ## [0.4.0] - 2026-08-15
 
 ### Added
